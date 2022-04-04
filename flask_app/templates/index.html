@@ -1,0 +1,101 @@
+{% extends "header.html" %}
+{% block content %}
+<b>UMD Schedule Builder</b>
+<a href="{{ url_for('all_courses', courses = courses) }}"><h3>See all courses</h3></a>
+
+
+
+<body>
+    <h1>My Schedule</h1>
+    <table border="5" cellspacing="0" align="center">
+        <!--<caption>Timetable</caption>-->
+        <tr>
+            <td align="center" height="50" 
+                width="300">
+                <b>MONDAY</b>
+            </td>
+            <td align="center" height="50" 
+                width="300">
+                <b>TUESDAY</b>
+            </td>
+            <td align="center" height="50" 
+                width="300">
+                <b>WEDNESDAY</b>
+            </td>
+            <td align="center" height="50" 
+                width="300">
+                <b>THURSDAY</b>
+            </td>
+            <td align="center" height="50" 
+                width="300">
+                <b>FRIDAY</b>
+            </td>
+        </tr>
+        <tr>
+            <td align="center" height="50" 
+                width="300">
+                <b>
+                {% for class in monday_classes %}
+                    <h3> • {{ class.time }} <br> {{ class.course_code }} </h3>
+                {% endfor %}
+                </b>
+            </td>
+            <td align="center" height="50" 
+                width="300">
+                <b>
+                    {% for class in tuesdayclasses %}
+                        <h3> • {{ class.time }} <br> {{ class.course_code }} </h3>
+                    {% endfor %}
+                </b>
+            </td>
+            <td align="center" height="50" 
+                width="300">
+                <b>
+                    {% for class in wednesday_classes %}
+                        <h3> • {{ class.time }} <br> {{ class.course_code }} </h3>
+                    {% endfor %}
+                </b>
+            </td>
+            <td align="center" height="50" 
+                width="300">
+                <b>
+                    {% for class in thursday_classes %}
+                        <h3> • {{ class.time }} <br> {{ class.course_code }} </h3>
+                    {% endfor %}
+                </b>
+            </td>
+            <td align="center" height="50" 
+                width="300">
+                <b>
+                    {% for class in friday_classes %}
+                        <h3> • {{ class.time }} <br> {{ class.course_code }} </h3>
+                    {% endfor %}
+                </b>
+            </td>
+        </tr>
+
+    </table>
+</body>
+
+
+<div class="container">
+    <h2>Search for a course to add</h2>
+</div>
+<div class="container">
+    <form action="/" class="form-inline my-2 my-lg-0" method="POST">
+        {{ form.csrf_token }}
+        {{ form.search_query(class="form-control", placeholder="Search") }}
+
+        {% if form.search_query.errors %}
+        <div class="alert alert-warning" role="alert">
+            {% for error in form.search_query.errors %}
+                <span>{{ error }}</span>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {{ form.submit(class="btn btn-outline-success") }}
+    </form>
+</div>
+
+{% endblock %}
