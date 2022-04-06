@@ -35,40 +35,45 @@
             <td align="center" height="50" 
                 width="300">
                 <b>
-                {% for class in monday_classes %}
-                    <h3> • {{ class.time }} <br> {{ class.course_code }} </h3>
-                {% endfor %}
-                </b>
-            </td>
-            <td align="center" height="50" 
-                width="300">
-                <b>
-                    {% for class in tuesdayclasses %}
-                        <h3> • {{ class.time }} <br> {{ class.course_code }} </h3>
+                    {% for class in schedule.schedule["M"] %}
+                        <h3> • {{ class.class_meetings[0].start_time }} - {{  class.class_meetings[0].end_time  }} <br>
+                            {{ class.section_id }} </h3>
                     {% endfor %}
                 </b>
             </td>
-            <td align="center" height="50" 
+            <td align="center" height="50"
                 width="300">
                 <b>
-                    {% for class in wednesday_classes %}
-                        <h3> • {{ class.time }} <br> {{ class.course_code }} </h3>
+                    {% for class in schedule.schedule["Tu"] %}
+                        <h3> • {{ class.class_meetings[0].start_time }} - {{  class.class_meetings[0].end_time  }} <br>
+                            {{ class.section_id }} </h3>
                     {% endfor %}
                 </b>
             </td>
-            <td align="center" height="50" 
+            <td align="center" height="50"
                 width="300">
                 <b>
-                    {% for class in thursday_classes %}
-                        <h3> • {{ class.time }} <br> {{ class.course_code }} </h3>
+                    {% for class in schedule.schedule["W"] %}
+                        <h3> • {{ class.class_meetings[0].start_time }} - {{  class.class_meetings[0].end_time  }} <br>
+                            {{ class.section_id }} </h3>
                     {% endfor %}
                 </b>
             </td>
-            <td align="center" height="50" 
+            <td align="center" height="50"
                 width="300">
                 <b>
-                    {% for class in friday_classes %}
-                        <h3> • {{ class.time }} <br> {{ class.course_code }} </h3>
+                    {% for class in schedule.schedule["Th"] %}
+                        <h3> • {{ class.class_meetings[0].start_time }} - {{  class.class_meetings[0].end_time  }} <br>
+                            {{ class.section_id }} </h3>
+                    {% endfor %}
+                </b>
+            </td>
+            <td align="center" height="50"
+                width="300">
+                <b>
+                    {% for class in schedule.schedule["F"] %}
+                        <h3> • {{ class.class_meetings[0].start_time }} - {{  class.class_meetings[0].end_time  }} <br>
+                            {{ class.section_id }} </h3>
                     {% endfor %}
                 </b>
             </td>
