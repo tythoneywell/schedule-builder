@@ -68,6 +68,18 @@ class MySchedule(object):
             self.class_list.remove(class_to_remove)
             self.total_credits -= class_to_remove.course.credits
 
+    def remove_all_classes(self):
+        """
+        This function will be used as a way to reset the schedule to blank (no classes) in one click.
+        """
+        self.schedule = {"M": [],
+                         "Tu": [],
+                         "W": [],
+                         "Th": [],
+                         "F": []}
+        self.total_credits = 0
+        self.class_list = []
+
 
 class CourseList(object):
     def __init__(self):
