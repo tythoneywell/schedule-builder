@@ -1,8 +1,9 @@
 {% extends "header.html" %}
 {% block content %}
 <b>UMD Schedule Builder</b>
-{% for course in courses %}
-    <ul> • {{ course.course_code }}, taught by {{ course.professor }}
-        <br> Time: {{course.time}}</ul></a>
+{% for course, info in courses.items() %}
+    <ul> • {{ course }}, {{ info.name }}
+
+    </ul>
 {% endfor %}
 {% endblock %}
