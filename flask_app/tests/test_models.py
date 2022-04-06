@@ -75,3 +75,25 @@ class ModelsTest(unittest.TestCase):
                 self.assertEqual(len(day_list), 2)
             else:
                 self.assertEqual(len(day_list), 1)
+
+    def test_removing_all_classes_with_no_classes_in_schedule(self):
+        schedule = MySchedule()
+        self.assertEqual(schedule.total_credits, 0)
+        schedule.remove_all_classes()
+        self.assertEqual(schedule.total_credits, 0)
+        for day, day_list in schedule.schedule.items():
+            self.assertEqual(len(day_list), 0)
+
+    def test_add_two_classes_then_remove_all_classes(self):
+        cmsc250 = ModelsTest.course_list.courses["CMSC250"].sections[-2]  # getting first section of 250
+        comm107 = ModelsTest.course_list.courses["COMM107"].sections[-1]  # getting first section of 250
+        schedule = MySchedule()
+        self.assertEqual(schedule.total_credits, 0)
+        schedule.add_class(cmsc250)
+        self.assertEqual(schedule.total_credits, 4)
+        schedule.add_class(comm107)
+        self.assertEqual(schedule.total_credits, 7)
+        schedule.remove_all_classes()
+        self.assertEqual(schedule.total_credits, 0)
+        for day, day_list in schedule.schedule.items():
+            self.assertEqual(len(day_list), 0)
