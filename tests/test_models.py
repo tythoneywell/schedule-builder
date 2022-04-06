@@ -4,8 +4,6 @@ from flask_app.model import MySchedule, CourseList
 
 
 class ModelsTest(unittest.TestCase):
-    if "tests" in os.getcwd():  # this is needed to get into the correct directory to open the course list file
-        os.chdir("../")
     course_list = CourseList()
 
     def test_schedule_is_empty(self):

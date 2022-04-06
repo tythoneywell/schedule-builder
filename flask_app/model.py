@@ -1,4 +1,5 @@
 import requests
+import os
 import json
 
 
@@ -83,7 +84,7 @@ class MySchedule(object):
 
 class CourseList(object):
     def __init__(self):
-        all_courses_list_raw = json.load(open("data/fall2020data.json"))
+        all_courses_list_raw = json.load(open(os.path.dirname(os.path.abspath(__file__)) + "/data/fall2020data.json"))
         self.courses = {}  # dictionary mapping course name (string) to a Course object
         for courses in all_courses_list_raw:
             course_id = courses["course_id"]
