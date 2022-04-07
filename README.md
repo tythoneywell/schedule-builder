@@ -7,7 +7,7 @@
 pip3 install -r requirements.txt
 This should install Flask and all required libraries.
 - Inside the flask_app directory, run:
-flask run
+flask run 
 - The console will tell you the address where the app is being hosted on your machine.
 
 
