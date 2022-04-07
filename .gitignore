@@ -4,3 +4,4 @@
 **/.pytest_cache
 .DS_store
 *.pyc
+venv/

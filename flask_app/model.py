@@ -37,9 +37,14 @@ class MySchedule(object):
         self.total_credits = 0
         self.class_list = []
 
+        self.warnings_list = []
+
     def add_class(self, class_to_add: Section):
         if class_to_add in self.class_list:
             return
+
+        if class_to_add.open_seats <= 0:
+            self.warnings_list.append(ScheduleWarning([class_to_add], "section full"))
 
         self.total_credits += class_to_add.course.credits
         for class_meetings in class_to_add.class_meetings:
@@ -65,9 +70,14 @@ class MySchedule(object):
                 else:
                     class_previously_in_schedule = True
             self.schedule[day] = new_day_list
+
         if class_previously_in_schedule:
             self.class_list.remove(class_to_remove)
             self.total_credits -= class_to_remove.course.credits
+
+            for warning in self.warnings_list:
+                if class_to_remove in warning.involved_sections:
+                    self.warnings_list.remove(warning)
 
     def remove_all_classes(self):
         """
@@ -80,6 +90,23 @@ class MySchedule(object):
                          "F": []}
         self.total_credits = 0
         self.class_list = []
+
+
+class ScheduleWarning(object):
+    """
+    Warning message to be displayed next to the user's schedule,
+    when their schedule has some notable issue.
+    """
+    # A type hint for involved_sections, which should be list[Section],
+    # causes Flask not to start. So it's not there.
+    def __init__(self, involved_sections: list, warning_type: str):
+        self.involved_sections = involved_sections
+        self.warning_type = warning_type
+
+        if warning_type == "section full":
+            self.warning_text = \
+                "WARNING: " + involved_sections[0].course_code + "-" + involved_sections[0].section_id + \
+                " has no open seats and must be waitlisted."
 
 
 class CourseList(object):
