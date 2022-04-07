@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect, url_for
-from model import MySchedule, CourseList
-from forms import SearchForm
+from flask_app.model import MySchedule, CourseList
+from flask_app.forms import SearchForm
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = "super secret key"
