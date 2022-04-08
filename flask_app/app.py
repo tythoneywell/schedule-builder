@@ -23,8 +23,14 @@ def index():
     schedule = MySchedule()
     cmsc250 = course_list.courses.get("CMSC250")
     comm107 = course_list.courses.get("COMM107")
-    schedule.add_class(cmsc250.sections[-2])  # get the 2nd to last 250 section
-    schedule.add_class(comm107.sections[-1])  # get the 1st section of comm107
+    colors = ["red", "blue", "green"]
+    cmsc250_section = cmsc250.sections[-2]
+    comm107_section = comm107.sections[-1]
+    cmsc250_section.color = colors[-2]
+    comm107_section.color = colors[-1]
+
+    schedule.add_class(cmsc250_section)  # get the 2nd to last 250 section
+    schedule.add_class(comm107_section)  # get the 1st section of comm107
 
     return render_template('index.html',
                            schedule=schedule,
