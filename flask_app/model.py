@@ -16,6 +16,7 @@ class Course(object):
 class Section(object):
     def __init__(self, course_code: str, section_id: str, total_seats: int, open_seats: int, class_meetings: list,
                  professor: str, gpa: float, course: Course):
+        self.color = None
         self.sess = requests.Session()
         self.course_code = course_code
         self.section_id = section_id
@@ -25,6 +26,9 @@ class Section(object):
         self.professor = professor
         self.gpa = gpa
         self.course = course
+    
+    def set_color(self, color: str):
+        self.color = color
 
 
 class MySchedule(object):
