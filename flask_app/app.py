@@ -14,10 +14,10 @@ def index():
     Also contains link to see all courses
     """
 
-    form = SearchForm()
+    search_form = SearchForm()
 
-    if form.validate_on_submit():
-        # Use form.search_query.data to access the query the user typed in
+    if search_form.validate_on_submit():
+        # Use search_form.search_query.data to access the query the user typed in
         return redirect(url_for('index'))
 
     schedule = MySchedule()
@@ -28,7 +28,7 @@ def index():
 
     return render_template('index.html',
                            schedule=schedule,
-                           form=form)
+                           search_form=search_form)
 
 
 @app.route('/all_courses')

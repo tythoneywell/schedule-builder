@@ -88,10 +88,10 @@
 </div>
 <div class="container">
     <form action="/" class="form-inline my-2 my-lg-0" method="POST">
-        {{ form.csrf_token }}
-        {{ form.search_query(class="form-control", placeholder="Search") }}
+        {{ search_form.csrf_token }}
+        {{ search_form.search_query(class="form-control", placeholder="Search") }}
 
-        {% if form.search_query.errors %}
+        {% if search_form.search_query.errors %}
         <div class="alert alert-warning" role="alert">
             {% for error in form.search_query.errors %}
                 <span>{{ error }}</span>
@@ -99,7 +99,7 @@
         </div>
         {% endif %}
 
-        {{ form.submit(class="btn btn-outline-success") }}
+        {{ search_form.submit(class="btn btn-outline-success") }}
     </form>
 </div>
 
@@ -111,33 +111,39 @@
 </div>
 <div class="container">
     <form action="/" class="form-inline my-2 my-lg-0" method="POST">
-        {{ form.csrf_token }}
-        {{ form.search_query(class="form-control", placeholder="Course Code") }}
+        {{ search_form.csrf_token }}
+        {{ search_form.search_query(class="form-control", placeholder="Course Code") }}
 
-        {% if form.search_query.errors %}
+        {% if search_form.search_query.errors %}
         <div class="alert alert-warning" role="alert">
-            {% for error in form.search_query.errors %}
+            {% for error in search_form.search_query.errors %}
                 <span>{{ error }}</span>
             {% endfor %}
         </div>
         {% endif %}
 
-        {{ form.csrf_token }}
-        {{ form.search_query(class="form-control", placeholder="Section Number") }}
+        {{ search_form.csrf_token }}
+        {{ search_form.search_query(class="form-control", placeholder="Section Number") }}
 
-        {% if form.search_query.errors %}
+        {% if search_form.search_query.errors %}
         <div class="alert alert-warning" role="alert">
-            {% for error in form.search_query.errors %}
+            {% for error in search_form.search_query.errors %}
                 <span>{{ error }}</span>
             {% endfor %}
         </div>
         {% endif %}
         <button type = "submit">Add</button>
-<!--        {{ form.submit(class="btn btn-outline-success") }}-->
+<!--        {{ search_form.submit(class="btn btn-outline-success") }}-->
     </form>
     <br>
     <br>
 </div>
 
+
+<div class="container">
+    {% for warning in schedule.warnings_list %}
+        <h3 style="color:red;"> • WARNING: {{ warning.warning_text }} </h3>
+    {% endfor %}
+</div>
 
 {% endblock %}

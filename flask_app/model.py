@@ -105,7 +105,7 @@ class ScheduleWarning(object):
 
         if warning_type == "section full":
             self.warning_text = \
-                "WARNING: " + involved_sections[0].course_code + "-" + involved_sections[0].section_id + \
+                involved_sections[0].section_id + \
                 " has no open seats and must be waitlisted."
 
 
