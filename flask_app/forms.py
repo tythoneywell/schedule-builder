@@ -6,3 +6,7 @@ from wtforms.validators import InputRequired
 class SearchForm(FlaskForm):
     search_query = StringField('Query', validators=[InputRequired()])
     submit = SubmitField('Submit')
+
+
+class ClearAllCoursesForm(FlaskForm):
+    clear_all = SubmitField('Clear Schedule')
