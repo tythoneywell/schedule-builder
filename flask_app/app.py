@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect, url_for
 from flask_app.model import MySchedule, CourseList
-from flask_app.forms import SearchForm
+from flask_app.forms import SearchForm, ClearAllCoursesForm
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = "super secret key"
@@ -15,10 +15,19 @@ def index():
     """
 
     search_form = SearchForm()
+    clear_all_courses_form = ClearAllCoursesForm()
 
     if search_form.validate_on_submit():
         # Use search_form.search_query.data to access the query the user typed in
         return redirect(url_for('index'))
+
+    if clear_all_courses_form.validate_on_submit():
+        schedule = MySchedule()
+        schedule.remove_all_classes()
+        return render_template('index.html',
+                               schedule=schedule,
+                               search_form=search_form,
+                               clear_all_courses_form=clear_all_courses_form)
 
     schedule = MySchedule()
     cmsc250 = course_list.courses.get("CMSC250")
@@ -28,7 +37,8 @@ def index():
 
     return render_template('index.html',
                            schedule=schedule,
-                           search_form=search_form)
+                           search_form=search_form,
+                           clear_all_courses_form=clear_all_courses_form)
 
 
 @app.route('/all_courses')
