@@ -76,6 +76,70 @@ class ScheduleTest(unittest.TestCase):
             else:
                 self.assertEqual(len(day_list), 1)
 
+    def test_add_two_classes_make_sure_ordered_by_time(self):
+        cmsc250 = TestUtils.course_list.courses["CMSC250"].sections[-2]  # getting 2nd section of 250
+        comm107 = TestUtils.course_list.courses["COMM107"].sections[-1]  # getting first section of comm107
+        schedule = MySchedule()
+        schedule.add_class(cmsc250)
+        schedule.add_class(comm107)
+        self.assertEqual(schedule.schedule["M"][0].section_id, "CMSC250-0307")
+        self.assertEqual(schedule.schedule["M"][1].section_id, "COMM107-FC04")
+        self.assertEqual(schedule.total_credits, 7)
+
+    def test_try_to_add_overlapping_classes_only_first_gets_added(self):
+        cmsc250 = TestUtils.course_list.courses["CMSC250"].sections[-3]  # getting 3rd section of 250
+        comm107 = TestUtils.course_list.courses["COMM107"].sections[-1]  # getting first section of 250
+        schedule = MySchedule()
+        schedule.add_class(comm107)
+        self.assertEqual(schedule.total_credits, 3)
+        schedule.add_class(cmsc250)  # can't add this class
+        self.assertEqual(schedule.total_credits, 3)
+        self.assertEqual(schedule.schedule["M"][0].section_id, "COMM107-FC04")
+
+    def test_remove_all_classes_on_empty_schedule(self):
+        schedule = MySchedule()
+        self.assertEqual(schedule.total_credits, 0)
+        schedule.remove_all_classes()
+        self.assertEqual(schedule.total_credits, 0)
+        for day, classes in schedule.schedule.items():
+            self.assertEqual(len(classes), 0)
+
+    def test_remove_all_classes_on_schedule_with_classes_in_it(self):
+        cmsc250 = TestUtils.course_list.courses["CMSC250"].sections[-2]
+        comm107 = TestUtils.course_list.courses["COMM107"].sections[-1]
+        schedule = MySchedule()
+        schedule.add_class(comm107)
+        schedule.add_class(cmsc250)
+        self.assertEqual(schedule.total_credits, 7)
+        schedule.remove_all_classes()
+        self.assertEqual(schedule.total_credits, 0)
+        for day, classes in schedule.schedule.items():
+            self.assertEqual(len(classes), 0)
+
+    def test_class_overlap_same_class(self):
+        cmsc250 = TestUtils.course_list.courses["CMSC250"].sections[-2]
+        cmsc250_2 = TestUtils.course_list.courses["CMSC250"].sections[-2]
+        schedule = MySchedule()
+        schedule.add_class(cmsc250)
+        self.assertFalse(schedule.no_class_overlap(cmsc250_2))
+
+    def test_class_overlap_different_class_time_conflict(self):
+        cmsc250 = TestUtils.course_list.courses["CMSC250"].sections[-3]
+        comm107 = TestUtils.course_list.courses["CMSC250"].sections[-1]
+        schedule = MySchedule()
+        schedule.add_class(cmsc250)
+        self.assertFalse(schedule.no_class_overlap(comm107))
+
+    def test_class_with_no_time_conflict(self):
+        cmsc250 = TestUtils.course_list.courses["CMSC250"].sections[-2]
+        comm107 = TestUtils.course_list.courses["COMM107"].sections[-1]
+        schedule = MySchedule()
+        schedule.add_class(cmsc250)
+        self.assertTrue(schedule.no_class_overlap(comm107))
+        schedule.remove_all_classes()
+        schedule.add_class(comm107)
+        self.assertTrue(schedule.no_class_overlap(cmsc250))
+
 
 class ScheduleWarningTest(unittest.TestCase):
     def test_add_class_no_open_seats_makes_warning(self):
