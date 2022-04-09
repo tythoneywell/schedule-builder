@@ -28,4 +28,4 @@ flask run
 
 *Andrew (20%)*: Created MySchedule, MeetingTime, Section, CourseList, and Course classes in backend. Parsed information from json file to create a complete CourseList and built resulting Course, Section, and MeetingTime objects from the original json for easy field access in backend. Implemented add_class and remove_class functions in MySchedule class, and also ensured that class meeting times are ordered in the schedule and include no time conflicts or duplicates.
 
-*Tyler (20%)*:
+*Tyler (20%)*: Located and imported course data to be used for Sprint 1. Added frontend and backend systems for warning the user of sections with no open seats available. Added frontend integration of adding/removing single classes. Added frontend and backend system to notify user of the result of trying to add/remove a class. Dockerized the application.
