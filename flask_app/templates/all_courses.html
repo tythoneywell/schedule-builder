@@ -2,15 +2,15 @@
 {% block content %}
 <b>UMD Schedule Builder</b>
 {% for course, info in courses.items() %}
-    <ul> • {{ course }}, {{ info.name }}
+<ul> <li> {{ course }}, {{ info.name }} </li>
         <ul>
-        {% for section in info.sections %}
+        {% for section in info.sections.values() %}
                 {{section.section_id}}
                 {%for times, day in section.get_formatted_weekly_schedule().items() %}
                     <ul>{{day}}: {{times}}</ul>
                 {%endfor%}
         {% endfor %}
-            </ul>
+        </ul>
     </ul>
 {% endfor %}
 {% endblock %}
