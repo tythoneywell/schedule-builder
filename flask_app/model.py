@@ -8,7 +8,7 @@ from datetime import datetime
 
 
 class Course(object):
-    def __init__(self, course_code: str, name: str, course_credits: int, sections: list):
+    def __init__(self, course_code: str, name: str, course_credits: int, sections: dict):
         self.sess = requests.Session()
         self.course_code = course_code
         self.name = name
@@ -51,8 +51,8 @@ class Section(object):
         return time_per_day
 
 
-
 class MySchedule(object):
+
     def __init__(self):
         #  dictionary of day of week to MeetingTime
         self.schedule = {"M": [],
@@ -86,15 +86,16 @@ class MySchedule(object):
                         break
         return True
 
-    def add_class(self, class_to_add: Section):
+    def add_class(self, class_to_add: Section) -> str:
+
         if class_to_add in self.class_list:
-            return
+            return class_to_add.section_id + " already present in schedule."
 
         if not self.no_class_overlap(class_to_add):
-            return
+            return class_to_add.section_id + " has time conflicts with an existing class."
 
         if class_to_add.open_seats <= 0:
-            self.warnings_list.append(ScheduleWarning([class_to_add], "section full"))
+            self.warnings_list.append(MySchedule.ScheduleWarning([class_to_add], "section full"))
 
         self.total_credits += class_to_add.course.credits
         for day, class_meetings in class_to_add.class_meetings.items():
@@ -112,7 +113,11 @@ class MySchedule(object):
                             self.schedule[day].append(class_time_to_add)
         self.class_list.append(class_to_add)
 
-    def remove_class(self, class_to_remove: Section):
+        return class_to_add.section_id + " added."
+
+    def remove_class(self, class_to_remove: Section) -> str:
+        class_to_remove.section_id
+
         class_previously_in_schedule = False
         for day, meeting_times in self.schedule.items():
             new_day_list = []
@@ -130,6 +135,10 @@ class MySchedule(object):
             for warning in self.warnings_list:
                 if class_to_remove in warning.involved_sections:
                     self.warnings_list.remove(warning)
+        else:
+            return class_to_remove.section_id + " not in schedule."
+
+        return class_to_remove.section_id + " removed."
 
     def remove_all_classes(self):
         """
@@ -143,23 +152,21 @@ class MySchedule(object):
         self.total_credits = 0
         self.class_list = []
 
+    class ScheduleWarning(object):
+        """
+        Warning message to be displayed next to the user's schedule,
+        when their schedule has some notable issue.
+        """
+        # A type hint for involved_sections, which should be list[Section],
+        # causes Flask not to start. So it's not there.
+        def __init__(self, involved_sections: list, warning_type: str):
+            self.involved_sections = involved_sections
+            self.warning_type = warning_type
 
-class ScheduleWarning(object):
-    """
-    Warning message to be displayed next to the user's schedule,
-    when their schedule has some notable issue.
-    """
-
-    # A type hint for involved_sections, which should be list[Section],
-    # causes Flask not to start. So it's not there.
-    def __init__(self, involved_sections: list, warning_type: str):
-        self.involved_sections = involved_sections
-        self.warning_type = warning_type
-
-        if warning_type == "section full":
-            self.warning_text = \
-                involved_sections[0].section_id + \
-                " has no open seats and must be waitlisted."
+            if warning_type == "section full":
+                self.warning_text = \
+                    involved_sections[0].section_id + \
+                    " has no open seats and must be waitlisted."
 
 
 class CourseList(object):
@@ -171,19 +178,20 @@ class CourseList(object):
             course_name = courses["name"]
             course_credits = int(courses["credits"])
             sections = courses["sections"]
-            section_list = []
-            course_obj = Course(course_id, course_name, course_credits, section_list)
+            section_dict = {}
+            course_obj = Course(course_id, course_name, course_credits, section_dict)
 
             # populate the sections of the specific course
             for section in sections:
                 section_id = section["section_id"]
+                section_number = section["number"]
                 total_seats = int(section["seats"])
                 open_seats = int(section["open_seats"])
                 class_meetings = CourseList.make_meeting_dict(section["meetings"], section_id)
                 professor = section["instructors"]
                 gpa = 3.5
-                section_list.append(
-                    Section(course_id, section_id, total_seats, open_seats, class_meetings, professor, gpa, course_obj))
+                section_dict[section_number] = \
+                    Section(course_id, section_id, total_seats, open_seats, class_meetings, professor, gpa, course_obj)
 
             self.courses[course_id] = course_obj
 
@@ -194,12 +202,20 @@ class CourseList(object):
                            "W": [],
                            "Th": [],
                            "F": []}
+        # a dict of day to times. this is only used to take out the duplicate times that are present in our data
+        current_meeting_times = {"M": set(),
+                                 "Tu": set(),
+                                 "W": set(),
+                                 "Th": set(),
+                                 "F": set()}
         for meeting in meetings_list:
             days = re.findall('[A-Z][a-z]*', meeting["days"])  # a list of all the days for this meeting time
             for day in days:
                 if day == "M" or day == "Tu" or day == "W" or day == "Th" or day == "F":  # ignore weekend classes
-                    day_to_meetings[day].append(MeetingTime(meeting, section_id))
-                    # print(MeetingTime(meeting, section_id).formatted_start_time)
+                    start_end_tuple = (meeting["start_time"], meeting["end_time"])
+                    if start_end_tuple not in current_meeting_times[day]:
+                        current_meeting_times[day].add(start_end_tuple)
+                        day_to_meetings[day].append(MeetingTime(meeting, section_id))
         return day_to_meetings
 
 

@@ -84,6 +84,52 @@
 
 
 <div class="container">
+    <h2>Search for a course to see sections</h2>
+    {% for warning in schedule.warnings_list %}
+        <h3 style="color:red;"> • WARNING: {{ warning.warning_text }} </h3>
+    {% endfor %}
+</div>
+
+<div class="container">
+    <br>
+    <h3>Add a section to schedule</h3>
+    <p>Enter course code and section number</p>
+    <p>E.G: CMSC131-0101 (Department Name: CMSC131, Section Number: 0101)</p>
+</div>
+<div class="container">
+    <form action="/" class="form-inline my-2 my-lg-0" method="POST">
+        {{ add_remove_form.csrf_token }}
+        {{ add_remove_form.course_query(class="form-control", placeholder="ABCD100") }}
+
+        {% if add_remove_form.course_query.errors %}
+        <div class="alert alert-warning" role="alert">
+            {% for error in add_remove_form.course_query.errors %}
+                <span>{{ error }}</span>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <b>-</b>
+
+        {{ add_remove_form.csrf_token }}
+        {{ add_remove_form.section_query(class="form-control", placeholder="0101") }}
+
+        {% if add_remove_form.section_query.errors %}
+        <div class="alert alert-warning" role="alert">
+            {% for error in add_remove_form.section_query.errors %}
+                <span>{{ error }}</span>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {{ add_remove_form.add(class="btn btn-outline-success") }}
+        {{ add_remove_form.remove(class="btn btn-outline-danger") }}
+    </form>
+    <b> {{ add_remove_notification_text }} </b>
+    <br>
+    <br>
+</div>
+
+<div class="container">
     <h2>Search for a course to add</h2>
 </div>
 <div class="container">
@@ -101,49 +147,6 @@
 
         {{ search_form.submit(class="btn btn-outline-success") }}
     </form>
-</div>
-
-<div class="container">
-    <br>
-    <h3>Select a Course and Section to Add</h3>
-    <p>Usage for Course Code: Department Name + Course Number</p>
-    <p>E.G: CMSC131 (Department Name: CMSC, Course Number: 131)</p>
-</div>
-<div class="container">
-    <form action="/" class="form-inline my-2 my-lg-0" method="POST">
-        {{ search_form.csrf_token }}
-        {{ search_form.search_query(class="form-control", placeholder="Course Code") }}
-
-        {% if search_form.search_query.errors %}
-        <div class="alert alert-warning" role="alert">
-            {% for error in search_form.search_query.errors %}
-                <span>{{ error }}</span>
-            {% endfor %}
-        </div>
-        {% endif %}
-
-        {{ search_form.csrf_token }}
-        {{ search_form.search_query(class="form-control", placeholder="Section Number") }}
-
-        {% if search_form.search_query.errors %}
-        <div class="alert alert-warning" role="alert">
-            {% for error in search_form.search_query.errors %}
-                <span>{{ error }}</span>
-            {% endfor %}
-        </div>
-        {% endif %}
-        <button type = "submit">Add</button>
-<!--        {{ search_form.submit(class="btn btn-outline-success") }}-->
-    </form>
-    <br>
-    <br>
-</div>
-
-
-<div class="container">
-    {% for warning in schedule.warnings_list %}
-        <h3 style="color:red;"> • WARNING: {{ warning.warning_text }} </h3>
-    {% endfor %}
 </div>
 
 <div class="container">
