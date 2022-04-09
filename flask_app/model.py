@@ -1,3 +1,5 @@
+from collections import defaultdict
+
 import requests
 import os
 import json
@@ -28,12 +30,26 @@ class Section(object):
         self.professor = professor
         self.gpa = gpa
         self.course = course
-    
+
     def set_color(self, color: str):
         self.color = color
         for day, classes in self.class_meetings.items():
             for meeting_time in classes:
                 meeting_time.color = color
+
+    def get_formatted_weekly_schedule(self):
+        time_per_day = dict()
+        for day, meeting_time_list in self.class_meetings.items():
+            if len(meeting_time_list) > 0:
+                for meeting_time in set(meeting_time_list):
+                    temp = meeting_time.formatted_start_time + "-" + meeting_time.formatted_end_time
+                    if temp in time_per_day:
+                        time_per_day[temp] = time_per_day[temp] + day + ""
+                    else:
+                        time_per_day[temp] = day
+
+        return time_per_day
+
 
 
 class MySchedule(object):
@@ -183,6 +199,7 @@ class CourseList(object):
             for day in days:
                 if day == "M" or day == "Tu" or day == "W" or day == "Th" or day == "F":  # ignore weekend classes
                     day_to_meetings[day].append(MeetingTime(meeting, section_id))
+                    # print(MeetingTime(meeting, section_id).formatted_start_time)
         return day_to_meetings
 
 
@@ -199,3 +216,18 @@ class MeetingTime(object):
         self.formatted_end_time = meeting["end_time"]
         self.section_id = section_id
         self.color = None
+
+    def __eq__(self, other):
+        if not isinstance(other, MeetingTime):
+            # don't attempt to compare against unrelated types
+            return NotImplemented
+
+        return self.start_time == other.start_time \
+               and self.end_time == other.end_time \
+               and self.section_id == other.section_id
+
+    def __ne__(self, obj):
+        return not self == obj
+
+    def __hash__(self):
+        return hash(self.section_id)

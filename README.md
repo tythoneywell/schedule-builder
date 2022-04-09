@@ -16,3 +16,8 @@ flask run
 2. CI/CD tab on left panel
 3. Click blue `Run Pipeline` button at top right corner
 4. Select branch (`main`) and run the pipeline. Tests will also automatically run upon any changes made to the GitLab repository. 
+
+## Contributions
+Amar: Created UI for adding a specific section of a class to the schedule, 
+    added sections, days, and times to All Course List, Colorized Schedule based
+    on sections. 20%.
