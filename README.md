@@ -26,6 +26,6 @@ flask run
 
 *Daniel (20%)*: Completed the backend, frontend, and integration of the remove all classes feature. Created the structure for having multiple Flask WTForms on one page with unique functionalities. Created the scrum log portions of the wiki and took notes during scrums. Assisted in setting up the structure of our issues, labels, and backlogs. 
 
-*Andrew (20%)*:
+*Andrew (20%)*: Created MySchedule, MeetingTime, Section, CourseList, and Course classes in backend. Parsed information from json file to create a complete CourseList and built resulting Course, Section, and MeetingTime objects from the original json for easy field access in backend. Implemented add_class and remove_class functions in MySchedule class, and also ensured that class meeting times are ordered in the schedule and include no time conflicts or duplicates.
 
 *Tyler (20%)*:
