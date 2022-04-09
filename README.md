@@ -11,6 +11,27 @@ flask run
 - The console will tell you the address where the app is being hosted on your machine.
 
 
+## Project structure
+
+The project has two main directories, flask_app and tests. flask_app contains all components required to run the Flask application, and tests contains all tests for backend functionality. The Dockerfile and requirements.txt file in the root directory are used to set up the application when cloned.
+
+### flask_app
+
+model.py contains backend code, including the classes for schedules, courses, and sections.
+
+forms.py contains WTForms forms which are used to handle user input.
+
+app.py contains the different pages which the app can display.
+
+
+Inside the templates directory are the html files to display the pages of the app.
+
+Inside the data directory is the file that stores all course and section information, fall2020data.json.
+
+### tests
+
+test_schedule.py contains tests relating to the backend functionality of the MySchedule class, which represents a user's schedule.
+
 ## How to run Tests
 1. Navigate to GitLab
 2. CI/CD tab on left panel
