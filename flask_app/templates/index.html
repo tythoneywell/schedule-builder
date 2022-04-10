@@ -130,26 +130,6 @@
 </div>
 
 <div class="container">
-    <h2>Search for a course to add</h2>
-</div>
-<div class="container">
-    <form action="/" class="form-inline my-2 my-lg-0" method="POST">
-        {{ search_form.csrf_token }}
-        {{ search_form.search_query(class="form-control", placeholder="Search") }}
-
-        {% if search_form.search_query.errors %}
-        <div class="alert alert-warning" role="alert">
-            {% for error in search_form.search_query.errors %}
-                <span>{{ error }}</span>
-            {% endfor %}
-        </div>
-        {% endif %}
-
-        {{ search_form.submit(class="btn btn-outline-success") }}
-    </form>
-</div>
-
-<div class="container">
     <h2>Remove all courses from schedule</h2>
 </div>
 <div class="container">
