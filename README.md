@@ -1,5 +1,5 @@
 # UMD Schedule Builder
-
+The purpose of this repository is to create a UMD schedule builder. Students can use this to create a schedule and eventually be able to see data on course professor reviews and GPAs. 
 
 ## Running with Docker
 
