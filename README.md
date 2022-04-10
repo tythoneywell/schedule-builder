@@ -14,6 +14,9 @@ docker run --publish 8000:5000 --rm schedule-builder
 
 4. Open the application in your browser at "localhost:8000"
 
+5. To kill the docker session, navigate to Docker Desktop and kill the appropriate container.
+
+
 ## Running without Docker (for devs)
 
 1. Python and pip should be installed.
@@ -27,8 +30,6 @@ This should install Flask and all required libraries.
 flask run 
 4. The console will tell you the address where the app is being hosted on your machine.
 
-5. To kill the docker session, navigate to Docker Desktop and kill the appropriate container.
-
 
 ## Project structure
 
@@ -36,7 +37,9 @@ The project has two main directories, flask_app and tests. flask_app contains al
 
 ### flask_app
 
-model.py contains backend code, including the classes for schedules, courses, and sections.
+courses.py contains backend code for courses and sections.
+
+schdeule.py contains backend code for the schedule.
 
 forms.py contains WTForms forms which are used to handle user input.
 
