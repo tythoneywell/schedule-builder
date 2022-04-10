@@ -57,7 +57,7 @@ class Section(object):
                 Keys are strings of format "9AM-10:15AM", etc.
                 Values are strings of format "MWF", "TuTh", etc.
         """
-        time_per_day = dict()
+        time_per_day = {}
         for day, meeting_time_list in self.class_meetings.items():
             if len(meeting_time_list) > 0:
                 for meeting_time in set(meeting_time_list):
@@ -167,4 +167,3 @@ class CourseList(object):
                         current_meeting_times[day].add(start_end_tuple)
                         day_to_meetings[day].append(MeetingTime(meeting, section_id))
         return day_to_meetings
-
