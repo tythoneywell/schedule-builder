@@ -155,6 +155,13 @@ class ScheduleTest(unittest.TestCase):
         schedule.add_class(chem271)  # try to add chem in between even though its start time overlaps with 250 end time
         self.assertEqual(schedule.total_credits, 7)
 
+    def test_class_formatted_weekly_schedule_correct(self):
+        cmsc250 = TestUtils.course_list.courses["CMSC250"].sections["0307"]
+        comm107 = TestUtils.course_list.courses["COMM107"].sections["FC04"]
+        self.assertEqual({'8:00am-8:50am': 'MW', '3:30pm-4:45pm': 'TuTh'},
+                         cmsc250.get_formatted_weekly_schedule())
+        self.assertEqual({'4:30pm-5:45pm': 'MW'}, comm107.get_formatted_weekly_schedule())
+
 
 class ScheduleWarningTest(unittest.TestCase):
     """
