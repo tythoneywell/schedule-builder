@@ -1,14 +1,33 @@
-# team project
+# UMD Schedule Builder
 
-(Temporary) Instructions to run Flask app
 
-- Python and pip should be installed.
-- In root directory, run:
+## Running with Docker
+
+1. Navigate to the root directory, team-project/
+2. Build the image by running the following command:
+
+docker build -t schedule-builder .
+
+3. Run the image by running the following command:
+
+docker run --publish 8000:5000 --rm schedule-builder
+
+4. Open the application in your browser at "localhost:8000"
+
+## Running without Docker (for devs)
+
+1. Python and pip should be installed.
+2. In root directory, run:
+
 pip3 install -r requirements.txt
+
 This should install Flask and all required libraries.
-- Inside the flask_app directory, run:
+3. Inside the flask_app directory, run:
+
 flask run 
-- The console will tell you the address where the app is being hosted on your machine.
+4. The console will tell you the address where the app is being hosted on your machine.
+
+5. To kill the docker session, navigate to Docker Desktop and kill the appropriate container.
 
 
 ## Project structure
