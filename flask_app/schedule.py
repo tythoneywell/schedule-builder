@@ -40,7 +40,7 @@ class MySchedule(object):
                             return False
                         if class_index > 0 and \
                                 self.schedule[day][class_index - 1].end_time >= \
-                                class_to_add_start_time:
+                                class_to_add_start_time:  # class right in front of one we want to add overlaps
                             return False
                         break
                     elif class_index == len(self.schedule[day]) - 1:  # if we are at end
@@ -147,4 +147,3 @@ class MySchedule(object):
                 self.warning_text = \
                     involved_sections[0].section_id + \
                     " has no open seats and must be waitlisted."
-

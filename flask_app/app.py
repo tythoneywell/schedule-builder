@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for
+from flask import Flask, render_template
 from flask_app.schedule import MySchedule
 from flask_app.courses import CourseList
 from flask_app.forms import SearchForm, ClearAllCoursesForm, AddRemoveForm

@@ -144,6 +144,17 @@ class ScheduleTest(unittest.TestCase):
         schedule.add_class(comm107)
         self.assertTrue(schedule.no_class_overlap(cmsc250))
 
+    def test_try_to_add_class_in_middle_of_day_start_time_overlaps_with_previous_end_time(self):
+        cmsc250 = TestUtils.course_list.courses["CMSC250"].sections["0307"]
+        anth221 = TestUtils.course_list.courses["ANTH221"].sections["FC01"]
+        chem271 = TestUtils.course_list.courses["CHEM271"].sections["2247"]
+        schedule = MySchedule()
+        schedule.add_class(cmsc250)
+        schedule.add_class(anth221)
+        self.assertFalse(schedule.no_class_overlap(chem271))
+        schedule.add_class(chem271)  # try to add chem in between even though its start time overlaps with 250 end time
+        self.assertEqual(schedule.total_credits, 7)
+
 
 class ScheduleWarningTest(unittest.TestCase):
     """
@@ -205,4 +216,3 @@ class ScheduleWarningTest(unittest.TestCase):
             1)
         schedule.remove_class(full_sections[1])
         self.assertNotIn("section full", [warning.warning_type for warning in schedule.warnings_list])
-

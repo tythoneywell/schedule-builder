@@ -36,8 +36,9 @@
                 width="300">
                 <b>
                     {% for class in schedule.schedule["M"] %}
-                        <h3 style = "color: {{class.color}}"> • {{ class.formatted_start_time }} - {{  class.formatted_end_time  }} <br>
-                            {{ class.section_id }} </h3>
+                        <span style = "color: {{class.color}}; font-size: 150%"> • {{ class.formatted_start_time }} -
+                            {{  class.formatted_end_time  }} <br>
+                            {{ class.section_id }} </span> <br>
                     {% endfor %}
                 </b>
             </td>
@@ -45,8 +46,9 @@
                 width="300">
                 <b>
                     {% for class in schedule.schedule["Tu"] %}
-                        <h3 style = "color: {{class.color}}"> • {{ class.formatted_start_time }} - {{  class.formatted_end_time  }} <br>
-                            {{ class.section_id }} </h3>
+                        <span style = "color: {{class.color}}; font-size: 150%"> • {{ class.formatted_start_time }} -
+                            {{  class.formatted_end_time  }} <br>
+                            {{ class.section_id }} </span> <br>
                     {% endfor %}
                 </b>
             </td>
@@ -54,8 +56,9 @@
                 width="300">
                 <b>
                     {% for class in schedule.schedule["W"] %}
-                        <h3 style = "color: {{class.color}}"> • {{ class.formatted_start_time }} - {{  class.formatted_end_time  }} <br>
-                            {{ class.section_id }} </h3>
+                        <span style = "color: {{class.color}}; font-size: 150%"> • {{ class.formatted_start_time }} -
+                            {{  class.formatted_end_time  }} <br>
+                            {{ class.section_id }} </span> <br>
                     {% endfor %}
                 </b>
             </td>
@@ -63,8 +66,9 @@
                 width="300">
                 <b>
                     {% for class in schedule.schedule["Th"] %}
-                        <h3 style = "color: {{class.color}}"> • {{ class.formatted_start_time }} - {{  class.formatted_end_time  }} <br>
-                            {{ class.section_id }} </h3>
+                        <span style = "color: {{class.color}}; font-size: 150%"> • {{ class.formatted_start_time }} -
+                            {{  class.formatted_end_time  }} <br>
+                            {{ class.section_id }} </span> <br>
                     {% endfor %}
                 </b>
             </td>
@@ -72,8 +76,9 @@
                 width="300">
                 <b>
                     {% for class in schedule.schedule["F"] %}
-                        <h3 style = "color: {{class.color}}"> • {{ class.formatted_start_time }} - {{  class.formatted_end_time  }} <br>
-                            {{ class.section_id }} </h3>
+                        <span style = "color: {{class.color}}; font-size: 150%"> • {{ class.formatted_start_time }} -
+                            {{  class.formatted_end_time  }} <br>
+                            {{ class.section_id }} </span> <br>
                     {% endfor %}
                 </b>
             </td>
