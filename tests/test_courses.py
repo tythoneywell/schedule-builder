@@ -1,5 +1,5 @@
 import unittest
-from flask_app.courses import CourseList
+from flask_app.backend.courses import CourseList
 
 
 class TestUtils:

@@ -1,6 +1,6 @@
 from flask import Flask, render_template
-from flask_app.schedule import MySchedule
-from flask_app.courses import CourseList
+from flask_app.backend.schedule import MySchedule
+from flask_app.backend.courses import CourseList
 from flask_app.forms import SearchForm, ClearAllCoursesForm, AddRemoveForm
 
 app = Flask(__name__)

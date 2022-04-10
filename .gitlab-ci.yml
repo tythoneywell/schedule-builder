@@ -32,4 +32,4 @@ before_script:
 
 test:
   script:
-    - pytest --cov=flask_app tests/
+    - pytest --cov=flask_app/backend/ tests/
