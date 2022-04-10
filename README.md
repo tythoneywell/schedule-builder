@@ -39,7 +39,7 @@ The project has two main directories, flask_app and tests. flask_app contains al
 
 courses.py contains backend code for courses and sections.
 
-schdeule.py contains backend code for the schedule.
+schedule.py contains backend code for the schedule.
 
 forms.py contains WTForms forms which are used to handle user input.
 
