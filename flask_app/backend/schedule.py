@@ -1,4 +1,4 @@
-from flask_app.courses import Section
+from flask_app.backend.courses import Section
 
 
 class MySchedule(object):

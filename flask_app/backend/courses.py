@@ -109,7 +109,8 @@ class CourseList(object):
     Class containing a list of all courses available to add.
     """
     def __init__(self):
-        all_courses_list_raw = json.load(open(os.path.dirname(os.path.abspath(__file__)) + "/data/fall2020data.json"))
+        all_courses_list_raw = json.load(open(
+            os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + "/data/fall2020data.json"))
         self.courses = {}  # dictionary mapping course name (string) to a Course object
         for courses in all_courses_list_raw:
             course_id = courses["course_id"]

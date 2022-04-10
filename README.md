@@ -6,13 +6,13 @@
 1. Navigate to the root directory, team-project/
 2. Build the image by running the following command:
 
-docker build -t schedule-builder .
+`docker build -t schedule-builder .`
 
 3. Run the image by running the following command:
 
-docker run --publish 8000:5000 --rm schedule-builder
+`docker run --publish 8000:5000 --rm schedule-builder`
 
-4. Open the application in your browser at "localhost:8000"
+4. Open the application in your browser at `localhost:8000`
 
 5. To kill the docker session, navigate to Docker Desktop and kill the appropriate container.
 
@@ -22,12 +22,13 @@ docker run --publish 8000:5000 --rm schedule-builder
 1. Python and pip should be installed.
 2. In root directory, run:
 
-pip3 install -r requirements.txt
+`pip3 install -r requirements.txt`
 
 This should install Flask and all required libraries.
 3. Inside the flask_app directory, run:
 
-flask run 
+`flask run`
+
 4. The console will tell you the address where the app is being hosted on your machine.
 
 
@@ -37,13 +38,13 @@ The project has two main directories, flask_app and tests. flask_app contains al
 
 ### flask_app
 
-courses.py contains backend code for courses and sections.
+* `courses.py` contains backend code for courses and sections.
 
-schedule.py contains backend code for the schedule.
+* `schedule.py` contains backend code for the schedule.
 
-forms.py contains WTForms forms which are used to handle user input.
+* `forms.py` contains WTForms forms which are used to handle user input.
 
-app.py contains the different pages which the app can display.
+* `app.py` contains the different pages which the app can display.
 
 
 Inside the templates directory are the html files to display the pages of the app.
