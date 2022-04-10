@@ -14,6 +14,9 @@ docker run --publish 8000:5000 --rm schedule-builder
 
 4. Open the application in your browser at "localhost:8000"
 
+5. To kill the docker session, navigate to Docker Desktop and kill the appropriate container.
+
+
 ## Running without Docker (for devs)
 
 1. Python and pip should be installed.
@@ -26,8 +29,6 @@ This should install Flask and all required libraries.
 
 flask run 
 4. The console will tell you the address where the app is being hosted on your machine.
-
-5. To kill the docker session, navigate to Docker Desktop and kill the appropriate container.
 
 
 ## Project structure
