@@ -140,6 +140,15 @@
     <form action="/" method="POST">
         {{ clear_all_courses_form.csrf_token }}
         {{ clear_all_courses_form.clear_all(class="btn btn-outline-danger") }}
+
+        {% if clear_all_courses_form.clear_all.errors %}
+        <div class="alert alert-warning" role="alert">
+            {% for error in clear_all_courses_form.clear_all.errors %}
+                <span>{{ error }}</span>
+            {% endfor %}
+        </div>
+        {% endif %}
+
     </form>
 </div>
 
