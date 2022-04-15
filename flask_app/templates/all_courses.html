@@ -1,12 +1,39 @@
 {% extends "header.html" %}
 {% block content %}
 <b>UMD Schedule Builder</b>
+
+{% if previous_page_form %}
+    <div class="container">
+        <form method="POST" action="">
+            {{ previous_page_form.csrf_token }}
+            {{ previous_page_form.previous_page(class="btn btn-outline-success") }}
+        </form>
+        <br>
+    </div>
+{% endif %}
+
+{% if next_page_form %}
+    <div class="container">
+        <form method="POST" action="">
+            {{ next_page_form.csrf_token }}
+            {{ next_page_form.next_page(class="btn btn-outline-success") }}
+        </form>
+        <br>
+    </div>
+{% endif %}
+
+
 {% for course, info in courses.items() %}
 <ul>
-    <li> {{ course }}, {{ info.name }}
+    <li> <h3> {{ course }}, {{ info.name }} ({{ info.credits }} credits) </h2>
         <ul>
         {% for section in info.sections.values() %}
-                <li>{{section.section_id}}
+                <li><h4> {{section.section_id}} </h4>
+                    {{section.open_seats}} out of {{section.total_seats}} seats available <br>
+                    {% for professor in section.professor %}
+                        {{ professor }} <br>
+                    {% endfor %}
+
                     {%for times, day in section.get_formatted_weekly_schedule().items() %}
                     <ul>{{day}}: {{times}}</ul>
                 </li>

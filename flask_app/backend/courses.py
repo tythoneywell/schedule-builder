@@ -10,6 +10,7 @@ class Course(object):
     Represents a course as seen on the Schedule of Classes.
     Contains a list of sections, the course code, and credits.
     """
+
     def __init__(self, course_code: str, name: str, course_credits: int, sections: dict):
         self.sess = requests.Session()
         self.course_code = course_code
@@ -24,6 +25,7 @@ class Section(object):
     Contains course code, section id, total and open seats,
     and other information for the schedule builder itself such as color to be displayed.
     """
+
     def __init__(self, course_code: str, section_id: str, total_seats: int, open_seats: int, class_meetings: dict,
                  professor: str, gpa: float, course: Course):
         self.color = None
@@ -75,6 +77,7 @@ class MeetingTime(object):
     Class representing a single time-slot of a section.
     Contains time, location, and section id.
     """
+
     def __init__(self, meeting: dict, section_id: str):
         self.room = meeting["room"]
         self.building = meeting["building"]
@@ -94,8 +97,8 @@ class MeetingTime(object):
             return NotImplemented
 
         return self.start_time == other.start_time \
-            and self.end_time == other.end_time \
-            and self.section_id == other.section_id
+               and self.end_time == other.end_time \
+               and self.section_id == other.section_id
 
     def __ne__(self, obj):
         return not self == obj
@@ -108,20 +111,40 @@ class CourseList(object):
     """
     Class containing a list of all courses available to add.
     """
-    def __init__(self):
-        all_courses_list_raw = json.load(open(
-            os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + "/data/fall2020data.json"))
-        self.courses = {}  # dictionary mapping course name (string) to a Course object
-        for courses in all_courses_list_raw:
-            course_id = courses["course_id"]
-            course_name = courses["name"]
-            course_credits = int(courses["credits"])
-            sections = courses["sections"]
-            section_dict = {}
-            course_obj = Course(course_id, course_name, course_credits, section_dict)
+
+    @staticmethod
+    def get_courses_using_course_code(course_code: str) -> Course:
+        """
+        Given a course code (e.g. CMSC131)
+        this function will call the umd.io API and give back a Course object
+        This function will raise an exception if the course code or sections information
+        cannot be found on the API (status code from response is not 200)
+        """
+
+        headers = {'Accept': 'application/json'}
+
+        course_response = requests.get('https://api.umd.io/v1/courses/' + course_code,
+                                       headers=headers)
+        if course_response.status_code != 200:
+            raise Exception("Course Code Not Found")
+
+        course_raw = course_response.json()[0]
+
+        course_id = course_raw["course_id"]
+        course_name = course_raw["name"]
+        course_credits = int(course_raw["credits"])
+        section_dict = {}
+        course_obj = Course(course_id, course_name, course_credits, section_dict)
+
+        sections_response = requests.get("https://api.umd.io/v1/courses/" + course_id + "/sections", headers=headers)
+
+        # Not all courses have available sections
+        if sections_response.status_code == 200:
+
+            all_sections_list_raw = sections_response.json()
 
             # populate the sections of the specific course
-            for section in sections:
+            for section in all_sections_list_raw:
                 section_id = section["section_id"]
                 section_number = section["number"]
                 total_seats = int(section["seats"])
@@ -132,7 +155,57 @@ class CourseList(object):
                 section_dict[section_number] = \
                     Section(course_id, section_id, total_seats, open_seats, class_meetings, professor, gpa, course_obj)
 
-            self.courses[course_id] = course_obj
+        return course_obj
+
+    @staticmethod
+    def get_courses_using_page_number(page_num: int) -> dict:
+
+        """
+        Given a page number, this function will call the API and give back a
+        dictionary of course objects in alphabetical order
+        in order to display them all on the "see all courses" page
+        Each page has 30 courses
+        """
+
+        headers = {'Accept': 'application/json'}
+
+        all_courses_list_raw = requests.get('https://api.umd.io/v1/courses?page=' + str(page_num),
+                                            headers=headers).json()
+
+        courses = {}  # dictionary mapping course name (string) to a Course object
+
+        for curr_course in all_courses_list_raw:
+            course_id = curr_course["course_id"]
+            course_name = curr_course["name"]
+            course_credits = int(curr_course["credits"])
+            # sections = curr_course["sections"]
+            section_dict = {}
+            course_obj = Course(course_id, course_name, course_credits, section_dict)
+
+            sections_response = requests.get("https://api.umd.io/v1/courses/" + course_id + "/sections",
+                                             headers=headers)
+
+            # Not all courses have available sections
+            if sections_response.status_code == 200:
+
+                all_sections_list_raw = sections_response.json()
+
+                # populate the sections of the specific course
+                for section in all_sections_list_raw:
+                    section_id = section["section_id"]
+                    section_number = section["number"]
+                    total_seats = int(section["seats"])
+                    open_seats = int(section["open_seats"])
+                    class_meetings = CourseList.make_meeting_dict(section["meetings"], section_id)
+                    professor = section["instructors"]
+                    gpa = 3.5
+                    section_dict[section_number] = \
+                        Section(course_id, section_id, total_seats, open_seats, class_meetings, professor, gpa,
+                                course_obj)
+
+            courses[course_id] = course_obj
+
+        return courses
 
     @staticmethod
     def make_meeting_dict(meetings_list: list, section_id: str) -> dict:

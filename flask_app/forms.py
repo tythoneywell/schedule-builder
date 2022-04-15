@@ -23,3 +23,9 @@ class AddRemoveForm(FlaskForm):
 
 class ClearAllCoursesForm(FlaskForm):
     clear_all = SubmitField('Clear Schedule')
+
+class NextPageOnAllCoursesPageForm(FlaskForm):
+    next_page = SubmitField('Next Page')
+
+class PreviousPageOnAllCoursesPageForm(FlaskForm):
+    previous_page = SubmitField('Previous Page')
