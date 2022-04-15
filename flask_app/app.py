@@ -62,7 +62,12 @@ def index():
                                    clear_all_courses_form=clear_all_courses_form)
 
     if clear_all_courses_form.validate_on_submit():
+        if schedule.total_credits == 0:
+            clear_all_courses_form.clear_all.errors = ["Schedule is already empty"]
+            
         schedule.remove_all_classes()
+        add_remove_form.course_query.errors = []
+        add_remove_form.section_query.errors = []
 
         return render_template('index.html',
                                schedule=schedule,
