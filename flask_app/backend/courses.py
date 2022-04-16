@@ -241,3 +241,102 @@ class CourseList(object):
                         current_meeting_times[day].add(start_end_tuple)
                         day_to_meetings[day].append(MeetingTime(meeting, section_id))
         return day_to_meetings
+
+
+class APIGet(object):
+    """
+    Static class which searches for matching course names,
+    or sections given a specific course name.
+    """
+    headers = {'Accept': 'application/json'}
+
+    @staticmethod
+    def get_course_heads_by_query(query: str) -> list:
+        """
+        Args:
+            query: str
+                 Search string to search on planetterp
+        Returns:
+            found_courses: list[Course]
+                List of courses that were found by this search,
+                without sections. (Course "heads")
+        """
+        query = query.upper()
+        course_search_return = requests.get('https://api.planetterp.com/v1/search', params={
+          'query': query
+        }, headers=APIGet.headers)
+        course_names = [result["name"] for result in course_search_return.json() if result["type"] == "course"]
+
+        course_heads = []
+        for course_name in course_names:
+            course_heads += [APIGet.get_course_head_by_course_code(course_name)]
+
+        return course_heads
+
+    @staticmethod
+    def get_complete_course_by_course_code(course_code: str) -> Course:
+        """
+        Args:
+            course_code: str
+                Course code of the course to be gotten.
+        Returns:
+            course: Course
+                Course returned by combined responses of
+                planetterp and umd.io APIs
+        """
+        out_course = APIGet.get_course_head_by_course_code(course_code)
+        # TODO: umd.io integration - populate sections
+        out_course.sections = APIParse.umd_io_raw_to_section_list([])
+
+        return out_course
+
+    @staticmethod
+    def get_course_head_by_course_code(course_code: str) -> Course:
+        """
+        Args:
+            course_code: str
+                Course code of the course to be gotten.
+        Returns:
+            course: Course
+                Course returned by planetterp API, without sections.
+                Will have rating info, etc.
+        """
+        course_search_return = requests.get('https://api.planetterp.com/v1/course', params={
+          'name': course_code
+        }, headers=APIGet.headers)
+
+        return APIParse.planetterp_raw_to_course_head(course_search_return.json())
+
+
+class APIParse(object):
+    @staticmethod
+    def planetterp_raw_to_course_head(course_raw: dict) -> Course:
+        """
+        Args:
+            course_raw: dict[str, str]
+                The raw response of the planetterp API (converted from json to dict)
+        Returns:
+            course: Course
+                Course object generated from the raw dict.
+        """
+        course_code = course_raw["department"] + course_raw["course_number"]
+        course_name = course_raw["title"]
+        course_credits = course_raw["credits"]
+        sections = {}
+        # TODO: fill in rating information
+        out_course = Course(course_code, course_name, course_credits, sections)
+
+        return out_course
+
+    @staticmethod
+    def umd_io_raw_to_section_list(sections_raw: list) -> dict:
+        """
+        Args:
+            sections_raw: dict[str, str]
+                The raw response of the umd.io API (converted from json to dict)
+        Returns:
+            sections: dict[str, Section]
+                Dict of Section objects generated from the raw dict.
+        """
+        return {}
+
