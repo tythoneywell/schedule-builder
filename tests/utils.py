@@ -30,7 +30,7 @@ class TestUtils:
                 professor = section["instructors"]
                 gpa = 3.5
                 section_dict[section_number] = \
-                    Section(course_id, section_id, total_seats, open_seats, class_meetings, professor, gpa, course_obj)
+                    Section(course_id, section_id, total_seats, open_seats, class_meetings, professor, course_obj)
 
             self.courses[course_id] = course_obj
 
