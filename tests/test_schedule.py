@@ -221,3 +221,22 @@ class ScheduleWarningTest(unittest.TestCase):
             1)
         schedule.remove_class(full_sections[1])
         self.assertNotIn("section full", [warning.warning_type for warning in schedule.warnings_list])
+
+
+class ScheduleGPA(unittest.TestCase):
+    """
+    Tests to ensure Average GPA schedule method is correct
+    """
+
+    def test_correct_average_gpa(self):
+        cmsc250 = test_util_instance.courses["CMSC250"].sections["0101"]
+        comm107 = test_util_instance.courses["COMM107"].sections["0101"]
+        schedule = MySchedule()
+        schedule.add_class(cmsc250)
+        schedule.add_class(comm107)
+
+        self.assertEqual(schedule.get_schedule_average_gpa(), 0.0)
+
+    def test_empty_schedule_zero_gpa(self):
+        schedule = MySchedule()
+        self.assertEqual(schedule.get_schedule_average_gpa(), 0.0)

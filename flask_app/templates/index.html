@@ -82,8 +82,10 @@
                 </b>
             </td>
         </tr>
-
     </table>
+    {% if schedule.class_list|length > 0 %}
+        <p>Average GPA of Schedule: {{schedule.get_schedule_average_gpa()}}</p>
+    {%endif%}
 </body>
 
 

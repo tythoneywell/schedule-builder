@@ -26,6 +26,7 @@
 {% for course, info in courses.items() %}
 <ul>
     <li> <h3> {{ course }}, {{ info.name }} ({{ info.credits }} credits) </h2>
+        <br> Average GPA of Course: {{info.avg_gpa}}
         <ul>
         {% for section in info.sections.values() %}
                 <li><h4> {{section.section_id}} </h4>
