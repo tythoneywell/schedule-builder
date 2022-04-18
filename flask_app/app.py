@@ -7,7 +7,7 @@ from flask_app.forms import SearchForm, ClearAllCoursesForm, AddRemoveForm, Next
 app = Flask(__name__)
 app.debug = True
 app.config['SECRET_KEY'] = "super secret key"
-course_list = CourseList()  # populate the course list from the big json file
+course_list = CourseList()
 
 schedule = MySchedule()
 color_index = 0
@@ -38,7 +38,7 @@ def index():
         course_code = search_for_sections_of_course_form.search_query.data.upper()
 
         try:
-            course_to_display = CourseList.get_courses_using_course_code(course_code)
+            course_to_display = CourseList.get_course_using_course_code(course_code)
 
         except Exception as e:
             add_remove_notification_text = str(e)
@@ -61,7 +61,6 @@ def index():
 
         try:
             course_to_add = CourseList.get_course_using_course_code(course_code).sections[section_number]
-            # course_list.courses[course_code].sections[section_number]
             course_to_add.set_color(colors[color_index])
 
             if add_remove_form.add.data:
@@ -112,8 +111,7 @@ def index():
             button_response = request.form['course'].split(" ")[1].split("-")
             course = button_response[0]
             section = button_response[1]
-            course_to_add = CourseList.get_courses_using_course_code(course).sections[section]
-            # course_list.courses[course_code].sections[section_number]
+            course_to_add = CourseList.get_course_using_course_code(course).sections[section]
             course_to_add.set_color(colors[color_index])
 
             schedule.add_class(course_to_add)

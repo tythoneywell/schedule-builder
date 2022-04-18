@@ -1,8 +1,9 @@
 import unittest
-from flask_app.backend.courses import CourseList, Course, Section, APIGet
+from flask_app.backend.courses import CourseList
 from tests.utils import TestUtils
 
 test_util_instance = TestUtils()
+
 
 class CourseListTest(unittest.TestCase):
     """
