@@ -132,6 +132,18 @@ class MySchedule(object):
 
         self.warnings_list = []
 
+    def get_schedule_average_gpa(self):
+        """
+        Calculates average GPA of the current schedule
+        """
+        gpa_sum = 0.0
+        for schedule_class in self.class_list:
+            gpa_sum += schedule_class.course.avg_gpa * schedule_class.course.credits
+        if len(self.class_list) == 0 or self.total_credits == 0:
+            # by default return 0 to avoid errors
+            return 0.0
+        return gpa_sum / self.total_credits
+
     class ScheduleWarning(object):
         """
         Warning message to be displayed next to the user's schedule,
@@ -147,3 +159,4 @@ class MySchedule(object):
                 self.warning_text = \
                     involved_sections[0].section_id + \
                     " has no open seats and must be waitlisted."
+

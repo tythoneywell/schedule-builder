@@ -95,8 +95,8 @@ class MeetingTime(object):
             return NotImplemented
 
         return self.start_time == other.start_time \
-               and self.end_time == other.end_time \
-               and self.section_id == other.section_id
+            and self.end_time == other.end_time \
+            and self.section_id == other.section_id
 
     def __ne__(self, obj):
         return not self == obj
@@ -187,7 +187,7 @@ class APIGet(object):
         """
         query = query.upper()
         course_search_return = requests.get('https://api.planetterp.com/v1/search', params={
-          'query': query
+            'query': query
         }, headers=APIGet.headers)
         course_names = [result["name"] for result in course_search_return.json() if result["type"] == "course"]
 
@@ -229,7 +229,7 @@ class APIGet(object):
                 Will have rating info, etc.
         """
         course_search_return = requests.get('https://api.planetterp.com/v1/course', params={
-          'name': course_code
+            'name': course_code
         }, headers=APIGet.headers)
 
         if course_search_return.status_code != 200:
@@ -302,9 +302,10 @@ class APIParse(object):
         course_code = course_raw["department"] + course_raw["course_number"]
         course_name = course_raw["title"]
         course_credits = course_raw["credits"]
+        average_gpa = course_raw["average_gpa"]
         section_dict = {}
 
-        out_course = Course(course_code, course_name, course_credits, section_dict)
+        out_course = Course(course_code, course_name, course_credits, section_dict, average_gpa)
 
         return out_course
 
@@ -354,4 +355,3 @@ class APIParse(object):
                 parent_course)
 
         return section_dict
-
