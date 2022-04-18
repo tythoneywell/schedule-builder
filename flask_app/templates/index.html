@@ -4,7 +4,6 @@
 <a href="{{ url_for('all_courses', page_num = 1) }}"><h3>See all courses</h3></a>
 
 
-
 <body>
     <h1>My Schedule</h1>
     <table border="5" cellspacing="0" align="center">
@@ -129,8 +128,38 @@
         {{ add_remove_form.remove(class="btn btn-outline-danger") }}
     </form>
     <b> {{ add_remove_notification_text }} </b>
+</div>
+
+<div class="container">
     <br>
-    <br>
+    <h3>Search for a course</h3>
+    <p>Enter course code: e.g. CMSC131</p>
+</div>
+<div class="container">
+    <form action="/" class="form-inline my-2 my-lg-0" method="POST">
+        {{ search_for_sections_of_course_form.csrf_token }}
+        {{ search_for_sections_of_course_form.search_query(class="form-control", placeholder="CMSC131") }}
+        {{ search_for_sections_of_course_form.search_for_course(class="btn btn-outline-success") }}
+    </form>
+    {% if course_to_display %}
+        <div class="scrollablesections" style="height: 20%; overflow-y: scroll;">
+            {% for section_num, section in course_to_display.sections.items() %}
+                <h4> {{section.section_id}} </h4>
+                    {{section.open_seats}} out of {{section.total_seats}} seats available <br>
+                    {% for professor in section.professor %}
+                        {{ professor }} <br>
+                    {% endfor %}
+
+                    {%for times, day in section.get_formatted_weekly_schedule().items() %}
+                         <ul>{{day}}: {{times}}</ul>
+                    {% endfor %}
+            <form action="/" method="POST">
+                 {{ add_class_form.csrf_token }}
+                 <input type="submit" name="course" value="Add {{section.section_id}}">
+            </form>
+            {% endfor %}
+        </div>
+    {% endif %}
 </div>
 
 <div class="container">

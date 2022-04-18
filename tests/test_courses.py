@@ -48,4 +48,3 @@ class CourseTest(unittest.TestCase):
         self.assertEqual({'8:00am-8:50am': 'MW', '3:30pm-4:45pm': 'TuTh'},
                          cmsc250.get_formatted_weekly_schedule())
         self.assertEqual({'4:30pm-5:45pm': 'MW'}, comm107.get_formatted_weekly_schedule())
-
