@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField
+from wtforms import StringField, SubmitField, HiddenField
 from wtforms.validators import InputRequired
 
 
@@ -9,9 +9,7 @@ class SearchForm(FlaskForm):
 
 
 class AddClassForm(FlaskForm):
-    course_code = StringField('Course Code', validators=[InputRequired()])
-    section_num = StringField('Section Number', validators=[InputRequired()])
-    add_course = SubmitField('Submit')
+    submit2 = SubmitField('Submit')
 
 
 class AddRemoveForm(FlaskForm):
@@ -24,8 +22,15 @@ class AddRemoveForm(FlaskForm):
 class ClearAllCoursesForm(FlaskForm):
     clear_all = SubmitField('Clear Schedule')
 
+
+class SearchForCourseSectionsForm(FlaskForm):
+    search_query = StringField('Course To Search', validators=[InputRequired()])
+    search_for_course = SubmitField('Search')
+
+
 class NextPageOnAllCoursesPageForm(FlaskForm):
     next_page = SubmitField('Next Page')
+
 
 class PreviousPageOnAllCoursesPageForm(FlaskForm):
     previous_page = SubmitField('Previous Page')
