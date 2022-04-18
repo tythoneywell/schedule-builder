@@ -60,7 +60,7 @@ def index():
         add_remove_notification_text = ""
 
         try:
-            course_to_add = CourseList.get_courses_using_course_code(course_code).sections[section_number]
+            course_to_add = CourseList.get_course_using_course_code(course_code).sections[section_number]
             # course_list.courses[course_code].sections[section_number]
             course_to_add.set_color(colors[color_index])
 

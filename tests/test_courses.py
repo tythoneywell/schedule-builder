@@ -11,20 +11,20 @@ class CourseListTest(unittest.TestCase):
     """
 
     def test_get_courses_using_course_code_valid_course_code(self):
-        cmsc250 = CourseList.get_courses_using_course_code("CMSC250")
+        cmsc250 = CourseList.get_course_using_course_code("CMSC250")
         self.assertEqual(cmsc250.course_code, "CMSC250")
 
-        chem271 = CourseList.get_courses_using_course_code("CHEM271")
+        chem271 = CourseList.get_course_using_course_code("CHEM271")
         self.assertEqual(chem271.course_code, "CHEM271")
 
     def test_get_courses_using_course_code_invalid_course_code_throws_exception(self):
         try:
-            CourseList.get_courses_using_course_code("CMSC250hahaha")
+            CourseList.get_course_using_course_code("CMSC250hahaha")
         except Exception as e:
             self.assertEqual(str(e), "Course Code Not Found")
 
         try:
-            CourseList.get_courses_using_course_code("CC")
+            CourseList.get_course_using_course_code("CC")
         except Exception as e:
             self.assertEqual(str(e), "Course Code Not Found")
 
