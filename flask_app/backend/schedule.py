@@ -59,8 +59,9 @@ class MySchedule(object):
                 String describing the result of trying to add the class.
         """
 
-        if class_to_add in self.class_list:
-            return class_to_add.section_id + " already present in schedule."
+        for section_obj in self.class_list:
+            if class_to_add.section_id == section_obj.section_id:
+                return class_to_add.section_id + " already present in schedule."
 
         if not self.no_class_overlap(class_to_add):
             return class_to_add.section_id + " has time conflicts with an existing class."
@@ -107,7 +108,12 @@ class MySchedule(object):
             self.schedule[day] = new_day_list
 
         if class_previously_in_schedule:
-            self.class_list.remove(class_to_remove)
+            for index in range(len(self.class_list)):
+                section_obj = self.class_list[index]
+                if section_obj.section_id == class_to_remove.section_id:
+                    self.class_list.pop(index)
+                    break
+
             self.total_credits -= class_to_remove.course.credits
 
             for warning in self.warnings_list:
@@ -118,7 +124,7 @@ class MySchedule(object):
 
         return class_to_remove.section_id + " removed."
 
-    def remove_all_classes(self):
+    def remove_all_classes(self) -> None:
         """
         Resets the schedule to be empty.
         """
@@ -132,7 +138,7 @@ class MySchedule(object):
 
         self.warnings_list = []
 
-    def get_schedule_average_gpa(self):
+    def get_schedule_average_gpa(self) -> float:
         """
         Calculates average GPA of the current schedule
         """

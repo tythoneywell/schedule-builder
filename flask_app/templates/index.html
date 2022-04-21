@@ -84,7 +84,7 @@
         </tr>
     </table>
     {% if schedule.class_list|length > 0 %}
-        <p>Average GPA of Schedule: {{schedule.get_schedule_average_gpa()}}</p>
+        <p>Average GPA of Schedule: {{ '%0.2f'|format(schedule.get_schedule_average_gpa()) }}</p>
     {%endif%}
 </body>
 
@@ -144,12 +144,21 @@
         {{ search_for_sections_of_course_form.search_for_course(class="btn btn-outline-success") }}
     </form>
     {% if course_to_display %}
-        <div class="scrollablesections" style="height: 20%; overflow-y: scroll;">
-            {% for section_num, section in course_to_display.sections.items() %}
-                <h4> {{section.section_id}} </h4>
+        <div class="scrollablesections" style="height: 30%; overflow-y: scroll;">
+            {% for professor, sections in course_to_display.professors_to_sections.items() %}
+                <h4> {{ professor }}</h4>
+                <h6> Average GPA:
+                    {% if course_to_display.professor_to_avg_course_gpa[professor] %}
+                        {{ '%0.2f'|format(course_to_display.professor_to_avg_course_gpa[professor]) }}
+                    {% else %}
+                        N/A
+                    {% endif %}
+                </h6>
+                {% for section in sections %}
+                    <h6>{{ section.section_id }}</h6>
                     {{section.open_seats}} out of {{section.total_seats}} seats available <br>
-                    {% for professor in section.professor %}
-                        {{ professor }} <br>
+                    {% for course_professor in section.professor %}
+                        {{ course_professor }} <br>
                     {% endfor %}
 
                     {%for times, day in section.get_formatted_weekly_schedule().items() %}
@@ -159,6 +168,7 @@
                  {{ add_class_form.csrf_token }}
                  <input type="submit" name="course" value="Add {{section.section_id}}">
             </form>
+                {% endfor %}
             {% endfor %}
         </div>
     {% endif %}
