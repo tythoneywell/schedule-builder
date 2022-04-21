@@ -2,6 +2,8 @@ import requests
 import re
 from datetime import datetime
 
+from typing import Tuple
+
 
 class Course(object):
     """
@@ -9,13 +11,18 @@ class Course(object):
     Contains a list of sections, the course code, and credits.
     """
 
-    def __init__(self, course_code: str, name: str, course_credits: int, sections: dict, avg_gpa: float = 0):
+    def __init__(self, course_code: str, name: str, course_credits: int, sections: dict, professor_to_sections: dict,
+                 professor_to_avg_course_gpa: dict, avg_gpa: float = 0):
         self.sess = requests.Session()
         self.course_code = course_code
         self.name = name
         self.credits = course_credits
         self.sections = sections
         self.avg_gpa = avg_gpa
+        # note this will be a dict[string: list] since it is just one professor. In the case of co-taught classes,
+        # the same section will appear as part of 2 (or more) lists in this dict
+        self.professor_to_sections = professor_to_sections
+        self.professor_to_avg_course_gpa = professor_to_avg_course_gpa
 
 
 class Section(object):
@@ -26,7 +33,7 @@ class Section(object):
     """
 
     def __init__(self, course_code: str, section_id: str, total_seats: int, open_seats: int, class_meetings: dict,
-                 professor: str, course: Course):
+                 professor: list, course: Course):
         self.color = None
         self.sess = requests.Session()
         self.course_code = course_code
@@ -95,8 +102,8 @@ class MeetingTime(object):
             return NotImplemented
 
         return self.start_time == other.start_time \
-            and self.end_time == other.end_time \
-            and self.section_id == other.section_id
+               and self.end_time == other.end_time \
+               and self.section_id == other.section_id
 
     def __ne__(self, obj):
         return not self == obj
@@ -211,7 +218,8 @@ class APIGet(object):
                 planetterp and umd.io APIs
         """
         out_course = APIGet.get_course_head_by_course_code(course_code)
-        out_course.sections = APIGet.get_sections_list_by_course(out_course)
+        out_course.sections, out_course.professors_to_sections = APIGet.get_sections_list_by_course(out_course)
+        out_course.professor_to_avg_course_gpa = APIGet.get_professor_gpa_breakdown_by_course(course_code)
 
         return out_course
 
@@ -254,7 +262,7 @@ class APIGet(object):
 
         for course_raw in courses_this_page_raw.json():
             course_obj = APIParse.planetterp_course_raw_to_course_head(course_raw)
-            course_obj.sections = APIGet.get_sections_list_by_course(course_obj)
+            course_obj.sections = APIGet.get_sections_list_by_course(course_obj)[0]
             course_code = course_obj.course_code
 
             courses[course_code] = course_obj
@@ -262,7 +270,7 @@ class APIGet(object):
         return courses
 
     @staticmethod
-    def get_sections_list_by_course(course: Course) -> dict:
+    def get_sections_list_by_course(course: Course) -> Tuple[dict, dict]:
         """
         Params:
             course: Course
@@ -270,6 +278,8 @@ class APIGet(object):
         Returns:
             sections: dict[str, Section]
                 Sections of this course, from umd.io
+            professors: dict[str, Section]
+                Professors teaching this course with a list of their sections, from umd.io
         """
         sections_response = requests.get("https://api.umd.io/v1/courses/" + course.course_code + "/sections",
                                          headers=APIGet.headers)
@@ -279,7 +289,26 @@ class APIGet(object):
             return APIParse.umd_io_sections_raw_to_section_list(sections_response.json(), course)
 
         else:
-            return {}
+            return {}, {}
+
+    @staticmethod
+    def get_professor_gpa_breakdown_by_course(course_code: str) -> dict:
+        """
+        Params:
+            course_code: str
+                Course code of class to query grade information
+        Returns:
+            gpa: dict
+                Dictionary of [str:float] of professor to calculated average gpa of specific course when taught by that
+                professor
+        """
+        course_search_return = requests.get('https://api.planetterp.com/v1/grades', params={
+            'course': course_code
+        }, headers=APIGet.headers)
+
+        if course_search_return.status_code != 200:
+            raise Exception("Error retrieving gpa information from course")
+        return APIParse.planetterp_raw_grade_distribution_to_gpa(course_search_return.json())
 
 
 class APIParse(object):
@@ -304,8 +333,11 @@ class APIParse(object):
         course_credits = course_raw["credits"]
         average_gpa = course_raw["average_gpa"]
         section_dict = {}
+        professor_to_sections = {}
+        professor_to_avg_course_gpa = {}
 
-        out_course = Course(course_code, course_name, course_credits, section_dict, average_gpa)
+        out_course = Course(course_code, course_name, course_credits, section_dict, professor_to_sections,
+                            professor_to_avg_course_gpa, average_gpa)
 
         return out_course
 
@@ -324,12 +356,16 @@ class APIParse(object):
         course_name = course_raw["name"]
         course_credits = int(course_raw["credits"])
         section_dict = {}
-        out_course = Course(course_id, course_name, course_credits, section_dict)
+        professor_to_sections = {}
+        professor_to_avg_course_gpa = {}
+
+        out_course = Course(course_id, course_name, course_credits, section_dict, professor_to_sections,
+                            professor_to_avg_course_gpa)
 
         return out_course
 
     @staticmethod
-    def umd_io_sections_raw_to_section_list(sections_raw: list, parent_course: Course) -> dict:
+    def umd_io_sections_raw_to_section_list(sections_raw: list, parent_course: Course) -> Tuple[dict, dict]:
         """
         Makes a response from umd.io's sections get into a list of sections
         Args:
@@ -342,6 +378,7 @@ class APIParse(object):
                 Dict of Section objects generated from the raw dict.
         """
         section_dict = {}
+        professor_to_sections_dict = {}
 
         for section in sections_raw:
             section_id = section["section_id"]
@@ -349,9 +386,78 @@ class APIParse(object):
             total_seats = int(section["seats"])
             open_seats = int(section["open_seats"])
             class_meetings = CourseList.make_meeting_dict(section["meetings"], section_id)
-            professor = section["instructors"]
-            section_dict[section_number] = Section(
-                parent_course.course_code, section_id, total_seats, open_seats, class_meetings, professor,
+            professors = section["instructors"]
+            section_to_add = Section(
+                parent_course.course_code, section_id, total_seats, open_seats, class_meetings, professors,
                 parent_course)
+            # set the initial value to an empty list of sections
+            for professor in professors:
+                professor_to_sections_dict.setdefault(professor, [])
+                professor_to_sections_dict[professor].append(section_to_add)
+            section_dict[section_number] = section_to_add
 
-        return section_dict
+        return section_dict, professor_to_sections_dict
+
+    @staticmethod
+    def planetterp_raw_grade_distribution_to_gpa(grades_raw) -> dict:
+        """
+        Makes a response from planetterps's grades get into a gpa float
+        Args:
+            grades_raw: dict[str, str]
+                The raw response of the planetterp API (converted from json to dict)
+        Returns:
+            gpa: dict
+                Dictionary of [string: float] representing Professor to the calculated average GPA of the course
+                taught by that specific professor
+        """
+        professor_to_course_gpa = {}
+        professor_to_quality_points = {}
+        professor_to_total_grade_entries = {}
+
+        # W's are counted as 0.0, "other" is excluded in gpa calculation
+        for semester_grade in grades_raw:
+            professor = semester_grade["professor"]
+            professor_to_quality_points.setdefault(professor, 0.0)
+            professor_to_total_grade_entries.setdefault(professor, 0)
+
+            professor_to_quality_points[professor] += 4 * (semester_grade["A+"] + semester_grade["A"])
+            professor_to_total_grade_entries[professor] += semester_grade["A+"] + semester_grade["A"]
+
+            professor_to_quality_points[professor] += 3.7 * semester_grade["A-"]
+            professor_to_total_grade_entries[professor] += semester_grade["A-"]
+
+            professor_to_quality_points[professor] += 3.3 * semester_grade["B+"]
+            professor_to_total_grade_entries[professor] += semester_grade["B+"]
+
+            professor_to_quality_points[professor] += 3 * semester_grade["B"]
+            professor_to_total_grade_entries[professor] += semester_grade["B"]
+
+            professor_to_quality_points[professor] += 2.7 * semester_grade["B-"]
+            professor_to_total_grade_entries[professor] += semester_grade["B-"]
+
+            professor_to_quality_points[professor] += 2.3 * semester_grade["C+"]
+            professor_to_total_grade_entries[professor] += semester_grade["C+"]
+
+            professor_to_quality_points[professor] += 2 * semester_grade["C"]
+            professor_to_total_grade_entries[professor] += semester_grade["C"]
+
+            professor_to_quality_points[professor] += 1.7 * semester_grade["C-"]
+            professor_to_total_grade_entries[professor] += semester_grade["C-"]
+
+            professor_to_quality_points[professor] += 1.3 * semester_grade["D+"]
+            professor_to_total_grade_entries[professor] += semester_grade["D+"]
+
+            professor_to_quality_points[professor] += 1 * semester_grade["D"]
+            professor_to_total_grade_entries[professor] += semester_grade["D"]
+
+            professor_to_quality_points[professor] += .7 * semester_grade["D-"]
+            professor_to_total_grade_entries[professor] += semester_grade["D-"]
+
+            professor_to_total_grade_entries[professor] += semester_grade["F"]
+
+            professor_to_total_grade_entries[professor] += semester_grade["W"]
+
+        for professor, quality_points in professor_to_quality_points.items():
+            professor_to_course_gpa[professor] = quality_points / professor_to_total_grade_entries[professor]
+
+        return professor_to_course_gpa

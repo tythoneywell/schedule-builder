@@ -18,7 +18,10 @@ class TestUtils:
             course_credits = int(courses["credits"])
             sections = courses["sections"]
             section_dict = {}
-            course_obj = Course(course_id, course_name, course_credits, section_dict)
+            professor_to_sections = {}
+            professor_to_avg_course_gpa = {}
+            course_obj = Course(course_id, course_name, course_credits, section_dict, professor_to_sections,
+                                professor_to_avg_course_gpa)
 
             # populate the sections of the specific course
             for section in sections:
@@ -28,7 +31,6 @@ class TestUtils:
                 open_seats = int(section["open_seats"])
                 class_meetings = CourseList.make_meeting_dict(section["meetings"], section_id)
                 professor = section["instructors"]
-                gpa = 3.5
                 section_dict[section_number] = \
                     Section(course_id, section_id, total_seats, open_seats, class_meetings, professor, course_obj)
 
