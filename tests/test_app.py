@@ -1,8 +1,5 @@
 import pytest
 
-from types import SimpleNamespace
-from flask_app.forms import SearchForCourseSectionsForm, AddRemoveForm, ClearAllCoursesForm
-
 
 def test_index_returns_200(client):
     resp = client.get("/")
