@@ -84,6 +84,10 @@ class CourseTest(unittest.TestCase):
         meeting_times_cmsc250_dict = cmsc250.class_meetings
         self.assertEqual(hash(meeting_times_cmsc250_dict["M"][0]), hash(meeting_times_cmsc250_dict["M"][0]))
 
+    def test_course_correct_professor_rating_static_method(self):
+        professor_json = APIGet.get_professor_by_name("Erin Callahan")
+        self.assertEqual(5.0, professor_json.average_rating)
+
 
 class APIGetAndParseTest(unittest.TestCase):
     """
@@ -94,3 +98,20 @@ class APIGetAndParseTest(unittest.TestCase):
     def test_get_course_heads_make_sure_all_courses_we_expect_are_present(self):
         cmsc_courses = APIGet.get_course_heads_by_query("CMSC")
         self.assertEqual(len(cmsc_courses), 30)  # 30 CMSC courses offered this semester
+
+    def test_professor_object_returned_valid_name(self):
+        professor_json = APIGet.get_professor_by_name("Clyde Kruskal")
+        self.assertEqual('Clyde Kruskal', professor_json.name)
+
+    def test_professor_object_returned_valid_rating(self):
+        professor_json = APIGet.get_professor_by_name("Erin Callahan")
+        self.assertEqual(5.0, professor_json.average_rating)
+
+    def test_professor_object_returned_valid_courselist(self):
+        professor_json = APIGet.get_professor_by_name("David Mount")
+        self.assertEqual(set(professor_json.course_list), {'CMSC388D', 'CMSC420', 'CMSC425',
+                                                           'CMSC427', 'CMSC451', 'CMSC754', 'CMSC798'})
+
+    def test_professor_object_returned_valid_instructor_type(self):
+        professor_json = APIGet.get_professor_by_name("Justin Wyss-Gallifent")
+        self.assertEqual('professor', professor_json.instructor_type)
