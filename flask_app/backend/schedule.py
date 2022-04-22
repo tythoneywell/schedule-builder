@@ -155,6 +155,7 @@ class MySchedule(object):
         Warning message to be displayed next to the user's schedule,
         when their schedule has some notable issue.
         """
+
         # A type hint for involved_sections, which should be list[Section],
         # causes Flask not to start. So it's not there.
         def __init__(self, involved_sections: list, warning_type: str):
@@ -165,4 +166,3 @@ class MySchedule(object):
                 self.warning_text = \
                     involved_sections[0].section_id + \
                     " has no open seats and must be waitlisted."
-

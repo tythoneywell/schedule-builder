@@ -99,11 +99,11 @@ class MeetingTime(object):
     def __eq__(self, other):
         if not isinstance(other, MeetingTime):
             # don't attempt to compare against unrelated types
-            return NotImplemented
+            return False
 
-        return self.start_time == other.start_time \
-               and self.end_time == other.end_time \
-               and self.section_id == other.section_id
+        return self.start_time == other.start_time and\
+            self.end_time == other.end_time and \
+            self.section_id == other.section_id
 
     def __ne__(self, obj):
         return not self == obj
