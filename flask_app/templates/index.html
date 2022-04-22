@@ -84,7 +84,24 @@
         </tr>
     </table>
     {% if schedule.class_list|length > 0 %}
-        <p>Average GPA of Schedule: {{ '%0.2f'|format(schedule.get_schedule_average_gpa()) }}</p>
+        <span>Average GPA of Schedule: {{ '%0.2f'|format(schedule.get_schedule_average_gpa()) }}</span>
+    {%endif%}
+    {% if schedule.class_list|length > 0 %}
+        <p>Total Credits of Schedule: {{ '%d'|format(schedule.total_credits) }}</p>
+    {%endif%}
+    {% if schedule.class_list|length > 0 %}
+        <span style = "font-size: 150%">List of Courses in Current Schedule:</span><br>
+    {%endif%}
+    {% if schedule.class_list|length > 0 %}
+        {% for class in schedule.class_list %}
+            <b>
+                <span style = "color: {{class.color}}; font-size: 125%"> {{ class.section_id }}
+                    {% if not class.is_synchronous %}
+                        <span> (Asynchronous)</span>
+                    {%endif%}
+                </span> <br>
+            </b>
+        {% endfor %}
     {%endif%}
 </body>
 

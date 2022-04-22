@@ -11,7 +11,7 @@ course_list = CourseList()
 
 schedule = MySchedule()
 color_index = 0
-colors = ["red", "blue", "green", "yellow", "orange", "pink"]
+colors = ["red", "blue", "green", "purple", "orange", "magenta"]
 
 
 @app.route('/', methods=['GET', 'POST'])

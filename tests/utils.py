@@ -30,10 +30,12 @@ class TestUtils:
                 total_seats = int(section["seats"])
                 open_seats = int(section["open_seats"])
                 class_meetings = CourseList.make_meeting_dict(section["meetings"], section_id)
+                is_synchronous = False
+                for meeting in class_meetings.values():
+                    if len(meeting) != 0:
+                        is_synchronous = True
                 professor = section["instructors"]
-                section_dict[section_number] = \
-                    Section(course_id, section_id, total_seats, open_seats, class_meetings, professor, course_obj)
+                section_dict[section_number] = Section(course_id, section_id, total_seats, open_seats,
+                                                       class_meetings, professor, course_obj, is_synchronous)
 
             self.courses[course_id] = course_obj
-
-
