@@ -33,7 +33,7 @@ class Section(object):
     """
 
     def __init__(self, course_code: str, section_id: str, total_seats: int, open_seats: int, class_meetings: dict,
-                 professor: list, course: Course):
+                 professor: list, course: Course, is_synchronous: bool):
         self.color = None
         self.sess = requests.Session()
         self.course_code = course_code
@@ -43,6 +43,7 @@ class Section(object):
         self.class_meetings = class_meetings
         self.professor = professor
         self.course = course
+        self.is_synchronous = is_synchronous
 
     def set_color(self, color: str):
         """
@@ -99,11 +100,11 @@ class MeetingTime(object):
     def __eq__(self, other):
         if not isinstance(other, MeetingTime):
             # don't attempt to compare against unrelated types
-            return NotImplemented
+            return False
 
         return self.start_time == other.start_time \
-               and self.end_time == other.end_time \
-               and self.section_id == other.section_id
+            and self.end_time == other.end_time \
+            and self.section_id == other.section_id
 
     def __ne__(self, obj):
         return not self == obj
@@ -386,10 +387,14 @@ class APIParse(object):
             total_seats = int(section["seats"])
             open_seats = int(section["open_seats"])
             class_meetings = CourseList.make_meeting_dict(section["meetings"], section_id)
+            is_synchronous = False
+            for meeting in class_meetings.values():
+                if len(meeting) != 0:
+                    is_synchronous = True
             professors = section["instructors"]
             section_to_add = Section(
                 parent_course.course_code, section_id, total_seats, open_seats, class_meetings, professors,
-                parent_course)
+                parent_course, is_synchronous)
             # set the initial value to an empty list of sections
             for professor in professors:
                 professor_to_sections_dict.setdefault(professor, [])
