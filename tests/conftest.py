@@ -1,14 +1,13 @@
 import pytest
 
-from types import SimpleNamespace
-
-from flask import Flask
 from flask_app.app import GetApp
 
 
 @pytest.fixture
 def app(request):
-    # app = Flask("flask_app")
+    """
+    Get app object and set it up for testing
+    """
     app = GetApp.get_app()
     app.debug = True
     app.config['SECRET_KEY'] = "super secret key"
@@ -28,5 +27,7 @@ def app(request):
 
 @pytest.fixture
 def client(app):
-    """ Creates a test client """
+    """
+    Creates a test client
+    """
     return app.test_client()
