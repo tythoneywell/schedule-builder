@@ -1,5 +1,5 @@
 import unittest
-from flask_app.backend.courses import CourseList, APIGet
+from flask_app.backend.courses import CourseList, APIGet, RequestProxy
 from tests.utils import TestUtils
 
 test_util_instance = TestUtils()
@@ -10,15 +10,22 @@ class CourseListTest(unittest.TestCase):
     Test functions in the CourseList class, which is primarily responsible for
     interacting with the API, so this also tests the API functions as supposed to
     """
+    def setUp(self):
+        RequestProxy.test_mode = True
+
+    def tearDown(self):
+        RequestProxy.test_mode = False
 
     def test_get_courses_using_course_code_valid_course_code(self):
+        RequestProxy.bad_request = False
         cmsc250 = CourseList.get_course_using_course_code("CMSC250")
-        self.assertEqual(cmsc250.course_code, "CMSC250")
+        self.assertEqual(cmsc250.course_code, "MATH140")  # Using API emulator
 
         chem271 = CourseList.get_course_using_course_code("CHEM271")
-        self.assertEqual(chem271.course_code, "CHEM271")
+        self.assertEqual(chem271.course_code, "MATH140")
 
     def test_get_courses_using_course_code_invalid_course_code_throws_exception(self):
+        RequestProxy.bad_request = True
         try:
             CourseList.get_course_using_course_code("CMSC250hahaha")
         except Exception as e:
@@ -30,14 +37,15 @@ class CourseListTest(unittest.TestCase):
             self.assertEqual(str(e), "Course Code Not Found")
 
     def test_get_courses_using_valid_page_number(self):
+        RequestProxy.bad_request = False
         courses = CourseList.get_courses_using_page_number(1)
-        self.assertEqual(len(courses), 30)
-        self.assertTrue("AASP100" in courses.keys())
+        self.assertEqual(len(courses), 1)  # Using API emulator
 
         courses = CourseList.get_courses_using_page_number(10)
-        self.assertEqual(len(courses), 30)
+        self.assertEqual(len(courses), 1)
 
     def test_get_courses_using_invalid_page_number(self):
+        RequestProxy.bad_request = True
         courses = CourseList.get_courses_using_page_number(100000)
         self.assertEqual(len(courses), 0)
 
