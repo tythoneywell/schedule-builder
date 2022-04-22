@@ -24,6 +24,34 @@ class Course(object):
         self.professor_to_sections = professor_to_sections
         self.professor_to_avg_course_gpa = professor_to_avg_course_gpa
 
+    
+    @staticmethod
+    def get_professor_average_rating(professor_name: str) -> float:
+        """
+        Args:
+            professor_name: str
+                Name of professor in section whose rating we want to get.
+        Returns:
+            rating: float
+                Rating of said professor
+        """
+        try:
+            return APIGet.get_professor_by_name(professor_name).average_rating
+        except Exception as e:
+            return None
+
+
+class Professor(object):
+    """
+    Represents a Professor Object that is so far used when searching for information about a Professor
+    """
+
+    def __init__(self, name: str, course_list: list, instructor_type: str, average_rating: float):
+        self.name = name
+        self.course_list = course_list
+        self.instructor_type = instructor_type
+        self.average_rating = average_rating
+
 
 class Section(object):
     """
@@ -41,7 +69,7 @@ class Section(object):
         self.total_seats = total_seats
         self.open_seats = open_seats
         self.class_meetings = class_meetings
-        self.professor = professor
+        self.professor_name_list = professor
         self.course = course
         self.is_synchronous = is_synchronous
 
@@ -76,6 +104,7 @@ class Section(object):
                         time_per_day[temp] = day
 
         return time_per_day
+
 
 
 class MeetingTime(object):
@@ -219,7 +248,7 @@ class APIGet(object):
                 planetterp and umd.io APIs
         """
         out_course = APIGet.get_course_head_by_course_code(course_code)
-        out_course.sections, out_course.professors_to_sections = APIGet.get_sections_list_by_course(out_course)
+        out_course.sections, out_course.professor_to_sections = APIGet.get_sections_list_by_course(out_course)
         out_course.professor_to_avg_course_gpa = APIGet.get_professor_gpa_breakdown_by_course(course_code)
 
         return out_course
@@ -311,6 +340,26 @@ class APIGet(object):
             raise Exception("Error retrieving gpa information from course")
         return APIParse.planetterp_raw_grade_distribution_to_gpa(course_search_return.json())
 
+
+    @staticmethod
+    def get_professor_by_name(professor_name: str) -> Professor:
+        """
+        Params:
+            professor_name: str
+                Professor Name whose object we want to get
+        Returns:
+            professor: Professor
+                The object of this professor
+        """
+        course_search_return = requests.get('https://api.planetterp.com/v1/professor', params={
+            'name': professor_name
+        }, headers=APIGet.headers)
+
+        if course_search_return.status_code != 200:
+            raise Exception("Professor Not Found")
+
+        prof_raw = course_search_return.json()
+        return APIParse.planetterp_prof_raw_to_prof_head(prof_raw)
 
 class APIParse(object):
     """
@@ -466,3 +515,25 @@ class APIParse(object):
             professor_to_course_gpa[professor] = quality_points / professor_to_total_grade_entries[professor]
 
         return professor_to_course_gpa
+
+    @staticmethod
+    def planetterp_prof_raw_to_prof_head(prof_raw: dict) -> Professor:
+        """
+        Makes a response from planetterp's professor get into a course (with no sections)
+        Args:
+            prof_raw: dict[str, str]
+                The raw response of the planetterp API (converted from json to dict)
+        Returns:
+            professor: Professor
+                Professor object generated from the raw dict. No reviews (yet).
+        """
+        prof_type = prof_raw["type"]
+        prof_name = prof_raw["name"]
+        course_list = prof_raw["courses"]
+        average_rating = prof_raw["average_rating"]
+
+        out_prof = Professor(prof_name, course_list, prof_type, average_rating)
+
+        return out_prof
+
+

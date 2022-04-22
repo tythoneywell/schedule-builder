@@ -162,8 +162,9 @@
     </form>
     {% if course_to_display %}
         <div class="scrollablesections" style="height: 30%; overflow-y: scroll;">
-            {% for professor, sections in course_to_display.professors_to_sections.items() %}
+            {% for professor, sections in course_to_display.professor_to_sections.items() %}
                 <h4> {{ professor }}</h4>
+                <h6>Average PlanetTerp rating: {{course_to_display.get_professor_average_rating(professor)}}</h6>
                 <h6> Average GPA:
                     {% if course_to_display.professor_to_avg_course_gpa[professor] %}
                         {{ '%0.2f'|format(course_to_display.professor_to_avg_course_gpa[professor]) }}
@@ -174,9 +175,6 @@
                 {% for section in sections %}
                     <h6>{{ section.section_id }}</h6>
                     {{section.open_seats}} out of {{section.total_seats}} seats available <br>
-                    {% for course_professor in section.professor %}
-                        {{ course_professor }} <br>
-                    {% endfor %}
 
                     {%for times, day in section.get_formatted_weekly_schedule().items() %}
                          <ul>{{day}}: {{times}}</ul>
