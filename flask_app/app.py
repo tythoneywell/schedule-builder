@@ -60,7 +60,11 @@ def index():
         add_remove_notification_text = ""
 
         try:
-            course_to_add = CourseList.get_course_using_course_code(course_code).sections[section_number]
+            course_list_to_add = CourseList.get_course_using_course_code(course_code)
+            if course_list_to_add.sections == {}:
+                raise Exception("This course has no sections, please "
+                                "contact department for information to register for this course.")
+            course_to_add = course_list_to_add.sections[section_number]
             course_to_add.set_color(colors[color_index])
 
             if add_remove_form.add.data:
