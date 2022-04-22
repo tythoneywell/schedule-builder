@@ -1,8 +1,8 @@
+from typing import Tuple
+
 import requests
 import re
 from datetime import datetime
-
-from typing import Tuple
 
 
 class Course(object):
@@ -223,10 +223,8 @@ class APIGet(object):
                 without sections. (Course "heads")
         """
         query = query.upper()
-        course_search_return = requests.get('https://api.planetterp.com/v1/search', params={
-            'query': query
-        }, headers=APIGet.headers)
-        course_names = [result["name"] for result in course_search_return.json() if result["type"] == "course"]
+        course_search_return = RequestProxy.planetterp_search_by_query(query)
+        course_names = [result["name"] for result in course_search_return if result["type"] == "course"]
 
         course_heads = []
         for course_name in course_names:
@@ -266,14 +264,9 @@ class APIGet(object):
                 Course returned by planetterp API, without sections.
                 Will have rating info, etc.
         """
-        course_search_return = requests.get('https://api.planetterp.com/v1/course', params={
-            'name': course_code
-        }, headers=APIGet.headers)
+        course_search_return = RequestProxy.planetterp_get_course_by_course_code(course_code)
 
-        if course_search_return.status_code != 200:
-            raise Exception("Course Code Not Found")
-
-        return APIParse.planetterp_course_raw_to_course_head(course_search_return.json())
+        return APIParse.planetterp_course_raw_to_course_head(course_search_return)
 
     @staticmethod
     def get_course_list_by_page_number(page_num: int) -> dict:
@@ -283,14 +276,11 @@ class APIGet(object):
         in order to display them all on the "see all courses" page
         Each page has 30 courses
         """
-        courses_this_page_raw = requests.get("https://api.planetterp.com/v1/courses", params={
-            "limit": 30,
-            "offset": page_num
-        }, headers=APIGet.headers)
+        courses_this_page = RequestProxy.planetterp_get_courses_by_page(page_num)
 
         courses = {}  # dictionary mapping course code (string) to a Course object
 
-        for course_raw in courses_this_page_raw.json():
+        for course_raw in courses_this_page:
             course_obj = APIParse.planetterp_course_raw_to_course_head(course_raw)
             course_obj.sections = APIGet.get_sections_list_by_course(course_obj)[0]
             course_code = course_obj.course_code
@@ -300,7 +290,7 @@ class APIGet(object):
         return courses
 
     @staticmethod
-    def get_sections_list_by_course(course: Course) -> Tuple[dict, dict]:
+    def get_sections_list_by_course(course: Course) -> Tuple:
         """
         Params:
             course: Course
@@ -311,15 +301,9 @@ class APIGet(object):
             professors: dict[str, Section]
                 Professors teaching this course with a list of their sections, from umd.io
         """
-        sections_response = requests.get("https://api.umd.io/v1/courses/" + course.course_code + "/sections",
-                                         headers=APIGet.headers)
+        sections_response = RequestProxy.umdio_get_sections_by_course_code(course)
 
-        # Not all courses have available sections
-        if sections_response.status_code == 200:
-            return APIParse.umd_io_sections_raw_to_section_list(sections_response.json(), course)
-
-        else:
-            return {}, {}
+        return APIParse.umd_io_sections_raw_to_section_list(sections_response, course)
 
     @staticmethod
     def get_professor_gpa_breakdown_by_course(course_code: str) -> dict:
@@ -332,17 +316,210 @@ class APIGet(object):
                 Dictionary of [str:float] of professor to calculated average gpa of specific course when taught by that
                 professor
         """
-        course_search_return = requests.get('https://api.planetterp.com/v1/grades', params={
-            'course': course_code
-        }, headers=APIGet.headers)
+        grade_search_return = RequestProxy.planetterp_get_grades_by_course_code(course_code)
 
-        if course_search_return.status_code != 200:
-            raise Exception("Error retrieving gpa information from course")
-        return APIParse.planetterp_raw_grade_distribution_to_gpa(course_search_return.json())
-
+        return APIParse.planetterp_raw_grade_distribution_to_gpa(grade_search_return)
 
     @staticmethod
     def get_professor_by_name(professor_name: str) -> Professor:
+        """
+        Params:
+            professor_name: str
+                Professor Name whose object we want to get
+        Returns:
+            professor: Professor
+                The object of this professor
+        """
+        prof_search_return = RequestProxy.get_professor_by_name(professor_name)
+
+        return APIParse.planetterp_prof_raw_to_prof_head(prof_search_return)
+
+class RequestProxy(object):
+    """
+    Handles sending requests to the API.
+    Can be set to emulate the API in order to complete tests. Set test_mode = True.
+    Emulation consists of returning the sample responses
+    listed on the respective APIs.
+    Returns error sample response when bad_request is set to True.
+    """
+    test_mode = False
+    bad_request = False
+
+    @classmethod
+    def planetterp_search_by_query(cls, query: str) -> list:
+        """
+        Ask planetterp to match query to course names
+        """
+        if not cls.test_mode:
+            return requests.get('https://api.planetterp.com/v1/search',
+                                params={'query': query},
+                                headers=APIGet.headers).json()
+
+        else:
+            return [{"name": "CMSC131", "slug": "CMSC131", "type": "course"}]
+
+    @classmethod
+    def planetterp_get_course_by_course_code(cls, course_code: str) -> dict:
+        """
+        Ask planetterp to search for a course given a specific course code
+        """
+        if not cls.test_mode:
+            course_search_return = requests.get('https://api.planetterp.com/v1/course',
+                                                params={'name': course_code},
+                                                headers=APIGet.headers)
+
+            if course_search_return.status_code != 200:
+                raise Exception("Course Code Not Found")
+
+            return course_search_return.json()
+
+        else:
+            if not cls.bad_request:
+                return {
+                      "department": "MATH",
+                      "course_number": "140",
+                      "title": "Calculus I",
+                      "description": "Introduction to calculus, including functions, limits, continuity, "
+                                     "derivatives and applications of the derivative, sketching of graphs of "
+                                     "functions, definite and indefinite integrals, and calculation of area. "
+                                     "The course is especially recommended "
+                                     "for science, engineering and mathematics majors.",
+                      "credits": 3,
+                      "professors": [
+                        [
+                          "Jon Snow",
+                          "Tyrion Lannister"
+                        ]
+                      ],
+                      "average_gpa": 3.17244
+                    }
+
+            else:
+                raise Exception("Course Code Not Found")
+
+    @classmethod
+    def planetterp_get_courses_by_page(cls, page_num: int) -> list:
+        """
+        Ask planetterp to get a page from the list of all courses
+        """
+        if not cls.test_mode:
+            return requests.get("https://api.planetterp.com/v1/courses", params={
+                "limit": 30,
+                "offset": page_num
+            }, headers=APIGet.headers).json()
+
+        else:
+            if not cls.bad_request:
+                return [{
+                      "department": "MATH",
+                      "course_number": "140",
+                      "title": "Calculus I",
+                      "description": "Introduction to calculus, including functions, limits, continuity, derivatives "
+                                     "and applications of the derivative, sketching of graphs of functions, "
+                                     "definite and indefinite integrals, and calculation of area. The course is "
+                                     "especially recommended"
+                                     "for science, engineering and mathematics majors.",
+                      "credits": 3,
+                      "professors": [
+                            [
+                                "Jon Snow",
+                                "Tyrion Lannister"
+                            ]
+                        ],
+                      "average_gpa": 3.17244
+                    }]
+            else:
+                return []
+
+    @classmethod
+    def umdio_get_sections_by_course_code(cls, course: Course) -> list:
+        """
+        Ask umd.io to get a list of sections from a course code
+        """
+        if not cls.test_mode:
+            sections_response = requests.get("https://api.umd.io/v1/courses/" + course.course_code + "/sections",
+                                             params={},
+                                             headers=APIGet.headers)
+
+            # Not all courses have sections
+            if sections_response.status_code != 200:
+                return []
+
+            return sections_response.json()
+
+        else:
+            if not cls.bad_request:
+                return [{
+                            "course": "ENGL101",
+                            "section_id": "ENGL101-0101",
+                            "semester": 201501,
+                            "number": 0,
+                            "seats": 0,
+                            "meetings": [
+                                {
+                                    "days": "MWF",
+                                    "room": "string",
+                                    "building": "string",
+                                    "classtype": "string",
+                                    "start_time": "9:00AM",
+                                    "end_time": "10:00AM"
+                                }
+                            ],
+                            "open_seats": 0,
+                            "waitlist": 0,
+                            "instructors": [
+                                "string"
+                            ]
+                        }]
+
+            else:
+                return []
+
+    @classmethod
+    def planetterp_get_grades_by_course_code(cls, course_code: str) -> list:
+        """
+        Ask planetterp to get grades for a course
+        """
+        if not cls.test_mode:
+            grade_search_return = requests.get('https://api.planetterp.com/v1/grades', params={
+                'course': course_code
+            }, headers=APIGet.headers)
+
+            if grade_search_return.status_code != 200:
+                raise Exception("Error retrieving gpa information from course")
+
+            return grade_search_return.json()
+
+        else:
+            if not cls.bad_request:
+                return [{
+                            "course": "MATH140",
+                            "professor": "Jon Snow",
+                            "semester": "202001",
+                            "section": "0101",
+                            "A+": 1,
+                            "A": 1,
+                            "A-": 1,
+                            "B+": 1,
+                            "B": 1,
+                            "B-": 1,
+                            "C+": 1,
+                            "C": 1,
+                            "C-": 1,
+                            "D+": 1,
+                            "D": 1,
+                            "D-": 1,
+                            "F": 1,
+                            "W": 1,
+                            "Other": 1
+                        }]
+
+            else:
+                raise Exception("Error retrieving gpa information from course")
+
+
+    @staticmethod
+    def get_professor_by_name(professor_name: str) -> list:
         """
         Params:
             professor_name: str
@@ -359,7 +536,8 @@ class APIGet(object):
             raise Exception("Professor Not Found")
 
         prof_raw = course_search_return.json()
-        return APIParse.planetterp_prof_raw_to_prof_head(prof_raw)
+        return prof_raw
+
 
 class APIParse(object):
     """
@@ -378,6 +556,7 @@ class APIParse(object):
             course: Course
                 Course object generated from the raw dict. No sections.
         """
+
         course_code = course_raw["department"] + course_raw["course_number"]
         course_name = course_raw["title"]
         course_credits = course_raw["credits"]
@@ -402,6 +581,7 @@ class APIParse(object):
             course: Course
                 Course object generated from the raw dict. No sections.
         """
+
         course_id = course_raw["course_id"]
         course_name = course_raw["name"]
         course_credits = int(course_raw["credits"])
@@ -415,7 +595,8 @@ class APIParse(object):
         return out_course
 
     @staticmethod
-    def umd_io_sections_raw_to_section_list(sections_raw: list, parent_course: Course) -> Tuple[dict, dict]:
+    def umd_io_sections_raw_to_section_list(sections_raw: list, parent_course: Course) \
+            -> Tuple[dict, dict]:
         """
         Makes a response from umd.io's sections get into a list of sections
         Args:
@@ -453,7 +634,7 @@ class APIParse(object):
         return section_dict, professor_to_sections_dict
 
     @staticmethod
-    def planetterp_raw_grade_distribution_to_gpa(grades_raw) -> dict:
+    def planetterp_raw_grade_distribution_to_gpa(grades_raw: list) -> dict:
         """
         Makes a response from planetterps's grades get into a gpa float
         Args:
