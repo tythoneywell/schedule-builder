@@ -62,7 +62,7 @@ def index():
         try:
             course_list_to_add = CourseList.get_course_using_course_code(course_code)
             if course_list_to_add.sections == {}:
-                raise Exception("This course has no sections, please"
+                raise Exception("This course has no sections, please "
                                 "contact department for information to register for this course.")
             course_to_add = course_list_to_add.sections[section_number]
             course_to_add.set_color(colors[color_index])
