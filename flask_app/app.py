@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect, url_for, request, Blueprint
 from flask_app.backend.schedule import MySchedule
-from flask_app.backend.courses import CourseList
+from flask_app.backend.courses import CourseList, APIGet
 from flask_app.forms import SearchForm, ClearAllCoursesForm, AddRemoveForm, NextPageOnAllCoursesPageForm, \
     PreviousPageOnAllCoursesPageForm, SearchForCourseSectionsForm, AddClassForm
 
@@ -44,18 +44,19 @@ def index():
 
     if search_for_sections_of_course_form.search_for_course.data and \
             search_for_sections_of_course_form.validate_on_submit():
-        course_to_display = None
-        course_code = search_for_sections_of_course_form.search_query.data.upper()
+        courses_to_display = []
+        partial_course_code = search_for_sections_of_course_form.search_query.data.upper()
 
         try:
-            course_to_display = CourseList.get_course_using_course_code(course_code)
+            courses_to_display = [CourseList.get_course_using_course_code(course_head.course_code) for course_head in
+                                  APIGet.get_course_heads_by_query(partial_course_code)]
 
         except Exception as e:
             add_remove_notification_text = str(e)
 
         finally:
             return render_template('index.html',
-                                   course_to_display=course_to_display,
+                                   courses_to_display=courses_to_display,
                                    schedule=schedule,
                                    search_form=search_form,
                                    add_remove_form=add_remove_form,
