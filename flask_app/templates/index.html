@@ -166,29 +166,31 @@
         {{ search_for_sections_of_course_form.search_query(class="form-control", placeholder="CMSC131") }}
         {{ search_for_sections_of_course_form.search_for_course(class="btn btn-outline-success") }}
     </form>
-    {% if course_to_display %}
+    {% if courses_to_display %}
         <div class="scrollablesections" style="height: 30%; overflow-y: scroll;">
-            {% for professor, sections in course_to_display.professor_to_sections.items() %}
-                <h4> {{ professor }}</h4>
-                <h6>Average PlanetTerp rating: {{course_to_display.get_professor_average_rating(professor)}}</h6>
-                <h6> Average GPA:
-                    {% if course_to_display.professor_to_avg_course_gpa[professor] %}
-                        {{ '%0.2f'|format(course_to_display.professor_to_avg_course_gpa[professor]) }}
-                    {% else %}
-                        N/A
-                    {% endif %}
-                </h6>
-                {% for section in sections %}
-                    <h6>{{ section.section_id }}</h6>
-                    {{section.open_seats}} out of {{section.total_seats}} seats available <br>
+            {% for course_to_display in courses_to_display %}
+                {% for professor, sections in course_to_display.professor_to_sections.items() %}
+                    <h4> {{ professor }}</h4>
+                    <h6>Average PlanetTerp rating: {{course_to_display.get_professor_average_rating(professor)}}</h6>
+                    <h6> Average GPA:
+                        {% if course_to_display.professor_to_avg_course_gpa[professor] %}
+                            {{ '%0.2f'|format(course_to_display.professor_to_avg_course_gpa[professor]) }}
+                        {% else %}
+                            N/A
+                        {% endif %}
+                    </h6>
+                    {% for section in sections %}
+                        <h6>{{ section.section_id }}</h6>
+                        {{section.open_seats}} out of {{section.total_seats}} seats available <br>
 
-                    {%for times, day in section.get_formatted_weekly_schedule().items() %}
-                         <ul>{{day}}: {{times}}</ul>
+                        {%for times, day in section.get_formatted_weekly_schedule().items() %}
+                             <ul>{{day}}: {{times}}</ul>
+                        {% endfor %}
+                <form action="" method="POST">
+                     {{ add_class_form.csrf_token }}
+                     <input type="submit" name="course" value="Add {{section.section_id}}">
+                </form>
                     {% endfor %}
-            <form action="" method="POST">
-                 {{ add_class_form.csrf_token }}
-                 <input type="submit" name="course" value="Add {{section.section_id}}">
-            </form>
                 {% endfor %}
             {% endfor %}
         </div>
