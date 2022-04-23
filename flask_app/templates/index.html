@@ -1,12 +1,17 @@
 {% extends "header.html" %}
 {% block content %}
-<b>UMD Schedule Builder</b>
-<a href="{{ url_for('all_courses', courses = courses) }}"><h3>See all courses</h3></a>
 
+<b>UMD Schedule Builder</b>
+<a href="{{ url_for('all_courses', page_num = 1) }}"><h3>See all courses</h3></a>
 
 
 <body>
     <h1>My Schedule</h1>
+    <h3> Total credits: {{ schedule.total_credits }}</h3>
+    {% if schedule.class_list|length > 0 %}
+        <h3>Average GPA of Schedule: {{ '%0.2f'|format(schedule.get_schedule_average_gpa()) }}</h3>
+    {%endif%}
+
     <table border="5" cellspacing="0" align="center">
         <!--<caption>Timetable</caption>-->
         <tr>
@@ -83,8 +88,27 @@
                 </b>
             </td>
         </tr>
-
     </table>
+    {% if schedule.class_list|length > 0 %}
+        <span>Average GPA of Schedule: {{ '%0.2f'|format(schedule.get_schedule_average_gpa()) }}</span>
+    {%endif%}
+    {% if schedule.class_list|length > 0 %}
+        <p>Total Credits of Schedule: {{ '%d'|format(schedule.total_credits) }}</p>
+    {%endif%}
+    {% if schedule.class_list|length > 0 %}
+        <span style = "font-size: 150%">List of Courses in Current Schedule:</span><br>
+    {%endif%}
+    {% if schedule.class_list|length > 0 %}
+        {% for class in schedule.class_list %}
+            <b>
+                <span style = "color: {{class.color}}; font-size: 125%"> {{ class.section_id }}
+                    {% if not class.is_synchronous %}
+                        <span> (Asynchronous)</span>
+                    {%endif%}
+                </span> <br>
+            </b>
+        {% endfor %}
+    {%endif%}
 </body>
 
 
@@ -101,7 +125,7 @@
     <p>E.G: CMSC131-0101 (Department Name: CMSC131, Section Number: 0101)</p>
 </div>
 <div class="container">
-    <form action="/" class="form-inline my-2 my-lg-0" method="POST">
+    <form action="" class="form-inline my-2 my-lg-0" method="POST">
         {{ add_remove_form.csrf_token }}
         {{ add_remove_form.course_query(class="form-control", placeholder="ABCD100") }}
 
@@ -129,17 +153,64 @@
         {{ add_remove_form.remove(class="btn btn-outline-danger") }}
     </form>
     <b> {{ add_remove_notification_text }} </b>
+</div>
+
+<div class="container">
     <br>
-    <br>
+    <h3>Search for a course</h3>
+    <p>Enter course code: e.g. CMSC131</p>
+</div>
+<div class="container">
+    <form action="" class="form-inline my-2 my-lg-0" method="POST">
+        {{ search_for_sections_of_course_form.csrf_token }}
+        {{ search_for_sections_of_course_form.search_query(class="form-control", placeholder="CMSC131") }}
+        {{ search_for_sections_of_course_form.search_for_course(class="btn btn-outline-success") }}
+    </form>
+    {% if course_to_display %}
+        <div class="scrollablesections" style="height: 30%; overflow-y: scroll;">
+            {% for professor, sections in course_to_display.professor_to_sections.items() %}
+                <h4> {{ professor }}</h4>
+                <h6>Average PlanetTerp rating: {{course_to_display.get_professor_average_rating(professor)}}</h6>
+                <h6> Average GPA:
+                    {% if course_to_display.professor_to_avg_course_gpa[professor] %}
+                        {{ '%0.2f'|format(course_to_display.professor_to_avg_course_gpa[professor]) }}
+                    {% else %}
+                        N/A
+                    {% endif %}
+                </h6>
+                {% for section in sections %}
+                    <h6>{{ section.section_id }}</h6>
+                    {{section.open_seats}} out of {{section.total_seats}} seats available <br>
+
+                    {%for times, day in section.get_formatted_weekly_schedule().items() %}
+                         <ul>{{day}}: {{times}}</ul>
+                    {% endfor %}
+            <form action="" method="POST">
+                 {{ add_class_form.csrf_token }}
+                 <input type="submit" name="course" value="Add {{section.section_id}}">
+            </form>
+                {% endfor %}
+            {% endfor %}
+        </div>
+    {% endif %}
 </div>
 
 <div class="container">
     <h2>Remove all courses from schedule</h2>
 </div>
 <div class="container">
-    <form action="/" method="POST">
+    <form action="" method="POST">
         {{ clear_all_courses_form.csrf_token }}
         {{ clear_all_courses_form.clear_all(class="btn btn-outline-danger") }}
+
+        {% if clear_all_courses_form.clear_all.errors %}
+        <div class="alert alert-warning" role="alert">
+            {% for error in clear_all_courses_form.clear_all.errors %}
+                <span>{{ error }}</span>
+            {% endfor %}
+        </div>
+        {% endif %}
+
     </form>
 </div>
 

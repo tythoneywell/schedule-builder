@@ -1,7 +1,7 @@
 # UMD Schedule Builder
 The purpose of this repository is to create a UMD schedule builder. Students can use this to create a schedule and eventually be able to see data on course professor reviews and GPAs. 
 
-## Running with Docker 
+## Running with Docker  
 
 1. Navigate to the root directory, team-project/
 2. Build the image by running the following command:
@@ -53,7 +53,16 @@ Inside the data directory is the file that stores all course and section informa
 
 ### tests
 
-test_schedule.py contains tests relating to the backend functionality of the MySchedule class, which represents a user's schedule.
+* `test_schedule.py` contains tests relating to the backend functionality of the MySchedule class, which represents a user's schedule.
+* `test_courses.py` contains tests for the API to check that the code is properly getting course information
+* `test_app.py` contains tests for the front end flask UI
+* `utils.py` contains utility code for the tests to use
+* `data_for_tests.json` contains course information that allows manual construction of Course objects for testing
+
+### Other
+
+* `requirements.txt` contains the package dependencies to be installed
+* `Dockerfile` contains the code needed to run the Docker image 
 
 ## How to run Tests
 1. Navigate to GitLab
@@ -61,10 +70,20 @@ test_schedule.py contains tests relating to the backend functionality of the MyS
 3. Click blue `Run Pipeline` button at top right corner
 4. Select branch (`main`) and run the pipeline. Tests will also automatically run upon any changes made to the GitLab repository. 
 
-## Contributions
-*Amar (20%)*: Created UI for adding a specific section of a class to the schedule, 
-    added sections, days, and times to All Course List, Colorized Schedule based
-    on sections. 20%.
+## Contributions (Sprint 2)
+*Amar (20%)*: Created Professor Object, retrieved average professor rating from API and listed it in search results, added Average GPA in Course List as well. Added subsequent tests for basic Professor API results. 
+
+*Michelle (20%)*: Hooked up the schedule with the umd.io API to obtain course information from. Revised the tests to reflect this new code. Added front end flask tests. Added number of credits to the schedule. 
+
+
+*Daniel (20%)*: Added a list of all courses that the user currently has on their schedule. Also added a readout of the total credits of the current schedule. Fixed some warnings that were popping up unintentionally and added appropriate warnings for a few other cases. 
+
+*Andrew (20%)*: Added drop down menu for users to search for a course name (e.g. cmsc435) and then a list is populated sorted by professor with all of the sections of that course. This includes information such as gpa, open seats, etc. There is also an add button next to the section for the user to click once to add that section to their schedule. Added backend support for getting grade information by professor and calculated gpa per course per professor (different from the average course gpa.) Added tests for all new functions. 
+
+*Tyler (20%)*: Integrated planetterp API. Combined API implementations with umd.io API. Implemented API testing.
+
+## Contributions (Sprint 1)
+*Amar (20%)*: Created UI for adding a specific section of a class to the schedule, added sections, days, and times to All Course List, Colorized Schedule based on sections. 20%.
 
 *Michelle (20%)*: Set up the flask app front end to display courses in an HTML table with their time and course code. Also set up the front end for a hyperlink to see all courses and for a search bar. Implemented the CI/CD automated testing.
 

@@ -59,8 +59,9 @@ class MySchedule(object):
                 String describing the result of trying to add the class.
         """
 
-        if class_to_add in self.class_list:
-            return class_to_add.section_id + " already present in schedule."
+        for section_obj in self.class_list:
+            if class_to_add.section_id == section_obj.section_id:
+                return class_to_add.section_id + " already present in schedule."
 
         if not self.no_class_overlap(class_to_add):
             return class_to_add.section_id + " has time conflicts with an existing class."
@@ -107,7 +108,12 @@ class MySchedule(object):
             self.schedule[day] = new_day_list
 
         if class_previously_in_schedule:
-            self.class_list.remove(class_to_remove)
+            for index in range(len(self.class_list)):
+                section_obj = self.class_list[index]
+                if section_obj.section_id == class_to_remove.section_id:
+                    self.class_list.pop(index)
+                    break
+
             self.total_credits -= class_to_remove.course.credits
 
             for warning in self.warnings_list:
@@ -118,7 +124,7 @@ class MySchedule(object):
 
         return class_to_remove.section_id + " removed."
 
-    def remove_all_classes(self):
+    def remove_all_classes(self) -> None:
         """
         Resets the schedule to be empty.
         """
@@ -132,11 +138,24 @@ class MySchedule(object):
 
         self.warnings_list = []
 
+    def get_schedule_average_gpa(self) -> float:
+        """
+        Calculates average GPA of the current schedule
+        """
+        gpa_sum = 0.0
+        for schedule_class in self.class_list:
+            gpa_sum += schedule_class.course.avg_gpa * schedule_class.course.credits
+        if len(self.class_list) == 0 or self.total_credits == 0:
+            # by default return 0 to avoid errors
+            return 0.0
+        return gpa_sum / self.total_credits
+
     class ScheduleWarning(object):
         """
         Warning message to be displayed next to the user's schedule,
         when their schedule has some notable issue.
         """
+
         # A type hint for involved_sections, which should be list[Section],
         # causes Flask not to start. So it's not there.
         def __init__(self, involved_sections: list, warning_type: str):
