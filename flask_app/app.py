@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for, request
+from flask import Flask, render_template, redirect, url_for, request, Blueprint
 from flask_app.backend.schedule import MySchedule
 from flask_app.backend.courses import CourseList
 from flask_app.forms import SearchForm, ClearAllCoursesForm, AddRemoveForm, NextPageOnAllCoursesPageForm, \
@@ -7,12 +7,22 @@ from flask_app.forms import SearchForm, ClearAllCoursesForm, AddRemoveForm, Next
 app = Flask(__name__)
 app.debug = True
 app.config['SECRET_KEY'] = "super secret key"
-course_list = CourseList()
 
+course_list = CourseList()
 schedule = MySchedule()
 color_index = 0
 colors = ["red", "blue", "green", "purple", "orange", "magenta"]
 
+
+class GetApp:
+    """"
+    Returns instance of the flask app
+    Mainly used so that other files (i.e. tests) can access the Flask object
+    """
+    @staticmethod
+    def get_app():
+        global app
+        return app
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
