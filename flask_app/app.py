@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for, request, Blueprint
+from flask import Flask, render_template, redirect, url_for, request
 from flask_app.backend.schedule import MySchedule
 from flask_app.backend.courses import CourseList, APIGet
 from flask_app.forms import SearchForm, ClearAllCoursesForm, AddRemoveForm, NextPageOnAllCoursesPageForm, \
@@ -23,6 +23,7 @@ class GetApp:
     def get_app():
         global app
         return app
+
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -162,6 +163,9 @@ def all_courses(page_num):
     """"
     Display a list of all courses that the student could try to sign up for
     The user can navigate to the next and previous pages to see more courses
+    Args:
+            page_num: int
+                The page number of all courses to load
     """
 
     if int(page_num) > 1:
@@ -169,8 +173,6 @@ def all_courses(page_num):
     else:
         previous_page_form = None
     next_page_form = NextPageOnAllCoursesPageForm()
-
-    # Need some way to prevent going to negative pages or too many pages
 
     if previous_page_form is not None and \
             previous_page_form.previous_page.data and previous_page_form.validate_on_submit():
