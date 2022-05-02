@@ -1,4 +1,4 @@
-from flask_app.backend.courses import Section
+from flask_app.backend.courses import Section, CourseList
 
 
 class MySchedule(object):
@@ -149,6 +149,41 @@ class MySchedule(object):
             # by default return 0 to avoid errors
             return 0.0
         return gpa_sum / self.total_credits
+
+    def get_serialized_schedule(self) -> str:
+        """
+        This function serializes the user's schedule to easily be copied by the user on the frontend. The user can
+        then use this serialized string to load their schedule through the "load_serialized_schedule" function.
+
+        return:
+            str_schedule: str
+                A String representation of the user's schedule
+        """
+        str_schedule = ""
+        if len(self.class_list) == 0:
+            return ""
+        for section in self.class_list:
+            str_schedule += section.section_id + ","
+        str_schedule = str_schedule.rstrip(str_schedule[-1])  # strip trailing comma at end of list
+        return str_schedule
+
+    def load_serialized_schedule(self, str_schedule: str) -> None:
+        """
+        This function takes a string representation of the serialized version of a user's schedule and loads this
+        schedule by adding all of the sections/meeting times.
+
+        param:
+            str_schedule: str
+                A String representation of the user's schedule generated from the get_serialized_schedule function
+        """
+        if len(str_schedule.strip()) == 0:  # if given empty schedule, just return
+            return
+        section_arr = str_schedule.split(",")
+        for section in section_arr:
+            course_code_without_section = section.split("-")[0]
+            course_section_number = section.split("-")[1]
+            course_to_extract_section_from = CourseList.get_course_using_course_code(course_code_without_section)
+            self.add_class(course_to_extract_section_from.sections[course_section_number])
 
     class ScheduleWarning(object):
         """

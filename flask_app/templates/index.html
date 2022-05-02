@@ -216,4 +216,17 @@
     </form>
 </div>
 
+<div class="container">
+    <form action="" method="POST">
+        {{ serialize_schedule_form.csrf_token }}
+        {% if serialized_schedule %}
+            {{ serialize_schedule_form.display_serialized_schedule(class="form-control", value=serialized_schedule) }}
+        {% else %}
+            {{ serialize_schedule_form.display_serialized_schedule(class="form-control", placeholder="CMSC351-0101,ENGL393-0303,COMM107-0401") }}
+        {% endif %}
+        {{ serialize_schedule_form.serialize_schedule(class="btn btn-outline-success") }}
+        {{ serialize_schedule_form.load_schedule(class="btn btn-outline-success") }}
+    </form>
+</div>
+
 {% endblock %}

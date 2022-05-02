@@ -55,3 +55,15 @@ class PreviousPageOnAllCoursesPageForm(FlaskForm):
     Form to select previous page on route for all pages
     """
     previous_page = SubmitField('Previous Page')
+
+
+class SerializeScheduleForm(FlaskForm):
+    """
+    Form to serialize the current schedule for the user to copy, to be loaded later.
+    Form also loads serialized data that was previously copied
+    """
+    serialize_schedule = SubmitField('Get Schedule Data')
+    display_serialized_schedule = StringField('Schedule Data')
+    load_schedule = SubmitField("Load Schedule Data")
+
+

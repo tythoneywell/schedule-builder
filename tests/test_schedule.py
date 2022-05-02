@@ -160,6 +160,34 @@ class ScheduleTest(unittest.TestCase):
                          cmsc250.get_formatted_weekly_schedule())
         self.assertEqual({'4:30pm-5:45pm': 'MW'}, comm107.get_formatted_weekly_schedule())
 
+    def test_serialize_schedule_returns_comma_separated_section_ids(self):
+        schedule = MySchedule()
+        cmsc250 = test_util_instance.courses["CMSC250"].sections["0101"]
+        chem271 = test_util_instance.courses["CHEM271"].sections["2222"]
+        comm107 = test_util_instance.courses["COMM107"].sections["0101"]
+        schedule.add_class(cmsc250)
+        schedule.add_class(chem271)
+        schedule.add_class(comm107)
+        self.assertEqual(schedule.get_serialized_schedule(), "CMSC250-0101,CHEM271-2222,COMM107-0101")
+
+    def test_serialize_empty_schedule(self):
+        schedule = MySchedule()
+        self.assertEqual(schedule.get_serialized_schedule(), "")
+
+    def test_load_serialize_schedule_works(self):
+        schedule = MySchedule()
+        str_schedule = "CMSC250-0101,CHEM271-2222,COMM107-0101"
+        schedule.load_serialized_schedule(str_schedule)
+        self.assertEqual(schedule.total_credits, 9)
+        section_list = str_schedule.split(",")
+        for sections in schedule.class_list:
+            self.assertTrue(sections.section_id in section_list)
+
+    def test_load_empty_serialized_schedule(self):
+        schedule = MySchedule()
+        schedule.load_serialized_schedule("")
+        self.assertEqual(schedule.total_credits, 0)
+
 
 class ScheduleWarningTest(unittest.TestCase):
     """
