@@ -15,7 +15,21 @@ class AddClassForm(FlaskForm):
     """
     Form to add class from the search results
     """
-    submit2 = SubmitField('Submit')
+    submit = SubmitField('Submit')
+
+
+class AddSectionForm(FlaskForm):
+    """
+    Form to add class from the search results
+    """
+    submit = SubmitField('Submit')
+
+
+class ViewSectionsForm(FlaskForm):
+    """
+    Form to view sections from the list of added or searched courses
+    """
+    submit = SubmitField('Submit')
 
 
 class AddRemoveForm(FlaskForm):
@@ -35,7 +49,7 @@ class ClearAllCoursesForm(FlaskForm):
     clear_all = SubmitField('Clear Schedule')
 
 
-class SearchForCourseSectionsForm(FlaskForm):
+class SearchForCourseForm(FlaskForm):
     """
     Form to search for course and display sections
     """

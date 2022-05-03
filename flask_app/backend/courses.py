@@ -83,7 +83,6 @@ class Section(object):
 
     def __init__(self, course_code: str, section_id: str, total_seats: int, open_seats: int, class_meetings: dict,
                  professor: list, course: Course, is_synchronous: bool):
-        self.color = None
         self.sess = requests.Session()
         self.course_code = course_code
         self.section_id = section_id
@@ -93,17 +92,6 @@ class Section(object):
         self.professor_name_list = professor
         self.course = course
         self.is_synchronous = is_synchronous
-
-    def set_color(self, color: str):
-        """
-        Args:
-            color: str
-                Color to set this section as.
-        """
-        self.color = color
-        for day, classes in self.class_meetings.items():
-            for meeting_time in classes:
-                meeting_time.color = color
 
     # Specifying the type contents of a dict type hint crashes Flask.
     def get_formatted_weekly_schedule(self) -> dict:
@@ -133,7 +121,7 @@ class MeetingTime(object):
     Contains time, location, and section id.
     """
 
-    def __init__(self, meeting: dict, section_id: str):
+    def __init__(self, meeting: dict, section_id: str, course: Course):
         self.room = meeting["room"]
         self.building = meeting["building"]
         self.classtype = meeting["classtype"]
@@ -143,8 +131,8 @@ class MeetingTime(object):
         # these next 2 are used for frontend formatting of time
         self.formatted_start_time = meeting["start_time"]
         self.formatted_end_time = meeting["end_time"]
+        self.course = course
         self.section_id = section_id
-        self.color = None
 
     def __eq__(self, other):
         if not isinstance(other, MeetingTime):
@@ -200,7 +188,7 @@ class CourseList(object):
         return APIGet.get_course_list_by_page_number(page_num)
 
     @staticmethod
-    def make_meeting_dict(meetings_list: list, section_id: str) -> dict:
+    def make_meeting_dict(meetings_list: list, section_id: str, course: Course) -> dict:
         """
         Args:
             meetings_list: list[dict]
@@ -208,6 +196,8 @@ class CourseList(object):
                 a dict of MeetingTimes.
             section_id: str
                 The section_id of the section
+            course: Course
+                The parent Course of the section
         Returns:
             weekly_schedule:
                 Dict mapping day of the week "M", "Tu", etc
@@ -231,7 +221,7 @@ class CourseList(object):
                     start_end_tuple = (meeting["start_time"], meeting["end_time"])
                     if start_end_tuple not in current_meeting_times[day]:
                         current_meeting_times[day].add(start_end_tuple)
-                        day_to_meetings[day].append(MeetingTime(meeting, section_id))
+                        day_to_meetings[day].append(MeetingTime(meeting, section_id, course))
         return day_to_meetings
 
 
@@ -684,7 +674,7 @@ class APIParse(object):
             section_number = section["number"]
             total_seats = int(section["seats"])
             open_seats = int(section["open_seats"])
-            class_meetings = CourseList.make_meeting_dict(section["meetings"], section_id)
+            class_meetings = CourseList.make_meeting_dict(section["meetings"], section_id, parent_course)
             is_synchronous = False
             for meeting in class_meetings.values():
                 if len(meeting) != 0:
