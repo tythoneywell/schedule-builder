@@ -29,7 +29,7 @@ class TestUtils:
                 section_number = section["number"]
                 total_seats = int(section["seats"])
                 open_seats = int(section["open_seats"])
-                class_meetings = CourseList.make_meeting_dict(section["meetings"], section_id)
+                class_meetings = CourseList.make_meeting_dict(section["meetings"], section_id, courses)
                 is_synchronous = False
                 for meeting in class_meetings.values():
                     if len(meeting) != 0:
