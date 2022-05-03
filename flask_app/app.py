@@ -2,7 +2,7 @@ from flask import Flask, render_template, redirect, url_for, request
 from flask_app.backend.schedule import MySchedule
 from flask_app.backend.courses import CourseList, APIGet
 from flask_app.forms import SearchForm, ClearAllCoursesForm, AddRemoveForm, NextPageOnAllCoursesPageForm, \
-    PreviousPageOnAllCoursesPageForm, SearchForCourseSectionsForm, AddClassForm
+    PreviousPageOnAllCoursesPageForm, SearchForCourseSectionsForm, AddClassForm, SerializeScheduleForm
 
 app = Flask(__name__)
 app.debug = True
@@ -42,6 +42,7 @@ def index():
     clear_all_courses_form = ClearAllCoursesForm()
     search_for_sections_of_course_form = SearchForCourseSectionsForm()
     add_class_form = AddClassForm()
+    serialize_schedule_form = SerializeScheduleForm()
 
     if search_for_sections_of_course_form.search_for_course.data and \
             search_for_sections_of_course_form.validate_on_submit():
@@ -64,7 +65,8 @@ def index():
                                    add_remove_notification_text=add_remove_notification_text,
                                    clear_all_courses_form=clear_all_courses_form,
                                    search_for_sections_of_course_form=search_for_sections_of_course_form,
-                                   add_class_form=add_class_form)
+                                   add_class_form=add_class_form,
+                                   serialize_schedule_form=serialize_schedule_form)
 
     if (add_remove_form.add.data or add_remove_form.remove.data) and add_remove_form.validate_on_submit():
         course_code = add_remove_form.course_query.data.upper()
@@ -102,7 +104,8 @@ def index():
                                    add_remove_notification_text=add_remove_notification_text,
                                    clear_all_courses_form=clear_all_courses_form,
                                    search_for_sections_of_course_form=search_for_sections_of_course_form,
-                                   add_class_form=add_class_form)
+                                   add_class_form=add_class_form,
+                                   serialize_schedule_form=serialize_schedule_form)
 
     if clear_all_courses_form.clear_all.data and clear_all_courses_form.validate_on_submit():
         if schedule.total_credits == 0:
@@ -119,7 +122,32 @@ def index():
                                add_remove_notification_text=add_remove_notification_text,
                                clear_all_courses_form=clear_all_courses_form,
                                search_for_sections_of_course_form=search_for_sections_of_course_form,
-                               add_class_form=add_class_form)
+                               add_class_form=add_class_form,
+                               serialize_schedule_form=serialize_schedule_form)
+    if serialize_schedule_form.serialize_schedule.data and serialize_schedule_form.validate_on_submit():
+        serialized_schedule = schedule.get_serialized_schedule()
+        return render_template('index.html',
+                               schedule=schedule,
+                               search_form=search_form,
+                               add_remove_form=add_remove_form,
+                               add_remove_notification_text=add_remove_notification_text,
+                               clear_all_courses_form=clear_all_courses_form,
+                               search_for_sections_of_course_form=search_for_sections_of_course_form,
+                               add_class_form=add_class_form,
+                               serialize_schedule_form=serialize_schedule_form,
+                               serialized_schedule=serialized_schedule)
+
+    if serialize_schedule_form.load_schedule.data and serialize_schedule_form.validate_on_submit():
+        schedule.load_serialized_schedule(serialize_schedule_form.display_serialized_schedule.data)
+        return render_template('index.html',
+                               schedule=schedule,
+                               search_form=search_form,
+                               add_remove_form=add_remove_form,
+                               add_remove_notification_text=add_remove_notification_text,
+                               clear_all_courses_form=clear_all_courses_form,
+                               search_for_sections_of_course_form=search_for_sections_of_course_form,
+                               add_class_form=add_class_form,
+                               serialize_schedule_form=serialize_schedule_form)
 
     # KEEP THIS IF STATEMENT LAST PLEASE!!!!
     if add_class_form.validate_on_submit():
@@ -146,7 +174,8 @@ def index():
                                    add_remove_notification_text=add_remove_notification_text,
                                    clear_all_courses_form=clear_all_courses_form,
                                    search_for_sections_of_course_form=search_for_sections_of_course_form,
-                                   add_class_form=add_class_form)
+                                   add_class_form=add_class_form,
+                                   serialize_schedule_form=serialize_schedule_form)
 
     return render_template('index.html',
                            schedule=schedule,
@@ -155,7 +184,8 @@ def index():
                            add_remove_notification_text=add_remove_notification_text,
                            clear_all_courses_form=clear_all_courses_form,
                            search_for_sections_of_course_form=search_for_sections_of_course_form,
-                           add_class_form=add_class_form)
+                           add_class_form=add_class_form,
+                           serialize_schedule_form=serialize_schedule_form)
 
 
 @app.route('/all_courses/<page_num>', methods=['GET', 'POST'])
