@@ -54,6 +54,7 @@ def index():
         try:
             courses_to_display = APIGet.get_course_heads_by_query(partial_course_code)
 
+            courses_to_display.sort(reverse=True, key=lambda this_course: (this_course.avg_gpa is not None, this_course.avg_gpa))
         except ConnectionError as e:
             add_remove_notification_text = str(e)
 
