@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for, request
+from flask import Flask, render_template, request
 from flask_app.backend.schedule import MySchedule
 from flask_app.backend.courses import CourseList, APIGet
 from flask_app.forms import SearchForm, ClearAllCoursesForm, AddRemoveForm, NextPageOnAllCoursesPageForm, \
@@ -19,6 +19,7 @@ class GetApp:
     Returns instance of the flask app
     Mainly used so that other files (i.e. tests) can access the Flask object
     """
+
     @staticmethod
     def get_app():
         global app
@@ -189,7 +190,7 @@ def index():
 
 
 @app.route('/all_courses/<page_num>', methods=['GET', 'POST'])
-def all_courses(page_num):
+def all_courses(page_num: int):
     """"
     Display a list of all courses that the student could try to sign up for
     The user can navigate to the next and previous pages to see more courses
@@ -198,25 +199,53 @@ def all_courses(page_num):
                 The page number of all courses to load
     """
 
-    if int(page_num) > 1:
-        previous_page_form = PreviousPageOnAllCoursesPageForm()
-    else:
-        previous_page_form = None
-    next_page_form = NextPageOnAllCoursesPageForm()
-
-    if previous_page_form is not None and \
-            previous_page_form.previous_page.data and previous_page_form.validate_on_submit():
-        page_num = int(page_num) - 1
-        return redirect(url_for("all_courses", page_num=page_num))
-
-    if next_page_form.next_page.data and next_page_form.validate_on_submit():
-        page_num = int(page_num) + 1
-        return redirect(url_for("all_courses", page_num=page_num))
-
     courses = CourseList.get_courses_using_page_number(page_num)
+
+    prev_page_num = None if page_num == 1 else int(page_num) - 1
+    next_page_num = int(page_num) + 1
 
     return render_template('all_courses.html',
                            courses=courses,
                            page_num=page_num,
-                           previous_page_form=previous_page_form,
-                           next_page_form=next_page_form)
+                           prev_page_num=prev_page_num,
+                           next_page_num=next_page_num)
+
+
+@app.route('/all_professors/<page_num>', methods=['GET', 'POST'])
+def all_professors(page_num: int):
+    """"
+    Display a list of all professors that the student could try to take
+    Each professor is a hyerlink to their specific page 
+    Args:
+        page_num: int
+            The page number of all courses to load
+    """
+
+    professor_names, professor_slugs, professor_ratings = Professor.get_all_professors(page_num)
+
+    prev_page_num = None if page_num == 1 else int(page_num) - 1
+    next_page_num = int(page_num) + 1
+
+    return render_template('all_professors.html',
+                           professor_names_slugs=zip(professor_names, professor_slugs, professor_ratings),
+                           page_num=page_num,
+                           prev_page_num=prev_page_num,
+                           next_page_num=next_page_num)
+
+
+@app.route('/professor/<name>/<slug>', methods=['GET', 'POST'])
+def professor_detail(name: str, slug):
+    """"
+    Display a page for a specific professor using their slug
+    Args:
+        name: string
+            Professor name to get professor with
+        slug: string
+            Professor slug to create a unique link to their page 
+    """
+
+    professor = APIGet.get_professor_by_name(name)
+    plantterp_link = "https://planetterp.com/professor/" + slug
+    return render_template("professor_detail.html",
+                           professor=professor,
+                           plantterp_link=plantterp_link)

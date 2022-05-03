@@ -51,6 +51,28 @@ class Professor(object):
         self.instructor_type = instructor_type
         self.average_rating = average_rating
 
+    @staticmethod
+    def get_all_professors(page_num : int) -> Tuple[list, list, list]:
+        """
+        Returns a list of professors 
+        Args:
+            page_num: int
+                Page number for the professors to retrieve from planetterp API
+        Returns:
+            (professor_names, professor_slugs, professor_ratings): Tuple(list, list, list)
+                Tuple consisting of list of professor names and slugs and ratings for that page number 
+        """
+
+        page_num_offset = str((int(page_num) - 1) * 100)
+
+        professors_request = requests.get('https://api.planetterp.com/v1/professors?offset=' + page_num_offset, headers = {'Accept': 'application/json'}).json()
+
+        professor_names = [prof["name"] for prof in professors_request]
+        professor_slugs = [prof["slug"] for prof in professors_request]
+        professor_ratings = [prof["average_rating"] for prof in professors_request]
+
+        return (professor_names, professor_slugs, professor_ratings)
+
 
 class Section(object):
     """
