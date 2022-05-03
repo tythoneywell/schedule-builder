@@ -1,26 +1,17 @@
 {% extends "header.html" %}
 {% block content %}
-<b>UMD Schedule Builder</b>
+<h1>All Courses</h1>
 
-{% if previous_page_form %}
-    <div class="container">
-        <form method="POST" action="">
-            {{ previous_page_form.csrf_token }}
-            {{ previous_page_form.previous_page(class="btn btn-outline-success") }}
-        </form>
-        <br>
-    </div>
-{% endif %}
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+        {% if prev_page_num %}
 
-{% if next_page_form %}
-    <div class="container">
-        <form method="POST" action="">
-            {{ next_page_form.csrf_token }}
-            {{ next_page_form.next_page(class="btn btn-outline-success") }}
-        </form>
-        <br>
-    </div>
-{% endif %}
+            <li class="page-item"><a class="page-link" href="{{ url_for('all_courses', page_num=prev_page_num) }}">Previous</a></li>
+        {% endif %}
+            <li class="page-item"><a class="page-link" href="{{ url_for('all_courses', page_num=next_page_num) }}">Next</a></li>
+    </ul>
+</nav>
+
 
 
 {% for course, info in courses.items() %}
