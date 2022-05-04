@@ -98,10 +98,12 @@ def index():
     if "add_course" in request.form:
         try:
             button_response = request.form['add_course']
-            course = button_response.split(" ")[1]
-            course_to_add = CourseList.get_course_using_course_code(course)
-
-            add_remove_notification_text = schedule.add_course(course_to_add)
+            course_code = button_response.split(" ")[1]
+            if expanded_course_to_display.course_code == course_code:
+                add_remove_notification_text = schedule.add_course(expanded_course_to_display)
+            else:
+                course_to_add = CourseList.get_course_using_course_code(course_code)
+                add_remove_notification_text = schedule.add_course(course_to_add)
 
         except ConnectionError as e:
             add_remove_notification_text = str(e)
@@ -126,8 +128,14 @@ def index():
     if "view_course" in request.form:
         try:
             button_response = request.form['view_course']
-            course = button_response.split(" ")[1]
-            expanded_course_to_display = CourseList.get_course_using_course_code(course)
+            course_code = button_response.split(" ")[1]
+
+            course_in_schedule = [course for course in schedule.courses_list
+                                  if course.course_code == course_code]
+            if course_in_schedule:
+                expanded_course_to_display = course_in_schedule[0]
+            else:
+                expanded_course_to_display = CourseList.get_course_using_course_code(course_code)
 
         except ConnectionError as e:
             add_remove_notification_text = str(e)
@@ -153,8 +161,8 @@ def all_courses(page_num: int):
     Display a list of all courses that the student could try to sign up for
     The user can navigate to the next and previous pages to see more courses
     Args:
-            page_num: int
-                The page number of all courses to load
+        page_num: int
+            The page number of all courses to load
     """
 
     courses = CourseList.get_courses_using_page_number(page_num)
