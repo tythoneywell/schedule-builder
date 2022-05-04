@@ -45,14 +45,15 @@ class Professor(object):
     Represents a Professor Object that is so far used when searching for information about a Professor
     """
 
-    def __init__(self, name: str, course_list: list, instructor_type: str, average_rating: float):
+    def __init__(self, name: str, course_list: list, instructor_type: str, average_rating: float, reviews: list):
         self.name = name
         self.course_list = course_list
         self.instructor_type = instructor_type
         self.average_rating = average_rating
+        self.reviews = reviews
 
     @staticmethod
-    def get_all_professors(page_num : int) -> Tuple[list, list, list]:
+    def get_all_professors(page_num: int) -> Tuple[list, list, list]:
         """
         Returns a list of professors 
         Args:
@@ -65,13 +66,14 @@ class Professor(object):
 
         page_num_offset = str((int(page_num) - 1) * 100)
 
-        professors_request = requests.get('https://api.planetterp.com/v1/professors?offset=' + page_num_offset, headers = {'Accept': 'application/json'}).json()
+        professors_request = requests.get('https://api.planetterp.com/v1/professors?offset=' + page_num_offset,
+                                          headers={'Accept': 'application/json'}).json()
 
         professor_names = [prof["name"] for prof in professors_request]
         professor_slugs = [prof["slug"] for prof in professors_request]
         professor_ratings = [prof["average_rating"] for prof in professors_request]
 
-        return (professor_names, professor_slugs, professor_ratings)
+        return professor_names, professor_slugs, professor_ratings
 
 
 class Section(object):
@@ -140,8 +142,8 @@ class MeetingTime(object):
             return False
 
         return self.start_time == other.start_time \
-            and self.end_time == other.end_time \
-            and self.section_id == other.section_id
+               and self.end_time == other.end_time \
+               and self.section_id == other.section_id
 
     def __ne__(self, obj):
         return not self == obj
@@ -349,7 +351,7 @@ class APIGet(object):
         return APIParse.planetterp_raw_grade_distribution_to_gpa(grade_search_return)
 
     @staticmethod
-    def get_professor_by_name(professor_name: str) -> Professor:
+    def get_professor_by_name(professor_name: str, get_reviews="false") -> Professor:
         """
         Params:
             professor_name: str
@@ -358,7 +360,7 @@ class APIGet(object):
             professor: Professor
                 The object of this professor
         """
-        prof_search_return = RequestProxy.planetterp_get_professor_by_name(professor_name)
+        prof_search_return = RequestProxy.planetterp_get_professor_by_name(professor_name, get_reviews=get_reviews)
 
         return APIParse.planetterp_prof_raw_to_prof_head(prof_search_return)
 
@@ -577,7 +579,7 @@ class RequestProxy(object):
                 raise ConnectionError("Error retrieving gpa information from course")
 
     @staticmethod
-    def planetterp_get_professor_by_name(professor_name: str) -> dict:
+    def planetterp_get_professor_by_name(professor_name: str, get_reviews="false") -> dict:
         """
         Ask planetterp for information on a professor
         Params:
@@ -587,7 +589,8 @@ class RequestProxy(object):
             prof_raw: a json dict with professor infomration
         """
         course_search_return = requests.get('https://api.planetterp.com/v1/professor', params={
-            'name': professor_name
+            'name': professor_name,
+            'reviews': get_reviews
         }, headers=APIGet.headers)
 
         if course_search_return.status_code != 200:
@@ -771,6 +774,16 @@ class APIParse(object):
         course_list = prof_raw["courses"]
         average_rating = prof_raw["average_rating"]
 
-        out_prof = Professor(prof_name, course_list, prof_type, average_rating)
+        if "reviews" in prof_raw.keys():
+            reviews = prof_raw["reviews"]
+
+            for review in reviews:
+                del review["professor"]
+                del review["created"]
+
+        else:
+            reviews = None
+
+        out_prof = Professor(prof_name, course_list, prof_type, average_rating, reviews)
 
         return out_prof

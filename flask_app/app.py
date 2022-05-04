@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request
 from flask_app.backend.schedule import MySchedule
-from flask_app.backend.courses import CourseList, APIGet
+from flask_app.backend.courses import CourseList, APIGet, Professor
 from flask_app.forms import SearchForm, ClearAllCoursesForm, AddRemoveForm, NextPageOnAllCoursesPageForm, \
     PreviousPageOnAllCoursesPageForm, SearchForCourseForm, AddClassForm, ViewSectionsForm, SerializeScheduleForm
 
@@ -202,7 +202,7 @@ def professor_detail(name: str, slug):
             Professor slug to create a unique link to their page 
     """
 
-    professor = APIGet.get_professor_by_name(name)
+    professor = APIGet.get_professor_by_name(name, get_reviews="true")
     plantterp_link = "https://planetterp.com/professor/" + slug
     return render_template("professor_detail.html",
                            professor=professor,
