@@ -1,8 +1,8 @@
 from flask import Flask, render_template, request
 from flask_app.backend.schedule import MySchedule
 from flask_app.backend.courses import CourseList, APIGet, Professor
-from flask_app.forms import SearchForm, ClearAllCoursesForm, AddRemoveForm, NextPageOnAllCoursesPageForm, \
-    PreviousPageOnAllCoursesPageForm, SearchForCourseForm, AddClassForm, ViewSectionsForm, SerializeScheduleForm
+from flask_app.forms import SearchForm, ClearAllCoursesForm, AddRemoveForm, SearchForCourseForm, AddClassForm, \
+    ViewSectionsForm, SerializeScheduleForm
 
 app = Flask(__name__)
 app.debug = True
@@ -54,7 +54,8 @@ def index():
         try:
             courses_to_display = APIGet.get_course_heads_by_query(partial_course_code)
 
-            courses_to_display.sort(reverse=True, key=lambda this_course: (this_course.avg_gpa is not None, this_course.avg_gpa))
+            courses_to_display.sort(reverse=True, key=lambda this_course: (this_course.avg_gpa is not None,
+                                                                           this_course.avg_gpa))
         except ConnectionError as e:
             add_remove_notification_text = str(e)
 
@@ -173,7 +174,7 @@ def all_courses(page_num: int):
 def all_professors(page_num: int):
     """"
     Display a list of all professors that the student could try to take
-    Each professor is a hyerlink to their specific page 
+    Each professor is a hyerlink to their specific page
     Args:
         page_num: int
             The page number of all courses to load
@@ -199,7 +200,7 @@ def professor_detail(name: str, slug):
         name: string
             Professor name to get professor with
         slug: string
-            Professor slug to create a unique link to their page 
+            Professor slug to create a unique link to their page
     """
 
     professor = APIGet.get_professor_by_name(name, get_reviews="true")
