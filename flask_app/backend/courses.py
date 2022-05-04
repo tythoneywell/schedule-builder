@@ -27,6 +27,7 @@ class Course(object):
     @staticmethod
     def get_professor_average_rating(professor_name: str) -> Union[float, None]:
         """
+        TODO: Add unit tests
         Args:
             professor_name: str
                 Name of professor in section whose rating we want to get.
@@ -55,13 +56,13 @@ class Professor(object):
     @staticmethod
     def get_all_professors(page_num: int) -> Tuple[list, list, list]:
         """
-        Returns a list of professors 
+        Returns a list of professors
         Args:
             page_num: int
                 Page number for the professors to retrieve from planetterp API
         Returns:
             (professor_names, professor_slugs, professor_ratings): Tuple(list, list, list)
-                Tuple consisting of list of professor names and slugs and ratings for that page number 
+                Tuple consisting of list of professor names and slugs and ratings for that page number
         """
 
         page_num_offset = str((int(page_num) - 1) * 100)
@@ -142,8 +143,8 @@ class MeetingTime(object):
             return False
 
         return self.start_time == other.start_time \
-               and self.end_time == other.end_time \
-               and self.section_id == other.section_id
+            and self.end_time == other.end_time \
+            and self.section_id == other.section_id
 
     def __ne__(self, obj):
         return not self == obj
@@ -634,6 +635,7 @@ class APIParse(object):
     @staticmethod
     def umd_io_course_raw_to_course_head(course_raw: dict) -> Course:
         """
+        TODO: Add unit test
         Makes a response from umd.io's course get into a course (with no sections)
         Args:
             course_raw: dict[str, str]

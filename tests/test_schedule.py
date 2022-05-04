@@ -150,7 +150,7 @@ class ScheduleTest(unittest.TestCase):
         schedule.add_section(cmsc250)
         schedule.add_section(anth221)
         self.assertFalse(schedule.check_section_no_time_conflicts(chem271))
-        schedule.add_section(chem271)  # try to add chem in between even though its start time overlaps with 250 end time
+        schedule.add_section(chem271)  # try to add chem between even though its start time overlaps with 250 end time
         self.assertEqual(schedule.total_credits, 7)
 
     def test_class_formatted_weekly_schedule_correct(self):
@@ -187,6 +187,51 @@ class ScheduleTest(unittest.TestCase):
         schedule = MySchedule()
         schedule.load_serialized_schedule("")
         self.assertEqual(schedule.total_credits, 0)
+
+    def test_load_serialized_schedule_invalid_course_format(self):
+        schedule = MySchedule()
+        schedule.load_serialized_schedule("fdgdfgsdf0103")
+        self.assertEqual(len(schedule.warnings_list), 1)
+        schedule.load_serialized_schedule("CMSC1310103")
+        self.assertEqual(len(schedule.warnings_list), 2)
+
+    def test_load_serialized_schedule_invalid_course(self):
+        schedule = MySchedule()
+        schedule.load_serialized_schedule("CM-0101")
+        self.assertEqual(len(schedule.warnings_list), 1)
+
+    def test_load_serialized_schedule_invalid_section_for_valid_course(self):
+        schedule = MySchedule()
+        schedule.load_serialized_schedule("CMSC131-9999")
+        self.assertEqual(len(schedule.warnings_list), 1)
+
+    def test_add_duplicate_course_doesnt_add_again(self):
+        schedule = MySchedule()
+        cmsc250 = test_util_instance.courses["CMSC250"]
+        schedule.add_course(cmsc250)
+        self.assertEqual(schedule.add_course(cmsc250), "CMSC250 already present in schedule.")
+
+    def test_remove_course_actually_in_schedule(self):
+        schedule = MySchedule()
+        cmsc250 = test_util_instance.courses["CMSC250"]
+        schedule.add_course(cmsc250)
+        self.assertEqual(schedule.remove_course(cmsc250), "CMSC250 removed.")
+
+    def test_remove_course_not_in_schedule(self):
+        schedule = MySchedule()
+        cmsc250 = test_util_instance.courses["CMSC250"]
+        self.assertEqual(schedule.remove_course(cmsc250), "CMSC250 not in schedule.")
+
+    def test_get_course_color_of_course_in_schedule(self):
+        schedule = MySchedule()
+        cmsc250 = test_util_instance.courses["CMSC250"]
+        schedule.add_course(cmsc250)
+        self.assertNotEqual(schedule.get_course_color(cmsc250), "black")
+
+    def test_get_course_color_of_course_not_in_schedule(self):
+        schedule = MySchedule()
+        comm107 = test_util_instance.courses["COMM107"]
+        self.assertEqual(schedule.get_course_color(comm107), "black")
 
 
 class ScheduleWarningTest(unittest.TestCase):

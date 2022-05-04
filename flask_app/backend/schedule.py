@@ -170,6 +170,7 @@ class MySchedule(object):
 
     def add_registered_course_section_by_id(self, section_id: str) -> str:
         """
+        TODO: Add unit test
         Args:
             section_id: str
                 Section ID to try to add, from an already registered course.
@@ -187,6 +188,7 @@ class MySchedule(object):
 
     def remove_registered_course_section_by_id(self, section_to_remove: Section) -> str:
         """
+        TODO: Add unit test
         Args:
             section_to_remove: Section
                 Section to try to remove.
@@ -277,10 +279,22 @@ class MySchedule(object):
             return
         section_arr = str_schedule.split(",")
         for section in section_arr:
+            #  if there is no - in the string, this is not a valid section to add to schedule
+            if section.find('-') < 0:
+                self.warnings_list.append(MySchedule.ScheduleWarning([section], "invalid format"))
+                continue
             course_code_without_section = section.split("-")[0]
             course_section_number = section.split("-")[1]
-            course_to_extract_section_from = CourseList.get_course_using_course_code(course_code_without_section)
-            self.add_section(course_to_extract_section_from.sections[course_section_number])
+            try:
+                course_to_extract_section_from = CourseList.get_course_using_course_code(course_code_without_section)
+                self.add_section(course_to_extract_section_from.sections[course_section_number])
+            except ConnectionError:
+                self.warnings_list.append(MySchedule.ScheduleWarning([course_code_without_section],
+                                                                     "course does not exist"))
+            except KeyError:
+                self.warnings_list.append(MySchedule.ScheduleWarning([course_code_without_section,
+                                                                      course_section_number],
+                                                                     "section number does not exist"))
 
     def get_course_color(self, course: Course):
         """
@@ -313,3 +327,9 @@ class MySchedule(object):
                 self.warning_text = \
                     involved_sections[0].section_id + \
                     " has no open seats and must be waitlisted."
+            elif warning_type == "course does not exist":
+                self.warning_text = involved_sections[0] + " is not a valid course code"
+            elif warning_type == "section number does not exist":
+                self.warning_text = involved_sections[1] + " is not a valid section number for " + involved_sections[0]
+            elif warning_type == "invalid format":
+                self.warning_text = involved_sections[0] + " is not a valid format of <course>-<section>"
