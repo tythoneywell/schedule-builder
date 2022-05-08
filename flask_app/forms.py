@@ -81,3 +81,8 @@ class SerializeScheduleForm(FlaskForm):
     load_schedule = SubmitField("Load Schedule Data")
 
 
+class GenEdSearchForm(FlaskForm):
+    """
+    Form to search for classes that are a certain gen ed
+    """
+    search_by_gened = SubmitField("Search for Gen Eds")
