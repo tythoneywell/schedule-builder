@@ -1,8 +1,8 @@
 from flask import Flask, render_template, request
 from flask_app.backend.schedule import MySchedule
 from flask_app.backend.courses import CourseList, APIGet, Professor
-from flask_app.forms import SearchForm, ClearAllCoursesForm, AddRemoveForm, SearchForCourseForm, AddClassForm, \
-    ViewSectionsForm, SerializeScheduleForm
+from flask_app.forms import SearchForm, ClearAllCoursesForm, AddRemoveForm, SearchForCourseForm, \
+    AddClassForm, ViewSectionsForm, SerializeScheduleForm, GenEdSearchForm
 
 app = Flask(__name__)
 app.debug = True
@@ -46,6 +46,9 @@ def index():
     view_sections_form = ViewSectionsForm()
     serialize_schedule_form = SerializeScheduleForm()
     serialized_schedule = None
+    gen_ed_search_form = GenEdSearchForm()
+    all_gen_ends = ["SCIS", "DVCC", "DVUP", "DSHS",
+                    "DSHU", "DSNS", "DSNL", "DSSP", "FSAW", "FSAR", "FSMA", "FSOC", "FSPW"]
 
     if search_for_course_form.search_for_course.data and \
             search_for_course_form.validate_on_submit():
@@ -79,6 +82,13 @@ def index():
 
         except ConnectionError as e:
             add_remove_notification_text = str(e)
+
+    if gen_ed_search_form.validate_on_submit():
+        list_of_gen_eds_selected = request.form.getlist("gened")
+        list_of_gen_eds_selected_str = "You selected the following gen eds: "
+        for gen_ed in list_of_gen_eds_selected:
+            list_of_gen_eds_selected_str += gen_ed + " "
+        return list_of_gen_eds_selected_str
 
     if clear_all_courses_form.clear_all.data and clear_all_courses_form.validate_on_submit():
         if schedule.total_credits == 0:
@@ -153,7 +163,9 @@ def index():
                            view_sections_form=view_sections_form,
                            expanded_course_to_display=expanded_course_to_display,
                            serialize_schedule_form=serialize_schedule_form,
-                           serialized_schedule=serialized_schedule)
+                           serialized_schedule=serialized_schedule,
+                           gen_ed_search_form=gen_ed_search_form,
+                           all_gen_ends=all_gen_ends)
 
 
 @app.route('/all_courses/<page_num>', methods=['GET', 'POST'])

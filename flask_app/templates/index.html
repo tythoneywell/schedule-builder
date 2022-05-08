@@ -259,6 +259,25 @@
 </div>
 
 <div class="container">
+    <h2>Search by checking which gen eds you want</h2>
+</div>
+<div class="container">
+    <form action="" method="POST">
+        {{ gen_ed_search_form.csrf_token }}
+        {% for gen_ed in all_gen_ends %}
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="{{gen_ed}}"" id="flexCheckDefault" name="gened">
+                <label class="form-check-label" for="flexCheckDefault">
+                    {{gen_ed}}
+                </label>
+            </div>
+        {% endfor %}
+
+        {{ gen_ed_search_form.search_by_gened(class="btn btn-outline-success") }}
+    </form>
+</div>
+  
+<div class="container">
     <h2>Remove all courses from schedule</h2>
 </div>
 <div class="container">
