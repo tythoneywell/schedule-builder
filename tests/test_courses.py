@@ -1,5 +1,5 @@
 import unittest
-from flask_app.backend.courses import CourseList, APIGet, RequestProxy
+from flask_app.backend.courses import CourseList, APIGet, RequestProxy, Course
 from tests.utils import TestUtils
 
 test_util_instance = TestUtils()
@@ -93,8 +93,18 @@ class CourseTest(unittest.TestCase):
         self.assertEqual(hash(meeting_times_cmsc250_dict["M"][0]), hash(meeting_times_cmsc250_dict["M"][0]))
 
     def test_course_correct_professor_rating_static_method(self):
-        professor_json = APIGet.get_professor_by_name("Erin Callahan")
-        self.assertEqual(5.0, professor_json.average_rating)
+        rating = Course.get_professor_average_rating("Erin Callahan")
+        self.assertEqual(5.0, rating)
+
+    def test_course_correct_prof_rating_order(self):
+        cmsc420 = CourseList.get_course_using_course_code("CMSC420")
+        # print(cmsc420.professor_to_sections)
+        self.assertEqual(list(cmsc420.professor_to_sections.keys()),
+                         ['Justin Wyss-Gallifent', 'David Mount', 'Michael Marsh', 'Hanan Samet'])
+    
+    def test_course_empty_prof_rating_order(self):
+        empty_course = Course('cmsc250', 'cmsc250', 3, {}, {}, {})
+        self.assertEqual(list(empty_course.professor_to_sections.keys()), [])
 
 
 class APIGetAndParseTest(unittest.TestCase):
