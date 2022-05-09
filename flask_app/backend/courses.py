@@ -3,6 +3,7 @@ from typing import Tuple, Union
 import requests
 import re
 from datetime import datetime
+from collections import OrderedDict
 
 
 class Course(object):
@@ -27,7 +28,7 @@ class Course(object):
     @staticmethod
     def get_professor_average_rating(professor_name: str) -> Union[float, None]:
         """
-        TODO: Add unit tests
+        Retrieves an average Planetterp rating for a specified professor by the name
         Args:
             professor_name: str
                 Name of professor in section whose rating we want to get.
@@ -39,6 +40,19 @@ class Course(object):
             return APIGet.get_professor_by_name(professor_name).average_rating
         except ConnectionError:
             return None
+
+    def set_sorted_professors_by_rating(self) -> None:
+        """
+        This function sorts the existing professors to sections object by the rating to display
+        the results properly in sorted order.
+        Args:
+            None
+        Returns:
+            None
+        """
+        self.professor_to_sections =  dict(OrderedDict(sorted(self.professor_to_sections.items(),
+            key = lambda prof : (Course.get_professor_average_rating(prof[0]) is not None,
+                 Course.get_professor_average_rating(prof[0])), reverse = True)))
 
 
 class Professor(object):
@@ -273,6 +287,7 @@ class APIGet(object):
         out_course = APIGet.get_course_head_by_course_code(course_code)
         out_course.sections, out_course.professor_to_sections = APIGet.get_sections_list_by_course(out_course)
         out_course.professor_to_avg_course_gpa = APIGet.get_professor_gpa_breakdown_by_course(course_code)
+        out_course.set_sorted_professors_by_rating()
 
         return out_course
 
