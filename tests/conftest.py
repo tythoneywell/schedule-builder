@@ -1,6 +1,6 @@
 import pytest
 
-from flask_app.app import GetApp
+from flask_app.app import create_app
 
 
 @pytest.fixture
@@ -8,7 +8,7 @@ def app(request):
     """
     Get app object and set it up for testing
     """
-    app = GetApp.get_app()
+    app = create_app()
     app.debug = True
     app.config['SECRET_KEY'] = "super secret key"
     app.config['TESTING'] = True

@@ -15,7 +15,21 @@ class AddClassForm(FlaskForm):
     """
     Form to add class from the search results
     """
-    submit2 = SubmitField('Submit')
+    submit = SubmitField('Submit')
+
+
+class AddSectionForm(FlaskForm):
+    """
+    Form to add class from the search results
+    """
+    submit = SubmitField('Submit')
+
+
+class ViewSectionsForm(FlaskForm):
+    """
+    Form to view sections from the list of added or searched courses
+    """
+    submit = SubmitField('Submit')
 
 
 class AddRemoveForm(FlaskForm):
@@ -35,7 +49,7 @@ class ClearAllCoursesForm(FlaskForm):
     clear_all = SubmitField('Clear Schedule')
 
 
-class SearchForCourseSectionsForm(FlaskForm):
+class SearchForCourseForm(FlaskForm):
     """
     Form to search for course and display sections
     """
@@ -55,3 +69,21 @@ class PreviousPageOnAllCoursesPageForm(FlaskForm):
     Form to select previous page on route for all pages
     """
     previous_page = SubmitField('Previous Page')
+
+
+class SerializeScheduleForm(FlaskForm):
+    """
+    Form to serialize the current schedule for the user to copy, to be loaded later.
+    Form also loads serialized data that was previously copied
+    """
+    serialize_schedule = SubmitField('Get Schedule Data')
+    display_serialized_schedule = StringField('Schedule Data')
+    load_schedule = SubmitField("Load Schedule Data")
+
+
+class GenEdSearchForm(FlaskForm):
+    """
+    Form to search for classes that are a certain gen ed
+    """
+    department_id = StringField("Department ID")
+    search_by_gened = SubmitField("Search for Gen Eds")
