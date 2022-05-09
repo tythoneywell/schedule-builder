@@ -30,6 +30,7 @@ class Course(object):
     def get_professor_average_rating(professor_name: str) -> Union[float, None]:
         """
         Retrieves an average Planetterp rating for a specified professor by the name
+
         Args:
             professor_name: str
                 Name of professor in section whose rating we want to get.
@@ -46,12 +47,13 @@ class Course(object):
         """
         This function sorts the existing professors to sections object by the rating to display
         the results properly in sorted order.
+
         Args:
             None
         Returns:
             None
         """
-        self.professor_to_sections =  dict(OrderedDict(sorted(self.professor_to_sections.items(),
+        self.professor_to_sections = dict(OrderedDict(sorted(self.professor_to_sections.items(),
             key = lambda prof : (Course.get_professor_average_rating(prof[0]) is not None,
                  Course.get_professor_average_rating(prof[0])), reverse = True)))
 
@@ -72,6 +74,7 @@ class Professor(object):
     def get_all_professors(page_num: int) -> Tuple[list, list, list]:
         """
         Returns a list of professors
+
         Args:
             page_num: int
                 Page number for the professors to retrieve from planetterp API
@@ -180,9 +183,11 @@ class CourseList(object):
         this function will call the umd.io API and give back a Course object
         This function will raise an exception if the course code or sections information
         cannot be found on the API (status code from response is not 200)
+
         Args:
             course_code: str
                 String of the course code (e.g. cmsc131)
+
         Returns:
             course: Course
                 Returns a Course object corresponding with the course code string
@@ -196,6 +201,7 @@ class CourseList(object):
         dictionary of course objects in alphabetical order
         in order to display them all on the "see all courses" page
         Each page has 30 courses
+
         Args:
             page_num: int
                 The page number of all courses to load
@@ -254,6 +260,7 @@ class APIGet(object):
         """
         Gets a list of courses (without sections) that match a given query.
         To be used when searching for a course to be added to schedule.
+
         Args:
             query: str
                  Search string to search on planetterp
@@ -277,6 +284,7 @@ class APIGet(object):
         """
         Gets a complete course (with sections) given its course code.
         To be used when adding a course to the schedule.
+
         Args:
             course_code: str
                 Course code of the course to be gotten.
@@ -297,6 +305,7 @@ class APIGet(object):
         """
         Gets a course "head" (without sections) given its course code.
         Helper method of get_course_heads_by_query and get_complete_course_by_course_code.
+
         Args:
             course_code: str
                 Course code of the course to be gotten.
@@ -316,7 +325,8 @@ class APIGet(object):
         dictionary of course objects in alphabetical order
         in order to display them all on the "see all courses" page
         Each page has 30 courses
-        Args:
+
+        :
             page_num: int
                 The page number of all courses to load
         Returns:
@@ -768,6 +778,7 @@ class APIParse(object):
     def planetterp_course_raw_to_course_head(course_raw: dict) -> Course:
         """
         Makes a response from planetterp's course get into a course (with no sections)
+
         Args:
             course_raw: dict[str, str]
                 The raw response of the planetterp API (converted from json to dict)
@@ -792,8 +803,9 @@ class APIParse(object):
     @staticmethod
     def umd_io_course_raw_to_course_head(course_raw: dict) -> Course:
         """
-        TODO: Add unit test
+        TODO Add unit test
         Makes a response from umd.io's course get into a course (with no sections)
+
         Args:
             course_raw: dict[str, str]
                 The raw response of the umd.io API (converted from json to dict)
@@ -820,6 +832,7 @@ class APIParse(object):
             -> Tuple[dict, dict]:
         """
         Makes a response from umd.io's sections get into a list of sections
+
         Args:
             sections_raw: dict[str, str]
                 The raw response of the umd.io API (converted from json to dict)
@@ -858,6 +871,7 @@ class APIParse(object):
     def planetterp_raw_grade_distribution_to_gpa(grades_raw: list) -> dict:
         """
         Makes a response from planetterps's grades get into a gpa float
+
         Args:
             grades_raw: dict[str, str]
                 The raw response of the planetterp API (converted from json to dict)
@@ -922,6 +936,7 @@ class APIParse(object):
     def planetterp_prof_raw_to_prof_head(prof_raw: dict) -> Professor:
         """
         Makes a response from planetterp's professor get into a course (with no sections)
+
         Args:
             prof_raw: dict[str, str]
                 The raw response of the planetterp API (converted from json to dict)

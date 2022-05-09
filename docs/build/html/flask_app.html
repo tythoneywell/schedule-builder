@@ -1,0 +1,317 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>flask_app package &#8212; UMD Schedule Builder 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="flask_app.backend package" href="flask_app.backend.html" />
+    <link rel="prev" title="Welcome to UMD Schedule Builder’s documentation!" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="flask-app-package">
+<h1>flask_app package<a class="headerlink" href="#flask-app-package" title="Permalink to this headline">¶</a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="flask_app.backend.html">flask_app.backend package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="flask_app.backend.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="flask_app.backend.html#module-flask_app.backend.courses">flask_app.backend.courses module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="flask_app.backend.html#module-flask_app.backend.schedule">flask_app.backend.schedule module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="flask_app.backend.html#module-flask_app.backend">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="module-flask_app.app">
+<span id="flask-app-app-module"></span><h2>flask_app.app module<a class="headerlink" href="#module-flask_app.app" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="flask_app.app.create_app">
+<span class="sig-prename descclassname"><span class="pre">flask_app.app.</span></span><span class="sig-name descname"><span class="pre">create_app</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#flask_app.app.create_app" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates the actual flask app</p>
+</dd></dl>
+
+</section>
+<section id="module-flask_app.forms">
+<span id="flask-app-forms-module"></span><h2>flask_app.forms module<a class="headerlink" href="#module-flask_app.forms" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="flask_app.forms.AddClassForm">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">flask_app.forms.</span></span><span class="sig-name descname"><span class="pre">AddClassForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#flask_app.forms.AddClassForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">flask_wtf.form.FlaskForm</span></code></p>
+<p>Form to add class from the search results</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="flask_app.forms.AddClassForm.submit">
+<span class="sig-name descname"><span class="pre">submit</span></span><em class="property"> <span class="pre">=</span> <span class="pre">&lt;UnboundField(SubmitField,</span> <span class="pre">('Submit',),</span> <span class="pre">{})&gt;</span></em><a class="headerlink" href="#flask_app.forms.AddClassForm.submit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="flask_app.forms.AddRemoveForm">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">flask_app.forms.</span></span><span class="sig-name descname"><span class="pre">AddRemoveForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#flask_app.forms.AddRemoveForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">flask_wtf.form.FlaskForm</span></code></p>
+<p>Form to add or remove a class from the schedule</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="flask_app.forms.AddRemoveForm.add">
+<span class="sig-name descname"><span class="pre">add</span></span><em class="property"> <span class="pre">=</span> <span class="pre">&lt;UnboundField(SubmitField,</span> <span class="pre">('Add',),</span> <span class="pre">{})&gt;</span></em><a class="headerlink" href="#flask_app.forms.AddRemoveForm.add" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="flask_app.forms.AddRemoveForm.course_query">
+<span class="sig-name descname"><span class="pre">course_query</span></span><em class="property"> <span class="pre">=</span> <span class="pre">&lt;UnboundField(StringField,</span> <span class="pre">('Course</span> <span class="pre">Code',),</span> <span class="pre">{'validators':</span> <span class="pre">[&lt;wtforms.validators.InputRequired</span> <span class="pre">object&gt;]})&gt;</span></em><a class="headerlink" href="#flask_app.forms.AddRemoveForm.course_query" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="flask_app.forms.AddRemoveForm.remove">
+<span class="sig-name descname"><span class="pre">remove</span></span><em class="property"> <span class="pre">=</span> <span class="pre">&lt;UnboundField(SubmitField,</span> <span class="pre">('Remove',),</span> <span class="pre">{})&gt;</span></em><a class="headerlink" href="#flask_app.forms.AddRemoveForm.remove" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="flask_app.forms.AddRemoveForm.section_query">
+<span class="sig-name descname"><span class="pre">section_query</span></span><em class="property"> <span class="pre">=</span> <span class="pre">&lt;UnboundField(StringField,</span> <span class="pre">('Section</span> <span class="pre">Number',),</span> <span class="pre">{'validators':</span> <span class="pre">[&lt;wtforms.validators.InputRequired</span> <span class="pre">object&gt;]})&gt;</span></em><a class="headerlink" href="#flask_app.forms.AddRemoveForm.section_query" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="flask_app.forms.AddSectionForm">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">flask_app.forms.</span></span><span class="sig-name descname"><span class="pre">AddSectionForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#flask_app.forms.AddSectionForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">flask_wtf.form.FlaskForm</span></code></p>
+<p>Form to add class from the search results</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="flask_app.forms.AddSectionForm.submit">
+<span class="sig-name descname"><span class="pre">submit</span></span><em class="property"> <span class="pre">=</span> <span class="pre">&lt;UnboundField(SubmitField,</span> <span class="pre">('Submit',),</span> <span class="pre">{})&gt;</span></em><a class="headerlink" href="#flask_app.forms.AddSectionForm.submit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="flask_app.forms.ClearAllCoursesForm">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">flask_app.forms.</span></span><span class="sig-name descname"><span class="pre">ClearAllCoursesForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#flask_app.forms.ClearAllCoursesForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">flask_wtf.form.FlaskForm</span></code></p>
+<p>Form to clear all courses from the schedule</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="flask_app.forms.ClearAllCoursesForm.clear_all">
+<span class="sig-name descname"><span class="pre">clear_all</span></span><em class="property"> <span class="pre">=</span> <span class="pre">&lt;UnboundField(SubmitField,</span> <span class="pre">('Clear</span> <span class="pre">Schedule',),</span> <span class="pre">{})&gt;</span></em><a class="headerlink" href="#flask_app.forms.ClearAllCoursesForm.clear_all" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="flask_app.forms.GenEdSearchForm">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">flask_app.forms.</span></span><span class="sig-name descname"><span class="pre">GenEdSearchForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#flask_app.forms.GenEdSearchForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">flask_wtf.form.FlaskForm</span></code></p>
+<p>Form to search for classes that are a certain gen ed</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="flask_app.forms.GenEdSearchForm.search_by_gened">
+<span class="sig-name descname"><span class="pre">search_by_gened</span></span><em class="property"> <span class="pre">=</span> <span class="pre">&lt;UnboundField(SubmitField,</span> <span class="pre">('Search</span> <span class="pre">for</span> <span class="pre">Gen</span> <span class="pre">Eds',),</span> <span class="pre">{})&gt;</span></em><a class="headerlink" href="#flask_app.forms.GenEdSearchForm.search_by_gened" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="flask_app.forms.NextPageOnAllCoursesPageForm">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">flask_app.forms.</span></span><span class="sig-name descname"><span class="pre">NextPageOnAllCoursesPageForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#flask_app.forms.NextPageOnAllCoursesPageForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">flask_wtf.form.FlaskForm</span></code></p>
+<p>Form to select next page on route for all pages</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="flask_app.forms.NextPageOnAllCoursesPageForm.next_page">
+<span class="sig-name descname"><span class="pre">next_page</span></span><em class="property"> <span class="pre">=</span> <span class="pre">&lt;UnboundField(SubmitField,</span> <span class="pre">('Next</span> <span class="pre">Page',),</span> <span class="pre">{})&gt;</span></em><a class="headerlink" href="#flask_app.forms.NextPageOnAllCoursesPageForm.next_page" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="flask_app.forms.PreviousPageOnAllCoursesPageForm">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">flask_app.forms.</span></span><span class="sig-name descname"><span class="pre">PreviousPageOnAllCoursesPageForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#flask_app.forms.PreviousPageOnAllCoursesPageForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">flask_wtf.form.FlaskForm</span></code></p>
+<p>Form to select previous page on route for all pages</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="flask_app.forms.PreviousPageOnAllCoursesPageForm.previous_page">
+<span class="sig-name descname"><span class="pre">previous_page</span></span><em class="property"> <span class="pre">=</span> <span class="pre">&lt;UnboundField(SubmitField,</span> <span class="pre">('Previous</span> <span class="pre">Page',),</span> <span class="pre">{})&gt;</span></em><a class="headerlink" href="#flask_app.forms.PreviousPageOnAllCoursesPageForm.previous_page" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="flask_app.forms.SearchForCourseForm">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">flask_app.forms.</span></span><span class="sig-name descname"><span class="pre">SearchForCourseForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#flask_app.forms.SearchForCourseForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">flask_wtf.form.FlaskForm</span></code></p>
+<p>Form to search for course and display sections</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="flask_app.forms.SearchForCourseForm.search_for_course">
+<span class="sig-name descname"><span class="pre">search_for_course</span></span><em class="property"> <span class="pre">=</span> <span class="pre">&lt;UnboundField(SubmitField,</span> <span class="pre">('Search',),</span> <span class="pre">{})&gt;</span></em><a class="headerlink" href="#flask_app.forms.SearchForCourseForm.search_for_course" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="flask_app.forms.SearchForCourseForm.search_query">
+<span class="sig-name descname"><span class="pre">search_query</span></span><em class="property"> <span class="pre">=</span> <span class="pre">&lt;UnboundField(StringField,</span> <span class="pre">('Course</span> <span class="pre">To</span> <span class="pre">Search',),</span> <span class="pre">{'validators':</span> <span class="pre">[&lt;wtforms.validators.InputRequired</span> <span class="pre">object&gt;]})&gt;</span></em><a class="headerlink" href="#flask_app.forms.SearchForCourseForm.search_query" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="flask_app.forms.SearchForm">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">flask_app.forms.</span></span><span class="sig-name descname"><span class="pre">SearchForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#flask_app.forms.SearchForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">flask_wtf.form.FlaskForm</span></code></p>
+<p>Form to search for a course and then be able to add course</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="flask_app.forms.SearchForm.search_query">
+<span class="sig-name descname"><span class="pre">search_query</span></span><em class="property"> <span class="pre">=</span> <span class="pre">&lt;UnboundField(StringField,</span> <span class="pre">('Query',),</span> <span class="pre">{'validators':</span> <span class="pre">[&lt;wtforms.validators.InputRequired</span> <span class="pre">object&gt;]})&gt;</span></em><a class="headerlink" href="#flask_app.forms.SearchForm.search_query" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="flask_app.forms.SearchForm.submit">
+<span class="sig-name descname"><span class="pre">submit</span></span><em class="property"> <span class="pre">=</span> <span class="pre">&lt;UnboundField(SubmitField,</span> <span class="pre">('Submit',),</span> <span class="pre">{})&gt;</span></em><a class="headerlink" href="#flask_app.forms.SearchForm.submit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="flask_app.forms.SerializeScheduleForm">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">flask_app.forms.</span></span><span class="sig-name descname"><span class="pre">SerializeScheduleForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#flask_app.forms.SerializeScheduleForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">flask_wtf.form.FlaskForm</span></code></p>
+<p>Form to serialize the current schedule for the user to copy, to be loaded later.
+Form also loads serialized data that was previously copied</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="flask_app.forms.SerializeScheduleForm.display_serialized_schedule">
+<span class="sig-name descname"><span class="pre">display_serialized_schedule</span></span><em class="property"> <span class="pre">=</span> <span class="pre">&lt;UnboundField(StringField,</span> <span class="pre">('Schedule</span> <span class="pre">Data',),</span> <span class="pre">{})&gt;</span></em><a class="headerlink" href="#flask_app.forms.SerializeScheduleForm.display_serialized_schedule" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="flask_app.forms.SerializeScheduleForm.load_schedule">
+<span class="sig-name descname"><span class="pre">load_schedule</span></span><em class="property"> <span class="pre">=</span> <span class="pre">&lt;UnboundField(SubmitField,</span> <span class="pre">('Load</span> <span class="pre">Schedule</span> <span class="pre">Data',),</span> <span class="pre">{})&gt;</span></em><a class="headerlink" href="#flask_app.forms.SerializeScheduleForm.load_schedule" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="flask_app.forms.SerializeScheduleForm.serialize_schedule">
+<span class="sig-name descname"><span class="pre">serialize_schedule</span></span><em class="property"> <span class="pre">=</span> <span class="pre">&lt;UnboundField(SubmitField,</span> <span class="pre">('Get</span> <span class="pre">Schedule</span> <span class="pre">Data',),</span> <span class="pre">{})&gt;</span></em><a class="headerlink" href="#flask_app.forms.SerializeScheduleForm.serialize_schedule" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="flask_app.forms.ViewSectionsForm">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">flask_app.forms.</span></span><span class="sig-name descname"><span class="pre">ViewSectionsForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#flask_app.forms.ViewSectionsForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">flask_wtf.form.FlaskForm</span></code></p>
+<p>Form to view sections from the list of added or searched courses</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="flask_app.forms.ViewSectionsForm.submit">
+<span class="sig-name descname"><span class="pre">submit</span></span><em class="property"> <span class="pre">=</span> <span class="pre">&lt;UnboundField(SubmitField,</span> <span class="pre">('Submit',),</span> <span class="pre">{})&gt;</span></em><a class="headerlink" href="#flask_app.forms.ViewSectionsForm.submit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-flask_app">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-flask_app" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">UMD Schedule Builder</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">flask_app package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#subpackages">Subpackages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-flask_app.app">flask_app.app module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-flask_app.forms">flask_app.forms module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-flask_app">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tests.html">tests package</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Welcome to UMD Schedule Builder’s documentation!</a></li>
+      <li>Next: <a href="flask_app.backend.html" title="next chapter">flask_app.backend package</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2022, Michelle Fang, Tyler Honeywell, Amar Mujumdar, Daniel Niezelski, and Andrew Schuck.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.2.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/flask_app.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

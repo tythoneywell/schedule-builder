@@ -76,7 +76,7 @@ def create_app():
             except ConnectionError as e:
                 add_remove_notification_text = str(e)
 
-        if gen_ed_search_form.validate_on_submit():
+        if request.form.getlist("gened") != [] and gen_ed_search_form.validate_on_submit():
             list_of_gen_eds_selected = request.form.getlist("gened")
             if len(list_of_gen_eds_selected) > 0:
                 courses_to_display = APIGet.get_course_list_by_gen_ed(
@@ -184,7 +184,7 @@ def create_app():
     def all_professors(page_num: int):
         """"
         Display a list of all professors that the student could try to take
-        Each professor is a hyerlink to their specific page 
+        Each professor is a hyerlink to their specific page
         Args:
             page_num: int
                 The page number of all courses to load
@@ -209,7 +209,7 @@ def create_app():
             name: string
                 Professor name to get professor with
             slug: string
-                Professor slug to create a unique link to their page 
+                Professor slug to create a unique link to their page
         """
 
         professor = APIGet.get_professor_by_name(name, get_reviews="true")
@@ -221,8 +221,8 @@ def create_app():
     @app.route('/tutorial', methods=['GET'])
     def tutorial():
         """"
-        Tutorial page explaining how to use the schedule builder 
+        Tutorial page explaining how to use the schedule builder
         """
         return render_template("tutorial.html")
-        
+
     return app

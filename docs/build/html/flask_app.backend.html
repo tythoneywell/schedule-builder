@@ -1,0 +1,1040 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>flask_app.backend package &#8212; UMD Schedule Builder 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="tests package" href="tests.html" />
+    <link rel="prev" title="flask_app package" href="flask_app.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="flask-app-backend-package">
+<h1>flask_app.backend package<a class="headerlink" href="#flask-app-backend-package" title="Permalink to this headline">¶</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="module-flask_app.backend.courses">
+<span id="flask-app-backend-courses-module"></span><h2>flask_app.backend.courses module<a class="headerlink" href="#module-flask_app.backend.courses" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="flask_app.backend.courses.APIGet">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">flask_app.backend.courses.</span></span><span class="sig-name descname"><span class="pre">APIGet</span></span><a class="headerlink" href="#flask_app.backend.courses.APIGet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Static class which handles API calls to retrieve course/section info.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="flask_app.backend.courses.APIGet.get_complete_course_by_course_code">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_complete_course_by_course_code</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">course_code</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#flask_app.backend.courses.Course" title="flask_app.backend.courses.Course"><span class="pre">flask_app.backend.courses.Course</span></a></span></span><a class="headerlink" href="#flask_app.backend.courses.APIGet.get_complete_course_by_course_code" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a complete course (with sections) given its course code.
+To be used when adding a course to the schedule.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>course_code</strong> – str
+Course code of the course to be gotten.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>Course</dt><dd><p>Course returned by combined responses of
+planetterp and umd.io APIs</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>course</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="flask_app.backend.courses.APIGet.get_course_head_by_course_code">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_course_head_by_course_code</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">course_code</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#flask_app.backend.courses.Course" title="flask_app.backend.courses.Course"><span class="pre">flask_app.backend.courses.Course</span></a></span></span><a class="headerlink" href="#flask_app.backend.courses.APIGet.get_course_head_by_course_code" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a course “head” (without sections) given its course code.
+Helper method of get_course_heads_by_query and get_complete_course_by_course_code.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>course_code</strong> – str
+Course code of the course to be gotten.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>Course</dt><dd><p>Course returned by planetterp API, without sections.
+Will have rating info, etc.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>course</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="flask_app.backend.courses.APIGet.get_course_heads_by_query">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_course_heads_by_query</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="headerlink" href="#flask_app.backend.courses.APIGet.get_course_heads_by_query" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a list of courses (without sections) that match a given query.
+To be used when searching for a course to be added to schedule.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>query</strong> – str
+Search string to search on planetterp</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>list[Course]</dt><dd><p>List of courses that were found by this search,
+without sections. (Course “heads”)</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>found_courses</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="flask_app.backend.courses.APIGet.get_course_list_by_page_number">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_course_list_by_page_number</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">page_num</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#flask_app.backend.courses.APIGet.get_course_list_by_page_number" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a page number, this function will call the API and give back a
+dictionary of course objects in alphabetical order
+in order to display them all on the “see all courses” page
+Each page has 30 courses</p>
+<dl class="simple">
+<dt>:</dt><dd><dl class="simple">
+<dt>page_num: int</dt><dd><p>The page number of all courses to load</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>dict</dt><dd><p>Dictionary of courses in alphabetical order to display in the “all courses” page (max of 30)</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>courses</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="flask_app.backend.courses.APIGet.get_professor_by_name">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_professor_by_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">professor_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">get_reviews</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'false'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#flask_app.backend.courses.Professor" title="flask_app.backend.courses.Professor"><span class="pre">flask_app.backend.courses.Professor</span></a></span></span><a class="headerlink" href="#flask_app.backend.courses.APIGet.get_professor_by_name" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Params:</dt><dd><dl class="simple">
+<dt>professor_name: str</dt><dd><p>Professor Name whose object we want to get</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>Professor</dt><dd><p>The object of this professor</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>professor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="flask_app.backend.courses.APIGet.get_professor_gpa_breakdown_by_course">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_professor_gpa_breakdown_by_course</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">course_code</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#flask_app.backend.courses.APIGet.get_professor_gpa_breakdown_by_course" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Params:</dt><dd><dl class="simple">
+<dt>course_code: str</dt><dd><p>Course code of class to query grade information</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>dict</dt><dd><p>Dictionary of [str:float] of professor to calculated average gpa of specific course when taught by that
+professor</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>gpa</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="flask_app.backend.courses.APIGet.get_sections_list_by_course">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_sections_list_by_course</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">course</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#flask_app.backend.courses.Course" title="flask_app.backend.courses.Course"><span class="pre">flask_app.backend.courses.Course</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span></span></span><a class="headerlink" href="#flask_app.backend.courses.APIGet.get_sections_list_by_course" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Params:</dt><dd><dl class="simple">
+<dt>course: Course</dt><dd><p>Base course to get sections of</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>dict[str, Section]</dt><dd><p>Sections of this course, from umd.io</p>
+</dd>
+<dt>professors: dict[str, Section]</dt><dd><p>Professors teaching this course with a list of their sections, from umd.io</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>sections</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="flask_app.backend.courses.APIGet.headers">
+<span class="sig-name descname"><span class="pre">headers</span></span><em class="property"> <span class="pre">=</span> <span class="pre">{'Accept':</span> <span class="pre">'application/json'}</span></em><a class="headerlink" href="#flask_app.backend.courses.APIGet.headers" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="flask_app.backend.courses.APIParse">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">flask_app.backend.courses.</span></span><span class="sig-name descname"><span class="pre">APIParse</span></span><a class="headerlink" href="#flask_app.backend.courses.APIParse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Static class which parses API responses.
+Extract their contents using .json() before calling this class.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="flask_app.backend.courses.APIParse.planetterp_course_raw_to_course_head">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">planetterp_course_raw_to_course_head</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">course_raw</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#flask_app.backend.courses.Course" title="flask_app.backend.courses.Course"><span class="pre">flask_app.backend.courses.Course</span></a></span></span><a class="headerlink" href="#flask_app.backend.courses.APIParse.planetterp_course_raw_to_course_head" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes a response from planetterp’s course get into a course (with no sections)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>course_raw</strong> – dict[str, str]
+The raw response of the planetterp API (converted from json to dict)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>Course</dt><dd><p>Course object generated from the raw dict. No sections.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>course</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="flask_app.backend.courses.APIParse.planetterp_prof_raw_to_prof_head">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">planetterp_prof_raw_to_prof_head</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prof_raw</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#flask_app.backend.courses.Professor" title="flask_app.backend.courses.Professor"><span class="pre">flask_app.backend.courses.Professor</span></a></span></span><a class="headerlink" href="#flask_app.backend.courses.APIParse.planetterp_prof_raw_to_prof_head" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes a response from planetterp’s professor get into a course (with no sections)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>prof_raw</strong> – dict[str, str]
+The raw response of the planetterp API (converted from json to dict)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>Professor</dt><dd><p>Professor object generated from the raw dict. No reviews (yet).</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>professor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="flask_app.backend.courses.APIParse.planetterp_raw_grade_distribution_to_gpa">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">planetterp_raw_grade_distribution_to_gpa</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grades_raw</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#flask_app.backend.courses.APIParse.planetterp_raw_grade_distribution_to_gpa" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes a response from planetterps’s grades get into a gpa float</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>grades_raw</strong> – dict[str, str]
+The raw response of the planetterp API (converted from json to dict)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>dict</dt><dd><p>Dictionary of [string: float] representing Professor to the calculated average GPA of the course
+taught by that specific professor</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>gpa</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="flask_app.backend.courses.APIParse.umd_io_course_raw_to_course_head">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">umd_io_course_raw_to_course_head</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">course_raw</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#flask_app.backend.courses.Course" title="flask_app.backend.courses.Course"><span class="pre">flask_app.backend.courses.Course</span></a></span></span><a class="headerlink" href="#flask_app.backend.courses.APIParse.umd_io_course_raw_to_course_head" title="Permalink to this definition">¶</a></dt>
+<dd><p>TODO Add unit test
+Makes a response from umd.io’s course get into a course (with no sections)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>course_raw</strong> – dict[str, str]
+The raw response of the umd.io API (converted from json to dict)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>Course</dt><dd><p>Course object generated from the raw dict. No sections.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>course</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="flask_app.backend.courses.APIParse.umd_io_sections_raw_to_section_list">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">umd_io_sections_raw_to_section_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sections_raw</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent_course</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#flask_app.backend.courses.Course" title="flask_app.backend.courses.Course"><span class="pre">flask_app.backend.courses.Course</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">,</span> </span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#flask_app.backend.courses.APIParse.umd_io_sections_raw_to_section_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes a response from umd.io’s sections get into a list of sections</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sections_raw</strong> – dict[str, str]
+The raw response of the umd.io API (converted from json to dict)</p></li>
+<li><p><strong>parent_course</strong> – Course
+Course these sections are sections of</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>dict[str, Section]</dt><dd><p>Dict of Section objects generated from the raw dict.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>sections</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="flask_app.backend.courses.Course">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">flask_app.backend.courses.</span></span><span class="sig-name descname"><span class="pre">Course</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">course_code</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">course_credits</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sections</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">professor_to_sections</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">professor_to_avg_course_gpa</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">avg_gpa</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">any</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#flask_app.backend.courses.Course" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents a course as seen on the Schedule of Classes.
+Contains a list of sections, the course code, and credits.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="flask_app.backend.courses.Course.get_professor_average_rating">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_professor_average_rating</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">professor_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#flask_app.backend.courses.Course.get_professor_average_rating" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves an average Planetterp rating for a specified professor by the name</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>professor_name</strong> – str
+Name of professor in section whose rating we want to get.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>any (float/none)</dt><dd><p>Rating of said professor</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>rating</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="flask_app.backend.courses.Course.set_sorted_professors_by_rating">
+<span class="sig-name descname"><span class="pre">set_sorted_professors_by_rating</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#flask_app.backend.courses.Course.set_sorted_professors_by_rating" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function sorts the existing professors to sections object by the rating to display
+the results properly in sorted order.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>None</strong> – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="flask_app.backend.courses.CourseList">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">flask_app.backend.courses.</span></span><span class="sig-name descname"><span class="pre">CourseList</span></span><a class="headerlink" href="#flask_app.backend.courses.CourseList" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class containing a list of all courses available to add.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="flask_app.backend.courses.CourseList.get_course_using_course_code">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_course_using_course_code</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">course_code</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#flask_app.backend.courses.Course" title="flask_app.backend.courses.Course"><span class="pre">flask_app.backend.courses.Course</span></a></span></span><a class="headerlink" href="#flask_app.backend.courses.CourseList.get_course_using_course_code" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a course code (e.g. CMSC131)
+this function will call the umd.io API and give back a Course object
+This function will raise an exception if the course code or sections information
+cannot be found on the API (status code from response is not 200)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>course_code</strong> – str
+String of the course code (e.g. cmsc131)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>Course</dt><dd><p>Returns a Course object corresponding with the course code string</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>course</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="flask_app.backend.courses.CourseList.get_courses_using_page_number">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_courses_using_page_number</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">page_num</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#flask_app.backend.courses.CourseList.get_courses_using_page_number" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a page number, this function will call the API and give back a
+dictionary of course objects in alphabetical order
+in order to display them all on the “see all courses” page
+Each page has 30 courses</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>page_num</strong> – int
+The page number of all courses to load</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>dict</dt><dd><p>Returns a dictionary of course objects (maximum of 30) to be displayed in the all courses tab</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>courses</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="flask_app.backend.courses.CourseList.make_meeting_dict">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">make_meeting_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">meetings_list</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">section_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">course</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#flask_app.backend.courses.Course" title="flask_app.backend.courses.Course"><span class="pre">flask_app.backend.courses.Course</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#flask_app.backend.courses.CourseList.make_meeting_dict" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>meetings_list</strong> – list[dict]
+List of dict representations of meeting times to be converted to
+a dict of MeetingTimes.</p></li>
+<li><p><strong>section_id</strong> – str
+The section_id of the section</p></li>
+<li><p><strong>course</strong> – Course
+The parent Course of the section</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Dict mapping day of the week “M”, “Tu”, etc
+to a list of MeetingTime objects (in order).</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>weekly_schedule</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="flask_app.backend.courses.MeetingTime">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">flask_app.backend.courses.</span></span><span class="sig-name descname"><span class="pre">MeetingTime</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">meeting</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">section_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">course</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#flask_app.backend.courses.Course" title="flask_app.backend.courses.Course"><span class="pre">flask_app.backend.courses.Course</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#flask_app.backend.courses.MeetingTime" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class representing a single time-slot of a section.
+Contains time, location, and section id.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="flask_app.backend.courses.Professor">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">flask_app.backend.courses.</span></span><span class="sig-name descname"><span class="pre">Professor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">course_list</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instructor_type</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">average_rating</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reviews</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#flask_app.backend.courses.Professor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents a Professor Object that is so far used when searching for information about a Professor</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="flask_app.backend.courses.Professor.get_all_professors">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_all_professors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">page_num</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">,</span> </span><span class="pre">list</span><span class="p"><span class="pre">,</span> </span><span class="pre">list</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#flask_app.backend.courses.Professor.get_all_professors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of professors</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>page_num</strong> – int
+Page number for the professors to retrieve from planetterp API</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>Tuple(list, list, list)</dt><dd><p>Tuple consisting of list of professor names and slugs and ratings for that page number</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>(professor_names, professor_slugs, professor_ratings)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="flask_app.backend.courses.RequestProxy">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">flask_app.backend.courses.</span></span><span class="sig-name descname"><span class="pre">RequestProxy</span></span><a class="headerlink" href="#flask_app.backend.courses.RequestProxy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Handles sending requests to the API.
+Can be set to emulate the API in order to complete tests. Set test_mode = True.
+Emulation consists of returning the sample responses
+listed on the respective APIs.
+Returns error sample response when bad_request is set to True.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="flask_app.backend.courses.RequestProxy.bad_request">
+<span class="sig-name descname"><span class="pre">bad_request</span></span><em class="property"> <span class="pre">=</span> <span class="pre">False</span></em><a class="headerlink" href="#flask_app.backend.courses.RequestProxy.bad_request" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="flask_app.backend.courses.RequestProxy.planetterp_get_course_by_course_code">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">planetterp_get_course_by_course_code</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">course_code</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#flask_app.backend.courses.RequestProxy.planetterp_get_course_by_course_code" title="Permalink to this definition">¶</a></dt>
+<dd><p>Ask planetterp to search for a course given a specific course code
+Params:</p>
+<blockquote>
+<div><dl class="simple">
+<dt>course_code: str</dt><dd><p>Course code string to get</p>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>dict</dt><dd><p>Course that was found, in dict form (from json response)</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>course</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="flask_app.backend.courses.RequestProxy.planetterp_get_courses_by_page">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">planetterp_get_courses_by_page</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">page_num</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="headerlink" href="#flask_app.backend.courses.RequestProxy.planetterp_get_courses_by_page" title="Permalink to this definition">¶</a></dt>
+<dd><p>Ask planetterp to get a page from the list of all courses
+Params:</p>
+<blockquote>
+<div><dl class="simple">
+<dt>page_num: str</dt><dd><p>Page number to get</p>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>list</dt><dd><p>List of course on this page (from json response)</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>courses</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="flask_app.backend.courses.RequestProxy.planetterp_get_grades_by_course_code">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">planetterp_get_grades_by_course_code</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">course_code</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="headerlink" href="#flask_app.backend.courses.RequestProxy.planetterp_get_grades_by_course_code" title="Permalink to this definition">¶</a></dt>
+<dd><p>Ask planetterp to get grades for a course
+Params:</p>
+<blockquote>
+<div><dl class="simple">
+<dt>course_code: str</dt><dd><p>Course code to get grades for</p>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>list</dt><dd><p>List of letter grades for this course (from json response)</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>grades</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="flask_app.backend.courses.RequestProxy.planetterp_get_professor_by_name">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">planetterp_get_professor_by_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">professor_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">get_reviews</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'false'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#flask_app.backend.courses.RequestProxy.planetterp_get_professor_by_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Ask planetterp for information on a professor
+Params:</p>
+<blockquote>
+<div><dl class="simple">
+<dt>professor_name: str</dt><dd><p>Professor Name whose object we want to get</p>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>a json dict with professor infomration</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>prof_raw</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="flask_app.backend.courses.RequestProxy.planetterp_search_by_query">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">planetterp_search_by_query</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="headerlink" href="#flask_app.backend.courses.RequestProxy.planetterp_search_by_query" title="Permalink to this definition">¶</a></dt>
+<dd><p>Ask planetterp to match query to course names
+Params:</p>
+<blockquote>
+<div><dl class="simple">
+<dt>query: str</dt><dd><p>Partial string to search</p>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>list</dt><dd><p>List of courses that were matched (from json response)</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>matched_courses</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="flask_app.backend.courses.RequestProxy.test_mode">
+<span class="sig-name descname"><span class="pre">test_mode</span></span><em class="property"> <span class="pre">=</span> <span class="pre">False</span></em><a class="headerlink" href="#flask_app.backend.courses.RequestProxy.test_mode" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="flask_app.backend.courses.RequestProxy.umdio_get_sections_by_course_code">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">umdio_get_sections_by_course_code</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">course</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#flask_app.backend.courses.Course" title="flask_app.backend.courses.Course"><span class="pre">flask_app.backend.courses.Course</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="headerlink" href="#flask_app.backend.courses.RequestProxy.umdio_get_sections_by_course_code" title="Permalink to this definition">¶</a></dt>
+<dd><p>Ask umd.io to get a list of sections from a course code
+Params:</p>
+<blockquote>
+<div><dl class="simple">
+<dt>course: str</dt><dd><p>Course whose course code will be used for search</p>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>list</dt><dd><p>List of sections for the course (from json response)</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>sections</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="flask_app.backend.courses.Section">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">flask_app.backend.courses.</span></span><span class="sig-name descname"><span class="pre">Section</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">course_code</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">section_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_seats</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">open_seats</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_meetings</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">professor</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">course</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#flask_app.backend.courses.Course" title="flask_app.backend.courses.Course"><span class="pre">flask_app.backend.courses.Course</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_synchronous</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#flask_app.backend.courses.Section" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents an individual section of a course.
+Contains course code, section id, total and open seats,
+and other information for the schedule builder itself such as color to be displayed.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="flask_app.backend.courses.Section.get_formatted_weekly_schedule">
+<span class="sig-name descname"><span class="pre">get_formatted_weekly_schedule</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#flask_app.backend.courses.Section.get_formatted_weekly_schedule" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>dict[str, str]</dt><dd><p>Dict of nicely formatted section info to be used on the course list.
+Keys are strings of format “9AM-10:15AM”, etc.
+Values are strings of format “MWF”, “TuTh”, etc.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>weekly_schedule</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-flask_app.backend.schedule">
+<span id="flask-app-backend-schedule-module"></span><h2>flask_app.backend.schedule module<a class="headerlink" href="#module-flask_app.backend.schedule" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="flask_app.backend.schedule.MySchedule">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">flask_app.backend.schedule.</span></span><span class="sig-name descname"><span class="pre">MySchedule</span></span><a class="headerlink" href="#flask_app.backend.schedule.MySchedule" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Representation of the user’s schedule.
+Contains a list of sections, the number of credits, meeting times for each day,
+and any important warnings about the schedule.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="flask_app.backend.schedule.MySchedule.ScheduleWarning">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">ScheduleWarning</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">involved_sections</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">warning_type</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#flask_app.backend.schedule.MySchedule.ScheduleWarning" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Warning message to be displayed next to the user’s schedule,
+when their schedule has some notable issue.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="flask_app.backend.schedule.MySchedule.add_course">
+<span class="sig-name descname"><span class="pre">add_course</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">course_to_add</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#flask_app.backend.courses.Course" title="flask_app.backend.courses.Course"><span class="pre">flask_app.backend.courses.Course</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#flask_app.backend.schedule.MySchedule.add_course" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>course_to_add</strong> – Course
+Course to try to add.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>bool</dt><dd><p>String describing the result of trying to add the course.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>message</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="flask_app.backend.schedule.MySchedule.add_registered_course_section_by_id">
+<span class="sig-name descname"><span class="pre">add_registered_course_section_by_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">section_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#flask_app.backend.schedule.MySchedule.add_registered_course_section_by_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>TODO Add unit test</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>section_id</strong> – str
+Section ID to try to add, from an already registered course.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>bool</dt><dd><p>String describing the result of trying to add the section.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>message</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="flask_app.backend.schedule.MySchedule.add_section">
+<span class="sig-name descname"><span class="pre">add_section</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">section_to_add</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#flask_app.backend.courses.Section" title="flask_app.backend.courses.Section"><span class="pre">flask_app.backend.courses.Section</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#flask_app.backend.schedule.MySchedule.add_section" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>section_to_add</strong> – Section
+Section to try to add.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>bool</dt><dd><p>String describing the result of trying to add the section.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>message</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="flask_app.backend.schedule.MySchedule.check_section_no_time_conflicts">
+<span class="sig-name descname"><span class="pre">check_section_no_time_conflicts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_to_add</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#flask_app.backend.courses.Section" title="flask_app.backend.courses.Section"><span class="pre">flask_app.backend.courses.Section</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#flask_app.backend.schedule.MySchedule.check_section_no_time_conflicts" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>class_to_add</strong> – Section
+Section to test for overlap with existing times.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>bool</dt><dd><p>Whether the class can be added.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>can_add</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="flask_app.backend.schedule.MySchedule.colors">
+<span class="sig-name descname"><span class="pre">colors</span></span><em class="property"> <span class="pre">=</span> <span class="pre">['red',</span> <span class="pre">'blue',</span> <span class="pre">'green',</span> <span class="pre">'purple',</span> <span class="pre">'orange',</span> <span class="pre">'magenta']</span></em><a class="headerlink" href="#flask_app.backend.schedule.MySchedule.colors" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="flask_app.backend.schedule.MySchedule.get_course_color">
+<span class="sig-name descname"><span class="pre">get_course_color</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">course</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#flask_app.backend.courses.Course" title="flask_app.backend.courses.Course"><span class="pre">flask_app.backend.courses.Course</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#flask_app.backend.schedule.MySchedule.get_course_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the color of a course in the schedule</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>course</strong> – Course
+Course to get the color of</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>str</dt><dd><p>Color of the course (in string form)</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>color</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="flask_app.backend.schedule.MySchedule.get_schedule_average_gpa">
+<span class="sig-name descname"><span class="pre">get_schedule_average_gpa</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#flask_app.backend.schedule.MySchedule.get_schedule_average_gpa" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates average GPA of the current schedule</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="flask_app.backend.schedule.MySchedule.get_serialized_schedule">
+<span class="sig-name descname"><span class="pre">get_serialized_schedule</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#flask_app.backend.schedule.MySchedule.get_serialized_schedule" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function serializes the user’s schedule to easily be copied by the user on the frontend. The user can
+then use this serialized string to load their schedule through the “load_serialized_schedule” function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>str</dt><dd><p>A String representation of the user’s schedule</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str_schedule</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="flask_app.backend.schedule.MySchedule.load_serialized_schedule">
+<span class="sig-name descname"><span class="pre">load_serialized_schedule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">str_schedule</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#flask_app.backend.schedule.MySchedule.load_serialized_schedule" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function takes a string representation of the serialized version of a user’s schedule and loads this
+schedule by adding all of the sections/meeting times.</p>
+<dl class="simple">
+<dt>param:</dt><dd><dl class="simple">
+<dt>str_schedule: str</dt><dd><p>A String representation of the user’s schedule generated from the get_serialized_schedule function</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="flask_app.backend.schedule.MySchedule.remove_all_classes">
+<span class="sig-name descname"><span class="pre">remove_all_classes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#flask_app.backend.schedule.MySchedule.remove_all_classes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resets the schedule to be empty.
+TODO Fix for new course/section addition procedure</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="flask_app.backend.schedule.MySchedule.remove_course">
+<span class="sig-name descname"><span class="pre">remove_course</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">course_to_remove</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#flask_app.backend.courses.Course" title="flask_app.backend.courses.Course"><span class="pre">flask_app.backend.courses.Course</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#flask_app.backend.schedule.MySchedule.remove_course" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>course_to_remove</strong> – Course
+Course to try to remove.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>bool</dt><dd><p>String describing the result of trying to remove the course.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>message</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="flask_app.backend.schedule.MySchedule.remove_registered_course_section_by_id">
+<span class="sig-name descname"><span class="pre">remove_registered_course_section_by_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">section_to_remove</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#flask_app.backend.courses.Section" title="flask_app.backend.courses.Section"><span class="pre">flask_app.backend.courses.Section</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#flask_app.backend.schedule.MySchedule.remove_registered_course_section_by_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>TODO Add unit test</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>section_to_remove</strong> – Section
+Section to try to remove.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>bool</dt><dd><p>String describing the result of trying to remove the section.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>message</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="flask_app.backend.schedule.MySchedule.remove_section">
+<span class="sig-name descname"><span class="pre">remove_section</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">section_to_remove</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#flask_app.backend.courses.Section" title="flask_app.backend.courses.Section"><span class="pre">flask_app.backend.courses.Section</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#flask_app.backend.schedule.MySchedule.remove_section" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>section_to_remove</strong> – Section
+Section to try to remove.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>bool</dt><dd><p>String describing the result of trying to remove the section.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>message</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-flask_app.backend">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-flask_app.backend" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">UMD Schedule Builder</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="flask_app.html">flask_app package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="flask_app.html#subpackages">Subpackages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="flask_app.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="flask_app.html#flask-app-app-module">flask_app.app module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="flask_app.html#module-flask_app.forms">flask_app.forms module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="flask_app.html#module-flask_app">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tests.html">tests package</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="flask_app.html">flask_app package</a><ul>
+      <li>Previous: <a href="flask_app.html" title="previous chapter">flask_app package</a></li>
+      <li>Next: <a href="tests.html" title="next chapter">tests package</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2022, Michelle Fang, Tyler Honeywell, Amar Mujumdar, Daniel Niezelski, and Andrew Schuck.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.2.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/flask_app.backend.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
