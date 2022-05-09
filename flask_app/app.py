@@ -219,4 +219,11 @@ def create_app():
                                professor=professor,
                                plantterp_link=plantterp_link)
 
+    @app.route('/tutorial', methods=['GET'])
+    def tutorial():
+        """"
+        Tutorial page explaining how to use the schedule builder 
+        """
+        return render_template("tutorial.html")
+        
     return app

@@ -28,3 +28,7 @@ def test_professor_detail_returns_404_if_no_professor(client):
 
     resp = client.get("/professor/")
     assert resp.status_code == 404
+
+def test_tutorial_returns_200(client):
+    resp = client.get("/tutorial")
+    assert resp.status_code == 200
