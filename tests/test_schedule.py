@@ -20,7 +20,7 @@ class ScheduleTest(unittest.TestCase):
         class_to_try_to_remove = test_util_instance.courses["CMSC250"].sections["0101"]  # getting section 0101
         schedule = MySchedule()
         self.assertEqual(schedule.total_credits, 0)
-        schedule.remove_class(class_to_try_to_remove)
+        schedule.remove_section(class_to_try_to_remove)
         self.assertEqual(schedule.total_credits, 0)
         for day, day_list in schedule.schedule.items():
             self.assertEqual(len(day_list), 0)
@@ -29,7 +29,7 @@ class ScheduleTest(unittest.TestCase):
         class_to_add = test_util_instance.courses["CMSC250"].sections["0307"]
         schedule = MySchedule()
         self.assertEqual(schedule.total_credits, 0)
-        schedule.add_class(class_to_add)
+        schedule.add_section(class_to_add)
         self.assertEqual(schedule.total_credits, 4)
         for day, day_list in schedule.schedule.items():
             if day != "F":
@@ -41,8 +41,8 @@ class ScheduleTest(unittest.TestCase):
         class_to_add = test_util_instance.courses["CMSC250"].sections["0307"]
         schedule = MySchedule()
         self.assertEqual(schedule.total_credits, 0)
-        schedule.add_class(class_to_add)
-        schedule.add_class(class_to_add)  # duplicate add, won't go through
+        schedule.add_section(class_to_add)
+        schedule.add_section(class_to_add)  # duplicate add, won't go through
         self.assertEqual(schedule.total_credits, 4)
         for day, day_list in schedule.schedule.items():
             if day != "F":
@@ -54,10 +54,10 @@ class ScheduleTest(unittest.TestCase):
         class_to_add = test_util_instance.courses["CMSC250"].sections["0307"]
         schedule = MySchedule()
         self.assertEqual(schedule.total_credits, 0)
-        schedule.add_class(class_to_add)
+        schedule.add_section(class_to_add)
         self.assertEqual(schedule.total_credits, 4)
-        schedule.remove_class(class_to_add)
-        self.assertEqual(schedule.total_credits, 0)
+        schedule.remove_section(class_to_add)
+        self.assertEqual(schedule.total_credits, 4)
         for day, day_list in schedule.schedule.items():
             self.assertEqual(len(day_list), 0)
 
@@ -66,9 +66,9 @@ class ScheduleTest(unittest.TestCase):
         comm107 = test_util_instance.courses["COMM107"].sections["FC04"]
         schedule = MySchedule()
         self.assertEqual(schedule.total_credits, 0)
-        schedule.add_class(cmsc250)
+        schedule.add_section(cmsc250)
         self.assertEqual(schedule.total_credits, 4)
-        schedule.add_class(comm107)
+        schedule.add_section(comm107)
         self.assertEqual(schedule.total_credits, 7)
         for day, day_list in schedule.schedule.items():
             if day == "F":
@@ -82,8 +82,8 @@ class ScheduleTest(unittest.TestCase):
         cmsc250 = test_util_instance.courses["CMSC250"].sections["0307"]
         comm107 = test_util_instance.courses["COMM107"].sections["FC04"]
         schedule = MySchedule()
-        schedule.add_class(cmsc250)
-        schedule.add_class(comm107)
+        schedule.add_section(cmsc250)
+        schedule.add_section(comm107)
         self.assertEqual(schedule.schedule["M"][0].section_id, "CMSC250-0307")
         self.assertEqual(schedule.schedule["M"][1].section_id, "COMM107-FC04")
         self.assertEqual(schedule.total_credits, 7)
@@ -92,9 +92,9 @@ class ScheduleTest(unittest.TestCase):
         cmsc250 = test_util_instance.courses["CMSC250"].sections["0306"]
         comm107 = test_util_instance.courses["COMM107"].sections["FC04"]
         schedule = MySchedule()
-        schedule.add_class(comm107)
+        schedule.add_section(comm107)
         self.assertEqual(schedule.total_credits, 3)
-        schedule.add_class(cmsc250)  # can't add this class
+        schedule.add_section(cmsc250)  # can't add this class
         self.assertEqual(schedule.total_credits, 3)
         self.assertEqual(schedule.schedule["M"][0].section_id, "COMM107-FC04")
 
@@ -110,8 +110,8 @@ class ScheduleTest(unittest.TestCase):
         cmsc250 = test_util_instance.courses["CMSC250"].sections["0307"]
         comm107 = test_util_instance.courses["COMM107"].sections["FC04"]
         schedule = MySchedule()
-        schedule.add_class(comm107)
-        schedule.add_class(cmsc250)
+        schedule.add_section(comm107)
+        schedule.add_section(cmsc250)
         self.assertEqual(schedule.total_credits, 7)
         schedule.remove_all_classes()
         self.assertEqual(schedule.total_credits, 0)
@@ -122,35 +122,35 @@ class ScheduleTest(unittest.TestCase):
         cmsc250 = test_util_instance.courses["CMSC250"].sections["0307"]
         cmsc250_2 = test_util_instance.courses["CMSC250"].sections["0307"]
         schedule = MySchedule()
-        schedule.add_class(cmsc250)
-        self.assertFalse(schedule.no_class_overlap(cmsc250_2))
+        schedule.add_section(cmsc250)
+        self.assertFalse(schedule.check_section_no_time_conflicts(cmsc250_2))
 
     def test_class_overlap_different_class_time_conflict(self):
         cmsc250 = test_util_instance.courses["CMSC250"].sections["0306"]
         comm107 = test_util_instance.courses["COMM107"].sections["FC04"]
         schedule = MySchedule()
-        schedule.add_class(cmsc250)
-        self.assertFalse(schedule.no_class_overlap(comm107))
+        schedule.add_section(cmsc250)
+        self.assertFalse(schedule.check_section_no_time_conflicts(comm107))
 
     def test_class_with_no_time_conflict(self):
         cmsc250 = test_util_instance.courses["CMSC250"].sections["0307"]
         comm107 = test_util_instance.courses["COMM107"].sections["FC04"]
         schedule = MySchedule()
-        schedule.add_class(cmsc250)
-        self.assertTrue(schedule.no_class_overlap(comm107))
+        schedule.add_section(cmsc250)
+        self.assertTrue(schedule.check_section_no_time_conflicts(comm107))
         schedule.remove_all_classes()
-        schedule.add_class(comm107)
-        self.assertTrue(schedule.no_class_overlap(cmsc250))
+        schedule.add_section(comm107)
+        self.assertTrue(schedule.check_section_no_time_conflicts(cmsc250))
 
     def test_try_to_add_class_in_middle_of_day_start_time_overlaps_with_previous_end_time(self):
         cmsc250 = test_util_instance.courses["CMSC250"].sections["0307"]
         anth221 = test_util_instance.courses["ANTH221"].sections["FC01"]
         chem271 = test_util_instance.courses["CHEM271"].sections["2247"]
         schedule = MySchedule()
-        schedule.add_class(cmsc250)
-        schedule.add_class(anth221)
-        self.assertFalse(schedule.no_class_overlap(chem271))
-        schedule.add_class(chem271)  # try to add chem in between even though its start time overlaps with 250 end time
+        schedule.add_section(cmsc250)
+        schedule.add_section(anth221)
+        self.assertFalse(schedule.check_section_no_time_conflicts(chem271))
+        schedule.add_section(chem271)  # try to add chem between even though its start time overlaps with 250 end time
         self.assertEqual(schedule.total_credits, 7)
 
     def test_class_formatted_weekly_schedule_correct(self):
@@ -159,6 +159,79 @@ class ScheduleTest(unittest.TestCase):
         self.assertEqual({'8:00am-8:50am': 'MW', '3:30pm-4:45pm': 'TuTh'},
                          cmsc250.get_formatted_weekly_schedule())
         self.assertEqual({'4:30pm-5:45pm': 'MW'}, comm107.get_formatted_weekly_schedule())
+
+    def test_serialize_schedule_returns_comma_separated_section_ids(self):
+        schedule = MySchedule()
+        cmsc250 = test_util_instance.courses["CMSC250"].sections["0101"]
+        chem271 = test_util_instance.courses["CHEM271"].sections["2222"]
+        comm107 = test_util_instance.courses["COMM107"].sections["0101"]
+        schedule.add_section(cmsc250)
+        schedule.add_section(chem271)
+        schedule.add_section(comm107)
+        self.assertEqual(schedule.get_serialized_schedule(), "CMSC250-0101,CHEM271-2222,COMM107-0101")
+
+    def test_serialize_empty_schedule(self):
+        schedule = MySchedule()
+        self.assertEqual(schedule.get_serialized_schedule(), "")
+
+    def test_load_serialize_schedule_works(self):
+        schedule = MySchedule()
+        str_schedule = "CMSC250-0101,CHEM271-2222,COMM107-0101"
+        schedule.load_serialized_schedule(str_schedule)
+        self.assertEqual(schedule.total_credits, 9)
+        section_list = str_schedule.split(",")
+        for sections in schedule.sections_list:
+            self.assertTrue(sections.section_id in section_list)
+
+    def test_load_empty_serialized_schedule(self):
+        schedule = MySchedule()
+        schedule.load_serialized_schedule("")
+        self.assertEqual(schedule.total_credits, 0)
+
+    def test_load_serialized_schedule_invalid_course_format(self):
+        schedule = MySchedule()
+        schedule.load_serialized_schedule("fdgdfgsdf0103")
+        self.assertEqual(len(schedule.warnings_list), 1)
+        schedule.load_serialized_schedule("CMSC1310103")
+        self.assertEqual(len(schedule.warnings_list), 2)
+
+    def test_load_serialized_schedule_invalid_course(self):
+        schedule = MySchedule()
+        schedule.load_serialized_schedule("CM-0101")
+        self.assertEqual(len(schedule.warnings_list), 1)
+
+    def test_load_serialized_schedule_invalid_section_for_valid_course(self):
+        schedule = MySchedule()
+        schedule.load_serialized_schedule("CMSC131-9999")
+        self.assertEqual(len(schedule.warnings_list), 1)
+
+    def test_add_duplicate_course_doesnt_add_again(self):
+        schedule = MySchedule()
+        cmsc250 = test_util_instance.courses["CMSC250"]
+        schedule.add_course(cmsc250)
+        self.assertEqual(schedule.add_course(cmsc250), "CMSC250 already present in schedule.")
+
+    def test_remove_course_actually_in_schedule(self):
+        schedule = MySchedule()
+        cmsc250 = test_util_instance.courses["CMSC250"]
+        schedule.add_course(cmsc250)
+        self.assertEqual(schedule.remove_course(cmsc250), "CMSC250 removed.")
+
+    def test_remove_course_not_in_schedule(self):
+        schedule = MySchedule()
+        cmsc250 = test_util_instance.courses["CMSC250"]
+        self.assertEqual(schedule.remove_course(cmsc250), "CMSC250 not in schedule.")
+
+    def test_get_course_color_of_course_in_schedule(self):
+        schedule = MySchedule()
+        cmsc250 = test_util_instance.courses["CMSC250"]
+        schedule.add_course(cmsc250)
+        self.assertNotEqual(schedule.get_course_color(cmsc250), "black")
+
+    def test_get_course_color_of_course_not_in_schedule(self):
+        schedule = MySchedule()
+        comm107 = test_util_instance.courses["COMM107"]
+        self.assertEqual(schedule.get_course_color(comm107), "black")
 
 
 class ScheduleWarningTest(unittest.TestCase):
@@ -176,7 +249,7 @@ class ScheduleWarningTest(unittest.TestCase):
 
         schedule = MySchedule()
         self.assertEqual(schedule.warnings_list, [])
-        schedule.add_class(full_section)
+        schedule.add_section(full_section)
         self.assertIn("section full", [warning.warning_type for warning in schedule.warnings_list])
 
     def test_add_multiple_classes_no_open_seats_makes_warnings(self):
@@ -186,9 +259,9 @@ class ScheduleWarningTest(unittest.TestCase):
 
         schedule = MySchedule()
         self.assertEqual(schedule.warnings_list, [])
-        schedule.add_class(full_sections[0])
+        schedule.add_section(full_sections[0])
         self.assertIn("section full", [warning.warning_type for warning in schedule.warnings_list])
-        schedule.add_class(full_sections[1])
+        schedule.add_section(full_sections[1])
         self.assertEqual(
             len([warning.warning_type for warning in schedule.warnings_list
                  if warning.warning_type == "section full"]),
@@ -201,8 +274,8 @@ class ScheduleWarningTest(unittest.TestCase):
         full_section = full_sections[0]
 
         schedule = MySchedule()
-        schedule.add_class(full_section)
-        schedule.remove_class(full_section)
+        schedule.add_section(full_section)
+        schedule.remove_section(full_section)
         self.assertNotIn("section full", [warning.warning_type for warning in schedule.warnings_list])
 
     def test_remove_multiple_classes_no_open_seats_removes_warnings(self):
@@ -212,14 +285,14 @@ class ScheduleWarningTest(unittest.TestCase):
 
         schedule = MySchedule()
         self.assertEqual(schedule.warnings_list, [])
-        schedule.add_class(full_sections[0])
-        schedule.add_class(full_sections[1])
-        schedule.remove_class(full_sections[0])
+        schedule.add_section(full_sections[0])
+        schedule.add_section(full_sections[1])
+        schedule.remove_section(full_sections[0])
         self.assertEqual(
             len([warning.warning_type for warning in schedule.warnings_list
                  if warning.warning_type == "section full"]),
             1)
-        schedule.remove_class(full_sections[1])
+        schedule.remove_section(full_sections[1])
         self.assertNotIn("section full", [warning.warning_type for warning in schedule.warnings_list])
 
 
@@ -232,8 +305,8 @@ class ScheduleGPA(unittest.TestCase):
         cmsc250 = test_util_instance.courses["CMSC250"].sections["0101"]
         comm107 = test_util_instance.courses["COMM107"].sections["0101"]
         schedule = MySchedule()
-        schedule.add_class(cmsc250)
-        schedule.add_class(comm107)
+        schedule.add_section(cmsc250)
+        schedule.add_section(comm107)
 
         self.assertEqual(schedule.get_schedule_average_gpa(), 0.0)
 

@@ -1,0 +1,54 @@
+{% extends "header.html" %}
+{% block content %}
+
+<div class="row">
+  <div class="col">
+    <div class="card text-center">
+      <div class="card-header">
+        <h2>Name: {{ professor.name }}  </h2>
+      </div>
+      <div class="card-body">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item"><b>Average Rating:</b> {{ professor.average_rating }}</li>
+          <li class="list-group-item"><b>Type:</b> {{ professor.instructor_type }}</li>
+          <li class="list-group-item"><b>PlanetTerp Link:</b> <a href={{ plantterp_link }} target="_blank">{{ plantterp_link }}</a></li>
+          <li class="list-group-item">
+            <b>Couses:</b> 
+            {% for course in professor.course_list %}
+            <ul>{{course}}</ul>
+            {% endfor %}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <h2> Reviews <small class="float-right">{{ professor.reviews|length }} reviews</small></h2>
+    <ul class="media-list">
+      <table class="table">
+        <thead>
+            <tr>
+            <th scope="col">Course</th>
+            <th scope="col">Rating</th>
+            <th scope="col">Review</th>
+          </tr>
+        </thead>
+        <tbody>
+
+        {% for review in professor.reviews %}
+          <tr>
+            <td>{{review["course"]}}</td>
+            <td>{{review["rating"]}}</td>
+            <td>{{review["review"]}}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </ul>
+  </div>
+</div>
+
+{% endblock content %}

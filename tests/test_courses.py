@@ -1,5 +1,5 @@
 import unittest
-from flask_app.backend.courses import CourseList, APIGet, RequestProxy
+from flask_app.backend.courses import CourseList, APIGet, RequestProxy, Course
 from tests.utils import TestUtils
 
 test_util_instance = TestUtils()
@@ -93,8 +93,18 @@ class CourseTest(unittest.TestCase):
         self.assertEqual(hash(meeting_times_cmsc250_dict["M"][0]), hash(meeting_times_cmsc250_dict["M"][0]))
 
     def test_course_correct_professor_rating_static_method(self):
-        professor_json = APIGet.get_professor_by_name("Erin Callahan")
-        self.assertEqual(5.0, professor_json.average_rating)
+        rating = Course.get_professor_average_rating("Erin Callahan")
+        self.assertEqual(5.0, rating)
+
+    def test_course_correct_prof_rating_order(self):
+        cmsc420 = CourseList.get_course_using_course_code("CMSC420")
+        # print(cmsc420.professor_to_sections)
+        self.assertEqual(list(cmsc420.professor_to_sections.keys()),
+                         ['Justin Wyss-Gallifent', 'David Mount', 'Michael Marsh', 'Hanan Samet'])
+    
+    def test_course_empty_prof_rating_order(self):
+        empty_course = Course('cmsc250', 'cmsc250', 3, {}, {}, {})
+        self.assertEqual(list(empty_course.professor_to_sections.keys()), [])
 
 
 class APIGetAndParseTest(unittest.TestCase):
@@ -102,24 +112,44 @@ class APIGetAndParseTest(unittest.TestCase):
     Test functions in the APIGet and APIParse classes, which consist of several static helper methods to call
     the Planetterp and umdio APIs, and parse the returned data into objects
     """
+    def setUp(self):
+        RequestProxy.test_mode = True
+
+    def tearDown(self):
+        RequestProxy.test_mode = False
 
     def test_get_course_heads_make_sure_all_courses_we_expect_are_present(self):
+        RequestProxy.bad_request = False
         cmsc_courses = APIGet.get_course_heads_by_query("CMSC")
-        self.assertEqual(len(cmsc_courses), 30)  # 30 CMSC courses offered this semester
+        self.assertEqual(len(cmsc_courses), 1)  # Using dummy API
 
     def test_professor_object_returned_valid_name(self):
+        RequestProxy.bad_request = False
         professor_json = APIGet.get_professor_by_name("Clyde Kruskal")
-        self.assertEqual('Clyde Kruskal', professor_json.name)
+        self.assertEqual('Jon Snow', professor_json.name)  # Using dummy API
 
     def test_professor_object_returned_valid_rating(self):
+        RequestProxy.bad_request = False
         professor_json = APIGet.get_professor_by_name("Erin Callahan")
-        self.assertEqual(5.0, professor_json.average_rating)
+        self.assertEqual(4.125, professor_json.average_rating)  # Using dummy API
 
     def test_professor_object_returned_valid_courselist(self):
+        RequestProxy.bad_request = False
         professor_json = APIGet.get_professor_by_name("David Mount")
-        self.assertEqual(set(professor_json.course_list), {'CMSC388D', 'CMSC420', 'CMSC425',
-                                                           'CMSC427', 'CMSC451', 'CMSC754', 'CMSC798'})
+        self.assertEqual(set(professor_json.course_list), {'MATH140'})  # Using dummy API
 
     def test_professor_object_returned_valid_instructor_type(self):
+        RequestProxy.bad_request = False
         professor_json = APIGet.get_professor_by_name("Justin Wyss-Gallifent")
         self.assertEqual('professor', professor_json.instructor_type)
+
+    def test_gen_ed_search_returned_courses_valid_good_request(self):
+        RequestProxy.bad_request = False
+        courses = APIGet.get_course_list_by_gen_ed("ENGL", "FSPW")
+        self.assertEqual(courses[0].course_code, "MATH140")
+
+    def test_gen_ed_search_returned_courses_empty_bad_request(self):
+        RequestProxy.bad_request = True
+        courses = APIGet.get_course_list_by_gen_ed("ENGL", "FSPW")
+        self.assertEqual(len(courses), 0)
+

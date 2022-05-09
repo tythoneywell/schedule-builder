@@ -1,114 +1,124 @@
 {% extends "header.html" %}
 {% block content %}
 
-<b>UMD Schedule Builder</b>
-<a href="{{ url_for('all_courses', page_num = 1) }}"><h3>See all courses</h3></a>
-
-
 <body>
     <h1>My Schedule</h1>
-    <h3> Total credits: {{ schedule.total_credits }}</h3>
-    {% if schedule.class_list|length > 0 %}
-        <h3>Average GPA of Schedule: {{ '%0.2f'|format(schedule.get_schedule_average_gpa()) }}</h3>
-    {%endif%}
-
-    <table border="5" cellspacing="0" align="center">
-        <!--<caption>Timetable</caption>-->
+    <table border="5" cellspacing="0" align="center" width="90%">
         <tr>
-            <td align="center" height="50" 
-                width="300">
-                <b>MONDAY</b>
+            <td style="width:80%">
+                <table border="5" cellspacing="0" align="center">
+                    <!--<caption>Timetable</caption>-->
+                    <tr>
+                        <td align="center" height="50"
+                            width="300">
+                            <b>MONDAY</b>
+                        </td>
+                        <td align="center" height="50"
+                            width="300">
+                            <b>TUESDAY</b>
+                        </td>
+                        <td align="center" height="50"
+                            width="300">
+                            <b>WEDNESDAY</b>
+                        </td>
+                        <td align="center" height="50"
+                            width="300">
+                            <b>THURSDAY</b>
+                        </td>
+                        <td align="center" height="50"
+                            width="300">
+                            <b>FRIDAY</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center" height="50"
+                            width="300">
+                            <b>
+                                {% for class in schedule.schedule["M"] %}
+                                    <span style = "color: {{schedule.get_course_color(class.course)}}; font-size: 150%">
+                                        • {{ class.formatted_start_time }} -
+                                        {{  class.formatted_end_time  }} <br>
+                                        {{ class.section_id }} </span> <br>
+                                {% endfor %}
+                            </b>
+                        </td>
+                        <td align="center" height="50"
+                            width="300">
+                            <b>
+                                {% for class in schedule.schedule["Tu"] %}
+                                    <span style = "color: {{schedule.get_course_color(class.course)}}; font-size: 150%">
+                                        • {{ class.formatted_start_time }} -
+                                        {{  class.formatted_end_time  }} <br>
+                                        {{ class.section_id }} </span> <br>
+                                {% endfor %}
+                            </b>
+                        </td>
+                        <td align="center" height="50"
+                            width="300">
+                            <b>
+                                {% for class in schedule.schedule["W"] %}
+                                    <span style = "color: {{schedule.get_course_color(class.course)}}; font-size: 150%">
+                                        • {{ class.formatted_start_time }} -
+                                        {{  class.formatted_end_time  }} <br>
+                                        {{ class.section_id }} </span> <br>
+                                {% endfor %}
+                            </b>
+                        </td>
+                        <td align="center" height="50"
+                            width="300">
+                            <b>
+                                {% for class in schedule.schedule["Th"] %}
+                                    <span style = "color: {{schedule.get_course_color(class.course)}}; font-size: 150%">
+                                        • {{ class.formatted_start_time }} -
+                                        {{  class.formatted_end_time  }} <br>
+                                        {{ class.section_id }} </span> <br>
+                                {% endfor %}
+                            </b>
+                        </td>
+                        <td align="center" height="50"
+                            width="300">
+                            <b>
+                                {% for class in schedule.schedule["F"] %}
+                                    <span style = "color: {{schedule.get_course_color(class.course)}}; font-size: 150%">
+                                        • {{ class.formatted_start_time }} -
+                                        {{  class.formatted_end_time  }} <br>
+                                        {{ class.section_id }} </span> <br>
+                                {% endfor %}
+                            </b>
+                        </td>
+                    </tr>
+                </table>
             </td>
-            <td align="center" height="50" 
-                width="300">
-                <b>TUESDAY</b>
-            </td>
-            <td align="center" height="50" 
-                width="300">
-                <b>WEDNESDAY</b>
-            </td>
-            <td align="center" height="50" 
-                width="300">
-                <b>THURSDAY</b>
-            </td>
-            <td align="center" height="50" 
-                width="300">
-                <b>FRIDAY</b>
-            </td>
-        </tr>
-        <tr>
-            <td align="center" height="50" 
-                width="300">
-                <b>
-                    {% for class in schedule.schedule["M"] %}
-                        <span style = "color: {{class.color}}; font-size: 150%"> • {{ class.formatted_start_time }} -
-                            {{  class.formatted_end_time  }} <br>
-                            {{ class.section_id }} </span> <br>
-                    {% endfor %}
-                </b>
-            </td>
-            <td align="center" height="50"
-                width="300">
-                <b>
-                    {% for class in schedule.schedule["Tu"] %}
-                        <span style = "color: {{class.color}}; font-size: 150%"> • {{ class.formatted_start_time }} -
-                            {{  class.formatted_end_time  }} <br>
-                            {{ class.section_id }} </span> <br>
-                    {% endfor %}
-                </b>
-            </td>
-            <td align="center" height="50"
-                width="300">
-                <b>
-                    {% for class in schedule.schedule["W"] %}
-                        <span style = "color: {{class.color}}; font-size: 150%"> • {{ class.formatted_start_time }} -
-                            {{  class.formatted_end_time  }} <br>
-                            {{ class.section_id }} </span> <br>
-                    {% endfor %}
-                </b>
-            </td>
-            <td align="center" height="50"
-                width="300">
-                <b>
-                    {% for class in schedule.schedule["Th"] %}
-                        <span style = "color: {{class.color}}; font-size: 150%"> • {{ class.formatted_start_time }} -
-                            {{  class.formatted_end_time  }} <br>
-                            {{ class.section_id }} </span> <br>
-                    {% endfor %}
-                </b>
-            </td>
-            <td align="center" height="50"
-                width="300">
-                <b>
-                    {% for class in schedule.schedule["F"] %}
-                        <span style = "color: {{class.color}}; font-size: 150%"> • {{ class.formatted_start_time }} -
-                            {{  class.formatted_end_time  }} <br>
-                            {{ class.section_id }} </span> <br>
-                    {% endfor %}
-                </b>
+            <td style="width:20%">
+                <table border="0" cellspacing="15">
+                    <tr>
+                        <td><h4>Avg. GPA: </h4></td>
+                        <td align="right"><h4>{{ '%0.2f'|format(schedule.get_schedule_average_gpa()) }}</h4></td>
+                    </tr>
+                    <tr>
+                        <td><h4>Total Credits: </h4></td>
+                        <td align="right"><h4>{{ '%d'|format(schedule.total_credits) }}</h4></td>
+                    </tr>
+                </table>
+                <span style = "font-size: 150%">Courses in Current Schedule:</span>
+                <br>
+                <span>Click to View Sections</span>
+                <br>
+                {% for course in schedule.courses_list %}
+                    <b>
+                        <span style = "color: {{schedule.get_course_color(course)}}; font-size: 125%">
+                            {{ course.course_code }}
+                        </span>
+                    </b>
+                    <form action="" method="POST">
+                         {{ view_sections_form.csrf_token }}
+                         <input type="submit" name="view_course" value="View {{course.course_code}} sections">
+                    </form>
+                    <br>
+                {% endfor %}
             </td>
         </tr>
     </table>
-    {% if schedule.class_list|length > 0 %}
-        <span>Average GPA of Schedule: {{ '%0.2f'|format(schedule.get_schedule_average_gpa()) }}</span>
-    {%endif%}
-    {% if schedule.class_list|length > 0 %}
-        <p>Total Credits of Schedule: {{ '%d'|format(schedule.total_credits) }}</p>
-    {%endif%}
-    {% if schedule.class_list|length > 0 %}
-        <span style = "font-size: 150%">List of Courses in Current Schedule:</span><br>
-    {%endif%}
-    {% if schedule.class_list|length > 0 %}
-        {% for class in schedule.class_list %}
-            <b>
-                <span style = "color: {{class.color}}; font-size: 125%"> {{ class.section_id }}
-                    {% if not class.is_synchronous %}
-                        <span> (Asynchronous)</span>
-                    {%endif%}
-                </span> <br>
-            </b>
-        {% endfor %}
-    {%endif%}
 </body>
 
 
@@ -162,41 +172,121 @@
 </div>
 <div class="container">
     <form action="" class="form-inline my-2 my-lg-0" method="POST">
-        {{ search_for_sections_of_course_form.csrf_token }}
-        {{ search_for_sections_of_course_form.search_query(class="form-control", placeholder="CMSC131") }}
-        {{ search_for_sections_of_course_form.search_for_course(class="btn btn-outline-success") }}
+        {{ search_for_course_form.csrf_token }}
+        {{ search_for_course_form.search_query(class="form-control", placeholder="CMSC131") }}
+        {{ search_for_course_form.search_for_course(class="btn btn-outline-success") }}
     </form>
-    {% if courses_to_display %}
-        <div class="scrollablesections" style="height: 30%; overflow-y: scroll;">
-            {% for course_to_display in courses_to_display %}
-                {% for professor, sections in course_to_display.professor_to_sections.items() %}
-                    <h4> {{ professor }}</h4>
-                    <h6>Average PlanetTerp rating: {{course_to_display.get_professor_average_rating(professor)}}</h6>
-                    <h6> Average GPA:
-                        {% if course_to_display.professor_to_avg_course_gpa[professor] %}
-                            {{ '%0.2f'|format(course_to_display.professor_to_avg_course_gpa[professor]) }}
-                        {% else %}
-                            N/A
+    <table border="1" cellspacing="10" style="width: 100%">
+        <tr><td style="width: 50%">
+            {% if courses_to_display %}
+                <h4>Courses Found:</h4>
+                <div class="scrollablesections" style="height: 500; overflow-y: scroll;">
+                    {% for course_to_display in courses_to_display %}
+                        <h4>{{ course_to_display.course_code }}</h4>
+                        <h6>Average GPA: {{ course_to_display.avg_gpa }}</h6>
+                        {% if course_to_display.gen_eds %}
+                            <h6>Gen Ed Credits:
+                            {% for gen_ed in course_to_display.gen_eds %}
+                                {{ gen_ed }}
+                            {% endfor %}
+                            </h6>
                         {% endif %}
-                    </h6>
-                    {% for section in sections %}
-                        <h6>{{ section.section_id }}</h6>
-                        {{section.open_seats}} out of {{section.total_seats}} seats available <br>
+                        <form action="" method="POST">
+                             {{ view_sections_form.csrf_token }}
+                             <input type="submit" name="view_course" value="View {{course_to_display.course_code}} sections">
+                        </form>
+                        <form action="" method="POST">
+                             {{ add_class_form.csrf_token }}
+                             <input type="submit" name="add_course" value="Add {{course_to_display.course_code}}">
+                        </form>
+                        {% for professor, sections in course_to_display.professor_to_sections.items() %}
+                            <h4> {{ professor }}</h4>
+                            <h6>Average PlanetTerp rating: {{course_to_display.get_professor_average_rating(professor)}}</h6>
+                            <h6> Average GPA:
+                                {% if course_to_display.professor_to_avg_course_gpa[professor] %}
+                                    {{ '%0.2f'|format(course_to_display.professor_to_avg_course_gpa[professor]) }}
+                                {% else %}
+                                    N/A
+                                {% endif %}
+                            </h6>
+                            {% for section in sections %}
+                                <h6>{{ section.section_id }}</h6>
+                                {{section.open_seats}} out of {{section.total_seats}} seats available <br>
 
-                        {%for times, day in section.get_formatted_weekly_schedule().items() %}
-                             <ul>{{day}}: {{times}}</ul>
+                                {%for times, day in section.get_formatted_weekly_schedule().items() %}
+                                     <ul>{{day}}: {{times}}</ul>
+                                {% endfor %}
+                        <form action="" method="POST">
+                             {{ add_class_form.csrf_token }}
+                             <input type="submit" name="add_section" value="Add {{section.section_id}}">
+                        </form>
+                            {% endfor %}
                         {% endfor %}
+                    {% endfor %}
+                </div>
+            {% else %}
+                <h4>Course search results are currently empty</h4>
+            {% endif %}
+        </td><td style="width: 50%">
+            {% if expanded_course_to_display %}
+                <h4>{{ expanded_course_to_display.course_code }}</h4>
+                <h6>Average GPA: {{ expanded_course_to_display.avg_gpa }}</h6>
                 <form action="" method="POST">
                      {{ add_class_form.csrf_token }}
-                     <input type="submit" name="course" value="Add {{section.section_id}}">
+                     <input type="submit" name="add_course" value="Add {{expanded_course_to_display.course_code}}">
                 </form>
+                <div class="scrollablesections" style="height: 500; overflow-y: scroll;">
+                    {% for professor, sections in expanded_course_to_display.professor_to_sections.items() %}
+                        <h4> {{ professor }}</h4>
+                        <h6>Average PlanetTerp rating: {{expanded_course_to_display.get_professor_average_rating(professor)}}</h6>
+                        <h6> Average GPA:
+                            {% if expanded_course_to_display.professor_to_avg_course_gpa[professor] %}
+                                {{ '%0.2f'|format(expanded_course_to_display.professor_to_avg_course_gpa[professor]) }}
+                            {% else %}
+                                N/A
+                            {% endif %}
+                        </h6>
+                        {% for section in sections %}
+                            <h6>{{ section.section_id }}</h6>
+                            {{section.open_seats}} out of {{section.total_seats}} seats available <br>
+
+                            {%for times, day in section.get_formatted_weekly_schedule().items() %}
+                                 <ul>{{day}}: {{times}}</ul>
+                            {% endfor %}
+                    <form action="" method="POST">
+                         {{ add_class_form.csrf_token }}
+                         <input type="submit" name="add_section" value="Add {{section.section_id}}">
+                    </form>
+                        {% endfor %}
                     {% endfor %}
-                {% endfor %}
-            {% endfor %}
-        </div>
-    {% endif %}
+                </div>
+            {% endif %}
+        </td></tr>
+    </table>
 </div>
 
+<div class="container">
+    <h2>Search by checking which gen eds you want</h2>
+</div>
+<div class="container">
+    Specify gen ed and (optional) department name
+    <form action="" class="form-inline my-2 my-lg-0" method="POST">
+        {{ gen_ed_search_form.csrf_token }}
+        {{ gen_ed_search_form.department_id(class="form-control", placeholder="ENGL") }}
+
+        {% for gen_ed in all_gen_ends %}
+            <div class="form-check">
+                <input class="form-check-input" type="radio" value="{{gen_ed}}" id="flexCheckDefault" name="gened">
+                <label class="form-check-label" for="flexCheckDefault">
+                    {{gen_ed}}
+                </label>
+            </div>
+        {% endfor %}
+
+        {{ gen_ed_search_form.search_by_gened(class="btn btn-outline-success") }}
+    </form>
+</div>
+  
 <div class="container">
     <h2>Remove all courses from schedule</h2>
 </div>
@@ -213,6 +303,19 @@
         </div>
         {% endif %}
 
+    </form>
+</div>
+
+<div class="container">
+    <form action="" method="POST">
+        {{ serialize_schedule_form.csrf_token }}
+        {% if serialized_schedule %}
+            {{ serialize_schedule_form.display_serialized_schedule(class="form-control", value=serialized_schedule) }}
+        {% else %}
+            {{ serialize_schedule_form.display_serialized_schedule(class="form-control", placeholder="CMSC351-0101,ENGL393-0303,COMM107-0401") }}
+        {% endif %}
+        {{ serialize_schedule_form.serialize_schedule(class="btn btn-outline-success") }}
+        {{ serialize_schedule_form.load_schedule(class="btn btn-outline-success") }}
     </form>
 </div>
 
