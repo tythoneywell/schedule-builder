@@ -170,7 +170,8 @@ class MySchedule(object):
 
     def add_registered_course_section_by_id(self, section_id: str) -> str:
         """
-        TODO: Add unit test
+        TODO Add unit test
+
         Args:
             section_id: str
                 Section ID to try to add, from an already registered course.
@@ -188,7 +189,8 @@ class MySchedule(object):
 
     def remove_registered_course_section_by_id(self, section_to_remove: Section) -> str:
         """
-        TODO: Add unit test
+        TODO Add unit test
+
         Args:
             section_to_remove: Section
                 Section to try to remove.
@@ -225,7 +227,7 @@ class MySchedule(object):
     def remove_all_classes(self) -> None:
         """
         Resets the schedule to be empty.
-        TODO: Fix for new course/section addition procedure
+        TODO Fix for new course/section addition procedure
         """
         self.schedule = {"M": [],
                          "Tu": [],
@@ -299,6 +301,7 @@ class MySchedule(object):
     def get_course_color(self, course: Course):
         """
         Returns the color of a course in the schedule
+
         Args:
             course: Course
                 Course to get the color of
