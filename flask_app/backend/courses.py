@@ -13,13 +13,14 @@ class Course(object):
     """
 
     def __init__(self, course_code: str, name: str, course_credits: int, sections: dict, professor_to_sections: dict,
-                 professor_to_avg_course_gpa: dict, avg_gpa: any = 0):
+                 professor_to_avg_course_gpa: dict, avg_gpa: any = 0, gen_eds: list = None):
         self.sess = requests.Session()
         self.course_code = course_code
         self.name = name
         self.credits = course_credits
         self.sections = sections
         self.avg_gpa = avg_gpa
+        self.gen_eds = [] if gen_eds is None else gen_eds
         # note this will be a dict[string: list] since it is just one professor. In the case of co-taught classes,
         # the same section will appear as part of 2 (or more) lists in this dict
         self.professor_to_sections = professor_to_sections
@@ -336,6 +337,39 @@ class APIGet(object):
         return courses
 
     @staticmethod
+    def get_course_list_by_gen_ed(department_id: str, gen_ed: str) -> list:
+        """
+        Returns a list of all courses within a department that satisfy a single gen ed
+        requirement (max 30)
+        Args:
+            department_id: str
+                The department in which to search for courses
+            gen_ed: str
+                The gen ed requirement to search for
+        Returns:
+            courses: list
+                List of courses satisfying input arguments
+        """
+        courses_this_page = RequestProxy.umdio_get_courses_by_gened(department_id, gen_ed)
+
+        out_courses = []
+
+        if not courses_this_page:
+            return []
+
+        for course_raw in courses_this_page:
+            course_obj = APIParse.umd_io_course_raw_to_course_head(course_raw)
+            try:
+                course_obj.avg_gpa = RequestProxy.planetterp_get_course_by_course_code(
+                    course_obj.course_code)["average_gpa"]
+            except ConnectionError:
+                pass
+
+            out_courses.append(course_obj)
+
+        return out_courses
+
+    @staticmethod
     def get_sections_list_by_course(course: Course) -> Tuple:
         """
         Params:
@@ -547,6 +581,100 @@ class RequestProxy(object):
                 return []
 
     @classmethod
+    def umdio_get_courses_by_gened(cls, department_id: str, gen_ed: str) -> list:
+        """
+        Ask umd.io to get a list of courses with a specific gen-ed requirement
+        Params:
+            department_id: str
+                Department ID to match (i.e. CMSC)
+            gen_ed: str
+                Gened requirement to search for
+        Returns:
+            courses: list
+                List of courses satisfying the gened (from json response)
+        """
+        if not cls.test_mode:
+            if department_id == "":
+                sections_response = requests.get("https://api.umd.io/v1/courses",
+                                                 params={"gen_ed": gen_ed},
+                                                 headers=APIGet.headers)
+            else:
+                sections_response = requests.get("https://api.umd.io/v1/courses",
+                                                 params={"dept_id": department_id,
+                                                         "gen_ed": gen_ed},
+                                                 headers=APIGet.headers)
+
+            # No courses found
+            if sections_response.status_code != 200:
+                return []
+
+            return sections_response.json()
+
+        else:
+            if not cls.bad_request:
+                return [{
+                    "course_id": "MATH140",
+                    "semester": 202001,
+                    "name": "Calculus I",
+                    "dept_id": "MATH",
+                    "department": "Mathematics",
+                    "credits": "4",
+                    "description": "Introduction to calculus, including functions, limits, continuity, "
+                                   "derivatives and applications of the derivative, sketching of graphs "
+                                   "of functions, definite and indefinite integrals, and calculation "
+                                   "of area. The course is especially recommended for science, "
+                                   "engineering and mathematics majors.",
+                    "grading_method": [
+                      "Regular",
+                      "Pass-Fail",
+                      "Audit"
+                    ],
+                    "gen_ed": [
+                      [
+                        "FSAR",
+                        "FSMA"
+                      ]
+                    ],
+                    "core": [
+                      "MS"
+                    ],
+                    "relationships": {
+                      "coreqs": None,
+                      "prereqs": "Minimum grade of C- in MATH115.",
+                      "formerly": None,
+                      "restrictions": None,
+                      "additional_info": "Or must have math eligibility of MATH140 or higher; "
+                                         "and math eligibility is based on the Math Placement "
+                                         "Test.  All sections will require the use of a TI "
+                                         "graphics calculator. Instructor will use a TI-83, "
+                                         "TI-83+, or TI-86 calculator. If purchasing used "
+                                         "books additional software may be required.",
+                      "also_offered_as": None,
+                      "credit_granted_for": "MATH120, MATH130, MATH136, MATH140 or MATH220."
+                    },
+                    "sections": [
+                      "MATH140-0111",
+                      "MATH140-0121",
+                      "MATH140-0131",
+                      "MATH140-0141",
+                      "MATH140-0211",
+                      "MATH140-0221",
+                      "MATH140-0231",
+                      "MATH140-0241",
+                      "MATH140-0311",
+                      "MATH140-0321",
+                      "MATH140-0112",
+                      "MATH140-0113",
+                      "MATH140-0122",
+                      "MATH140-0123",
+                      "MATH140-0132",
+                      "MATH140-0142"
+                    ]
+                  }]
+            else:
+                return []
+
+    @classmethod
     def planetterp_get_grades_by_course_code(cls, course_code: str) -> list:
         """
         Ask planetterp to get grades for a course
@@ -594,8 +722,8 @@ class RequestProxy(object):
             else:
                 raise ConnectionError("Error retrieving gpa information from course")
 
-    @staticmethod
-    def planetterp_get_professor_by_name(professor_name: str, get_reviews="false") -> dict:
+    @classmethod
+    def planetterp_get_professor_by_name(cls, professor_name: str, get_reviews="false") -> dict:
         """
         Ask planetterp for information on a professor
         Params:
@@ -604,16 +732,30 @@ class RequestProxy(object):
         Returns:
             prof_raw: a json dict with professor infomration
         """
-        course_search_return = requests.get('https://api.planetterp.com/v1/professor', params={
-            'name': professor_name,
-            'reviews': get_reviews
-        }, headers=APIGet.headers)
+        if not cls.test_mode:
+            course_search_return = requests.get('https://api.planetterp.com/v1/professor', params={
+                'name': professor_name,
+                'reviews': get_reviews
+            }, headers=APIGet.headers)
 
-        if course_search_return.status_code != 200:
-            raise ConnectionError("Professor Not Found")
+            if course_search_return.status_code != 200:
+                raise ConnectionError("Professor Not Found")
 
-        prof_raw = course_search_return.json()
-        return prof_raw
+            prof_raw = course_search_return.json()
+            return prof_raw
+        else:
+            if not cls.bad_request:
+                return {
+                          "name": "Jon Snow",
+                          "slug": "snow",
+                          "type": "professor",
+                          "courses": [
+                            "MATH140"
+                          ],
+                          "average_rating": 4.125
+                        }
+            else:
+                raise ConnectionError("Professor Not Found")
 
 
 class APIParse(object):
@@ -663,12 +805,13 @@ class APIParse(object):
         course_id = course_raw["course_id"]
         course_name = course_raw["name"]
         course_credits = int(course_raw["credits"])
+        gen_eds = course_raw["gen_ed"][0]
         section_dict = {}
         professor_to_sections = {}
         professor_to_avg_course_gpa = {}
 
         out_course = Course(course_id, course_name, course_credits, section_dict, professor_to_sections,
-                            professor_to_avg_course_gpa)
+                            professor_to_avg_course_gpa, gen_eds=gen_eds)
 
         return out_course
 

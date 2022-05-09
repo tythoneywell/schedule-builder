@@ -184,6 +184,13 @@
                     {% for course_to_display in courses_to_display %}
                         <h4>{{ course_to_display.course_code }}</h4>
                         <h6>Average GPA: {{ course_to_display.avg_gpa }}</h6>
+                        {% if course_to_display.gen_eds %}
+                            <h6>Gen Ed Credits:
+                            {% for gen_ed in course_to_display.gen_eds %}
+                                {{ gen_ed }}
+                            {% endfor %}
+                            </h6>
+                        {% endif %}
                         <form action="" method="POST">
                              {{ view_sections_form.csrf_token }}
                              <input type="submit" name="view_course" value="View {{course_to_display.course_code}} sections">
@@ -262,11 +269,14 @@
     <h2>Search by checking which gen eds you want</h2>
 </div>
 <div class="container">
-    <form action="" method="POST">
+    Specify gen ed and (optional) department name
+    <form action="" class="form-inline my-2 my-lg-0" method="POST">
         {{ gen_ed_search_form.csrf_token }}
+        {{ gen_ed_search_form.department_id(class="form-control", placeholder="ENGL") }}
+
         {% for gen_ed in all_gen_ends %}
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="{{gen_ed}}"" id="flexCheckDefault" name="gened">
+                <input class="form-check-input" type="radio" value="{{gen_ed}}" id="flexCheckDefault" name="gened">
                 <label class="form-check-label" for="flexCheckDefault">
                     {{gen_ed}}
                 </label>
