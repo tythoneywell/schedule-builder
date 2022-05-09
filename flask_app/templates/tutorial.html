@@ -1,0 +1,17 @@
+{% extends "header.html" %}
+{% block content %}
+<h1>Tutorial</h1>
+<br>
+<h3><a class="navbar-brand" href="{{ url_for('index', page_num = 1) }}"
+      style="color: black; font-size: 125%">Schedule Builder Page</a></h3>
+
+
+<h3><a class="navbar-brand" href="{{ url_for('all_courses', page_num = 1) }}"
+      style="color: black; font-size: 125%">All Courses Page</a></h3>
+
+
+<h3><a class="navbar-brand" href="{{ url_for('all_professors', page_num = 1) }}"
+      style="color: black; font-size: 125%">All Professors Page</a></h3>
+
+
+{% endblock %}
