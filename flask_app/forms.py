@@ -85,4 +85,5 @@ class GenEdSearchForm(FlaskForm):
     """
     Form to search for classes that are a certain gen ed
     """
+    department_id = StringField("Department ID")
     search_by_gened = SubmitField("Search for Gen Eds")

@@ -76,12 +76,11 @@ def create_app():
             except ConnectionError as e:
                 add_remove_notification_text = str(e)
 
-        if  request.form.getlist("gened") != [] and gen_ed_search_form.validate_on_submit():
+        if gen_ed_search_form.validate_on_submit():
             list_of_gen_eds_selected = request.form.getlist("gened")
-            list_of_gen_eds_selected_str = "You selected the following gen eds: "
-            for gen_ed in list_of_gen_eds_selected:
-                list_of_gen_eds_selected_str += gen_ed + " "
-            return list_of_gen_eds_selected_str
+            if len(list_of_gen_eds_selected) > 0:
+                courses_to_display = APIGet.get_course_list_by_gen_ed(
+                    gen_ed_search_form.department_id.data, list_of_gen_eds_selected[0])
 
         if clear_all_courses_form.clear_all.data and clear_all_courses_form.validate_on_submit():
             if schedule.total_credits == 0:
