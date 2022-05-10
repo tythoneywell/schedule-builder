@@ -57,6 +57,59 @@
 <dd><p>Creates the actual flask app</p>
 </dd></dl>
 
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">flask_app.app.</span></span><span class="sig-name descname"><span class="pre">index</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#flask_app.app.create_app" title="Permalink to this definition">¶</a></dt>
+<dd><p>Home page for the flask app that will allow users to see/make their schedule. Also contains link to see all courses</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">flask_app.app.</span></span><span class="sig-name descname"><span class="pre">all_courses</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">page_num</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#flask_app.app.create_app" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display a list of all courses that the student could try to sign up for. The user can navigate to the next and previous pages to see more courses</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>page_num</strong> – int
+The page number of all courses to load</p></li>
+</ul>
+</dd>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">flask_app.app.</span></span><span class="sig-name descname"><span class="pre">all_professors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">page_num</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#flask_app.app.create_app" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display a list of all professors that the student could try to take. Each professor is a hyerlink to their specific page</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>page_num</strong> – int
+The page number of all professors to load</p></li>
+</ul>
+</dd>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">flask_app.app.</span></span><span class="sig-name descname"><span class="pre">professor_detail</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">slug</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span><span class="sig-paren">)</span><a class="headerlink" href="#flask_app.app.create_app" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display a page for a specific professor using their slug</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> – str
+Professor name to get professor with</p></li>
+<li><p><strong>slug</strong> – str
+Professor slug to create a unique link to their page</p></li>
+</ul>
+</dd>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">flask_app.app.</span></span><span class="sig-name descname"><span class="pre">tutorial</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#flask_app.app.create_app" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tutorial page explaining how to use the schedule builder</p>
+</dd></dl>
+
 </section>
 <section id="module-flask_app.forms">
 <span id="flask-app-forms-module"></span><h2>flask_app.forms module<a class="headerlink" href="#module-flask_app.forms" title="Permalink to this headline">¶</a></h2>

@@ -116,9 +116,9 @@ The project has two main directories, flask_app and tests. flask_app contains al
 
 ### flask_app
 
-* `courses.py` contains backend code for courses and sections.
+* `backend/courses.py` contains backend code for courses and sections.
 
-* `schedule.py` contains backend code for the schedule.
+* `backend/schedule.py` contains backend code for the schedule.
 
 * `forms.py` contains WTForms forms which are used to handle user input.
 
@@ -127,7 +127,9 @@ The project has two main directories, flask_app and tests. flask_app contains al
 
 Inside the templates directory are the html files to display the pages of the app.
 
-Inside the data directory is the file that stores all course and section information, fall2020data.json.
+Inside the static directory are the screenshots used for the tutorial page.
+
+
 
 ### tests
 
@@ -139,6 +141,9 @@ Inside the data directory is the file that stores all course and section informa
 
 ### screenshots
 * Contains screenshots of the web app. These images are used in the README
+
+### docs
+* Contains all sphinx documentation and the files necessary to automatically generate documentation
 
 ### Other
 
