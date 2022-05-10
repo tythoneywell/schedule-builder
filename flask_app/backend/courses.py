@@ -17,10 +17,10 @@ class Course(object):
         self.sess = requests.Session()
         self.course_code = course_code
         self.name = name
-        self.credits = course_credits
+        self.credits = course_credits if course_credits else 0
         self.sections = sections
         self.avg_gpa = avg_gpa
-        self.gen_eds = [] if gen_eds is None else gen_eds
+        self.gen_eds = gen_eds if gen_eds else []
         # note this will be a dict[string: list] since it is just one professor. In the case of co-taught classes,
         # the same section will appear as part of 2 (or more) lists in this dict
         self.professor_to_sections = professor_to_sections
@@ -56,6 +56,9 @@ class Course(object):
         self.professor_to_sections = dict(OrderedDict(sorted(self.professor_to_sections.items(),
             key = lambda prof : (Course.get_professor_average_rating(prof[0]) is not None,
                  Course.get_professor_average_rating(prof[0])), reverse = True)))
+
+    def toJSON(self):
+        pass
 
 
 class Professor(object):
