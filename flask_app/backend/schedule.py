@@ -238,7 +238,7 @@ class MySchedule(object):
                          "F": []}
         self.total_credits = 0
         self.sections_list = []
-
+        self.courses_list = []
         self.warnings_list = []
 
     def get_schedule_average_gpa(self) -> float:
@@ -258,7 +258,7 @@ class MySchedule(object):
         This function serializes the user's schedule to easily be copied by the user on the frontend. The user can
         then use this serialized string to load their schedule through the "load_serialized_schedule" function.
 
-        return:
+        Returns:
             str_schedule: str
                 A String representation of the user's schedule
         """
@@ -275,7 +275,7 @@ class MySchedule(object):
         This function takes a string representation of the serialized version of a user's schedule and loads this
         schedule by adding all of the sections/meeting times.
 
-        param:
+        Args:
             str_schedule: str
                 A String representation of the user's schedule generated from the get_serialized_schedule function
         """
