@@ -1,13 +1,12 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session
 from flask_app.backend.schedule import MySchedule
-from flask_app.backend.courses import CourseList, APIGet, Professor
+from flask_app.backend.courses import Course, CourseList, APIGet, Professor
 from flask_app.forms import SearchForm, ClearAllCoursesForm, AddRemoveForm, SearchForCourseForm, AddClassForm, \
     ViewSectionsForm, SerializeScheduleForm, GenEdSearchForm
 
 course_list = CourseList()
-schedule = MySchedule()
-courses_to_display = []
-expanded_course_to_display = None
+session_data = {}  # Dict mapping the user's session's _user_id to a dict of relevant objects stored server-side.
+session_count = 0
 
 
 def create_app():
@@ -24,10 +23,25 @@ def create_app():
         Home page for the flask app that will allow users to see/make their schedule
         Also contains link to see all courses
         """
+        global session_data
+        global session_count
 
-        global schedule
-        global courses_to_display
-        global expanded_course_to_display
+        if len(request.form) == 0:
+            session["session_num"] = session_count
+            session_count += 1
+
+        if session["session_num"] not in session_data:
+            session_data[session["session_num"]] = {
+                "schedule": MySchedule(),
+                "courses_to_display": [],
+                "expanded_course_to_display": None,
+            }
+
+        # Load up session info
+        this_session_data = session_data[session["session_num"]]
+        schedule = this_session_data["schedule"]
+        courses_to_display = this_session_data["courses_to_display"]
+        expanded_course_to_display = this_session_data["expanded_course_to_display"]
 
         search_form = SearchForm()
         add_remove_form = AddRemoveForm()
@@ -102,7 +116,7 @@ def create_app():
             try:
                 button_response = request.form['add_course']
                 course_code = button_response.split(" ")[1]
-                if expanded_course_to_display.course_code == course_code:
+                if expanded_course_to_display and expanded_course_to_display.course_code == course_code:
                     add_remove_notification_text = schedule.add_course(expanded_course_to_display)
                 else:
                     course_to_add = CourseList.get_course_using_course_code(course_code)
@@ -142,6 +156,11 @@ def create_app():
 
             except ConnectionError as e:
                 add_remove_notification_text = str(e)
+
+        # Write session info
+        session_data[session["session_num"]]["schedule"] = schedule
+        session_data[session["session_num"]]["courses_to_display"] = courses_to_display
+        session_data[session["session_num"]]["expanded_course_to_display"] = expanded_course_to_display
 
         return render_template('index.html',
                                schedule=schedule,

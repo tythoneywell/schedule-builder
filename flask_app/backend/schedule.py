@@ -60,6 +60,8 @@ class MySchedule(object):
             message: bool
                 String describing the result of trying to add the course.
         """
+        if course_to_add.credits == 0:
+            return "Oops! " + course_to_add.course_code + " is not offered this semester."
 
         for other_course in self.courses_list:
             if course_to_add.course_code == other_course.course_code:
