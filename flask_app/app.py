@@ -1,11 +1,12 @@
 from flask import Flask, render_template, request, session
 from flask_app.backend.schedule import MySchedule
-from flask_app.backend.courses import Course, CourseList, APIGet, Professor
+from flask_app.backend.courses import CourseList, APIGet, Professor
 from flask_app.forms import SearchForm, ClearAllCoursesForm, AddRemoveForm, SearchForCourseForm, AddClassForm, \
     ViewSectionsForm, SerializeScheduleForm, GenEdSearchForm
+from time import time
 
 course_list = CourseList()
-session_data = {}  # Dict mapping the user's session's _user_id to a dict of relevant objects stored server-side.
+session_data = {}  # Dict mapping the user's session's session_num to a dict of relevant objects stored server-side.
 session_count = 0
 
 
@@ -17,6 +18,8 @@ def create_app():
     app.debug = True
     app.config['SECRET_KEY'] = "super secret key"
 
+    app_boot_time = time()
+
     @app.route('/', methods=['GET', 'POST'])
     def index():
         """
@@ -26,11 +29,13 @@ def create_app():
         global session_data
         global session_count
 
-        if len(request.form) == 0:
+        # Check if the user's session_num is valid
+        if "start_time" not in session or session["start_time"] < app_boot_time\
+                or "session_num" not in session:
+            session["start_time"] = time()
             session["session_num"] = session_count
             session_count += 1
-
-        if session["session_num"] not in session_data:
+            
             session_data[session["session_num"]] = {
                 "schedule": MySchedule(),
                 "courses_to_display": [],
@@ -79,14 +84,15 @@ def create_app():
                 if course_list_to_add.sections == {}:
                     raise ConnectionError("This course has no sections, please "
                                           "contact department for information to register for this course.")
-                course_to_add = course_list_to_add.sections[section_number]
+                try:
+                    course_to_add = course_list_to_add.sections[section_number]
+                    if add_remove_form.add.data:
+                        add_remove_notification_text = schedule.add_section(course_to_add)
 
-                if add_remove_form.add.data:
-                    add_remove_notification_text = schedule.add_section(course_to_add)
-
-                if add_remove_form.remove.data:
-                    add_remove_notification_text = schedule.remove_section(course_to_add)
-
+                    if add_remove_form.remove.data:
+                        add_remove_notification_text = schedule.remove_section(course_to_add)
+                except KeyError:
+                    add_remove_notification_text = "Section Number not found"
             except ConnectionError as e:
                 add_remove_notification_text = str(e)
 
