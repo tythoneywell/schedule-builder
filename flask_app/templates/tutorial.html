@@ -5,13 +5,120 @@
 <h3><a class="navbar-brand" href="{{ url_for('index', page_num = 1) }}"
       style="color: black; font-size: 125%">Schedule Builder Page</a></h3>
 
+<h5>Schedule Builder - Home Page</h5>
+
+<p>Below is a screenshot of the web application's home page. On the header, there are links to
+"See All Courses" and to "See All Professors" which route the user to separate endpoints within
+the site. The schedule is currently empty because the user has not added any sections to their course.
+Below the schedule are several interactive elements for the user to help build their schedule. The first section includes
+an area for the user to add/remove a specific section to/from their schedule. If the user is not certain which section they
+want to add, they are free to search for a course and view all available sections from the query provided (e.g. searching
+for "CMSC13" will return all courses starting with "CMSC13" for the user to choose from.) If the user wishes to restart
+their schedule, they can easily wipe the schedule clean by clicking "Clear Schedule." Lastly, the user
+can easily import/export their schedule. By clicking "Get Schedule Data", the user can copy a string which represents the
+serialized schedule. If the user already has this serialized schedule string and wishes to reload their schedule later,
+they can paste this string in the textbox and click "Load Schedule Data."</p>
+
+<img src="{{url_for('static', filename='schedule_homescreen.png')}}" alt="Schedule Homescreen" width="800">
+<br>
+<br>
+
+<h5>Schedule Builder - Add a section to schedule</h5>
+
+<p>Below is a screenshot of the "Add a section to schedule" portion of the schedule builder. This form includes two
+text boxes which allow the user to enter a course code (e.g. CMSC435) followed by a section number (e.g. 0101). The user
+is then prompted to add or remove this section from their schedule by two buttons immediately preceding the input textboxes.
+If the section cannot be added or remove from their schedule, an appropriate warning/reason will be displayed.</p>
+
+<img src="{{url_for('static', filename='add_section_to_schedule.png')}}" alt="Add Section to Schedule" width="800">
+<br>
+<br>
+
+<h5>Schedule Builder - Search for a course</h5>
+
+<p>Below is a screenshot of the "Search for a course" portion of the schedule builder. This form allows the user to enter a
+search query for a course. As an example, after searching for "CMSC131", a scrollable section is rendered
+with all the courses beginning with "CMSC131". The screenshot below shows that CMSC131H, CMSC131, and CMSC131A are all
+valid courses from the given query. The user can now add the course to their schedule, or can view all
+available sections for a given course and can then add a specific section to their schedule.</p>
+
+<img src="{{url_for('static', filename='search_for_course.png')}}" alt="Search for Course" width="800">
+<br>
+<br>
+
+<h5>Schedule Builder - View sections of a course</h5>
+
+<p>Below is a screenshot of the same form after the user selected to "View CMSC131 sections". A different scrollable
+section is rendered to the right of the search query results. This portion is sorted by professor. Under each professor,
+average PlanetTerp rating information and average GPA information for that course taught by that professor
+is also displayed. Each section of the course includes information about the number of seats available and the meeting
+times of that specific section. The user can browse the available sections and if a section fits their criteria, they
+can easily add a specific section to their schedule with a click of a button.</p>
+
+<img src="{{url_for('static', filename='view_sections_after_searching_for_course.png')}}" alt="View Sections" width="800">
+<br>
+<br>
+
+<h5>Schedule Builder - View the Schedule After Adding a Section</h5>
+
+<p>Below is a screenshot of the home page after the user added CMSC131-0101. In this example, the user clicked the button
+under the "Search for a course" portion to "Add CMSC131-0101", but they also could have added CMSC131-0101 through the
+"Add a section to schedule" form. Notice that the schedule displays the meeting times of CMSC131-0101, and the average
+schedule GPA, total credits, and courses in the current schedule were updated appropriately as well.</p>
+
+<img src="{{url_for('static', filename='schedule_after_adding_section.png')}}" alt="After adding Section" width="800">
+<br>
+<br>
+
+<h5>Schedule Builder - Get Schedule Data</h5>
+
+<p>Below are two screenshots of the home page after the user added CHEM135-3125, CMSC131-0101, and INAG110-0501. The user
+then selected to "Get Schedule Data" (as shown in the second screenshot) and a string was displayed for the user to copy.
+If the user wishes to come back to the schedule builder at a later time and continue progress, they can paste the same
+string into the text box and click "Load Schedule Data" to continue with their schedule as they left it.</p>
+
+<img src="{{url_for('static', filename='multiple_classes_in_schedule.png')}}" alt="Multiple Classes" width="800">
+<br>
+<br>
+
+<img src="{{url_for('static', filename='export_schedule.png')}}" alt="Export Schedule" width="800">
+<br>
+<br>
+
 
 <h3><a class="navbar-brand" href="{{ url_for('all_courses', page_num = 1) }}"
       style="color: black; font-size: 125%">All Courses Page</a></h3>
 
+<h5>See All Courses</h5>
+
+<p>Below is a screenshot of the "See All Courses" tab of the web application. This can be accessed by clicking the
+shortcut on the banner at the top of the screen. This endpoint loads all the courses for the current academic term in
+alphabetical order and lists the following information: number of credits, average GPA of course, available sections,
+and the meeting times and seats available for each section.</p>
+
+<img src="{{url_for('static', filename='see_all_courses.png')}}" alt="See all Courses" width="800">
+<br>
+<br>
 
 <h3><a class="navbar-brand" href="{{ url_for('all_professors', page_num = 1) }}"
       style="color: black; font-size: 125%">All Professors Page</a></h3>
 
+<h5>See All Professors</h5>
+
+<p>Below is a screenshot of the "See All Professors" tab of the web application. This can be accessed by clicking the
+shortcut on the banner at the top of the screen. This endpoint loads all the professors. Beneath each professor
+is their average PlanetTerp rating and a link to visit the professor's page which includes review information.</p>
+
+<p>The second screenshot shows an example of a Professor's page (in this case, Auguste Gezalyan.) The Professor review page
+shows the average rating, the type (e.g. lecturer, TA, etc.), a link to the PlanetTerp review page, courses they are
+teaching in the current academic year, and finally a list of reviews by real students taken from PlanetTerp!</p>
+
+<img src="{{url_for('static', filename='see_all_professors.png')}}" alt="See All Professors" width="800">
+<br>
+<br>
+
+<img src="{{url_for('static', filename='professor_review.png')}}" alt="Professor Review" width="800">
+<br>
+<br>
 
 {% endblock %}

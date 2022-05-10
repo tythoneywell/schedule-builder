@@ -409,6 +409,11 @@ the results properly in sorted order.</p>
 </dl>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="flask_app.backend.courses.Course.toJSON">
+<span class="sig-name descname"><span class="pre">toJSON</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#flask_app.backend.courses.Course.toJSON" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -893,11 +898,10 @@ then use this serialized string to load their schedule through the “load_seria
 <span class="sig-name descname"><span class="pre">load_serialized_schedule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">str_schedule</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#flask_app.backend.schedule.MySchedule.load_serialized_schedule" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function takes a string representation of the serialized version of a user’s schedule and loads this
 schedule by adding all of the sections/meeting times.</p>
-<dl class="simple">
-<dt>param:</dt><dd><dl class="simple">
-<dt>str_schedule: str</dt><dd><p>A String representation of the user’s schedule generated from the get_serialized_schedule function</p>
-</dd>
-</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>str_schedule</strong> – str
+A String representation of the user’s schedule generated from the get_serialized_schedule function</p>
 </dd>
 </dl>
 </dd></dl>
