@@ -229,7 +229,6 @@ class MySchedule(object):
     def remove_all_classes(self) -> None:
         """
         Resets the schedule to be empty.
-        TODO Fix for new course/section addition procedure
         """
         self.schedule = {"M": [],
                          "Tu": [],

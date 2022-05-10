@@ -48,17 +48,15 @@ class Course(object):
         This function sorts the existing professors to sections object by the rating to display
         the results properly in sorted order.
 
-        Args:
-            None
         Returns:
             None
         """
         self.professor_to_sections = dict(OrderedDict(sorted(self.professor_to_sections.items(),
-            key = lambda prof : (Course.get_professor_average_rating(prof[0]) is not None,
-                 Course.get_professor_average_rating(prof[0])), reverse = True)))
-
-    def toJSON(self):
-        pass
+                                                             key=lambda prof: (
+                                                                 Course.get_professor_average_rating(
+                                                                     prof[0]) is not None,
+                                                                 Course.get_professor_average_rating(prof[0])),
+                                                             reverse=True)))
 
 
 class Professor(object):
@@ -420,6 +418,8 @@ class APIGet(object):
         Args:
             professor_name: str
                 Professor Name whose object we want to get
+            get_reviews: bool
+                Boolean representing if API call should return the Professor reviews too
         Returns:
             professor: Professor
                 The object of this professor
@@ -644,52 +644,52 @@ class RequestProxy(object):
                                    "of area. The course is especially recommended for science, "
                                    "engineering and mathematics majors.",
                     "grading_method": [
-                      "Regular",
-                      "Pass-Fail",
-                      "Audit"
+                        "Regular",
+                        "Pass-Fail",
+                        "Audit"
                     ],
                     "gen_ed": [
-                      [
-                        "FSAR",
-                        "FSMA"
-                      ]
+                        [
+                            "FSAR",
+                            "FSMA"
+                        ]
                     ],
                     "core": [
-                      "MS"
+                        "MS"
                     ],
                     "relationships": {
-                      "coreqs": None,
-                      "prereqs": "Minimum grade of C- in MATH115.",
-                      "formerly": None,
-                      "restrictions": None,
-                      "additional_info": "Or must have math eligibility of MATH140 or higher; "
-                                         "and math eligibility is based on the Math Placement "
-                                         "Test.  All sections will require the use of a TI "
-                                         "graphics calculator. Instructor will use a TI-83, "
-                                         "TI-83+, or TI-86 calculator. If purchasing used "
-                                         "books additional software may be required.",
-                      "also_offered_as": None,
-                      "credit_granted_for": "MATH120, MATH130, MATH136, MATH140 or MATH220."
+                        "coreqs": None,
+                        "prereqs": "Minimum grade of C- in MATH115.",
+                        "formerly": None,
+                        "restrictions": None,
+                        "additional_info": "Or must have math eligibility of MATH140 or higher; "
+                                           "and math eligibility is based on the Math Placement "
+                                           "Test.  All sections will require the use of a TI "
+                                           "graphics calculator. Instructor will use a TI-83, "
+                                           "TI-83+, or TI-86 calculator. If purchasing used "
+                                           "books additional software may be required.",
+                        "also_offered_as": None,
+                        "credit_granted_for": "MATH120, MATH130, MATH136, MATH140 or MATH220."
                     },
                     "sections": [
-                      "MATH140-0111",
-                      "MATH140-0121",
-                      "MATH140-0131",
-                      "MATH140-0141",
-                      "MATH140-0211",
-                      "MATH140-0221",
-                      "MATH140-0231",
-                      "MATH140-0241",
-                      "MATH140-0311",
-                      "MATH140-0321",
-                      "MATH140-0112",
-                      "MATH140-0113",
-                      "MATH140-0122",
-                      "MATH140-0123",
-                      "MATH140-0132",
-                      "MATH140-0142"
+                        "MATH140-0111",
+                        "MATH140-0121",
+                        "MATH140-0131",
+                        "MATH140-0141",
+                        "MATH140-0211",
+                        "MATH140-0221",
+                        "MATH140-0231",
+                        "MATH140-0241",
+                        "MATH140-0311",
+                        "MATH140-0321",
+                        "MATH140-0112",
+                        "MATH140-0113",
+                        "MATH140-0122",
+                        "MATH140-0123",
+                        "MATH140-0132",
+                        "MATH140-0142"
                     ]
-                  }]
+                }]
             else:
                 return []
 
@@ -750,8 +750,10 @@ class RequestProxy(object):
         Args:
             professor_name: str
                 Professor Name whose object we want to get
+            get_reviews: bool
+                Boolean representing if API call should also return Professor reviews
         Returns:
-            prof_raw: a json dict with professor infomration
+            prof_raw: a json dict with professor information
         """
         if not cls.test_mode:
             course_search_return = requests.get('https://api.planetterp.com/v1/professor', params={
@@ -767,14 +769,14 @@ class RequestProxy(object):
         else:
             if not cls.bad_request:
                 return {
-                          "name": "Jon Snow",
-                          "slug": "snow",
-                          "type": "professor",
-                          "courses": [
-                            "MATH140"
-                          ],
-                          "average_rating": 4.125
-                        }
+                    "name": "Jon Snow",
+                    "slug": "snow",
+                    "type": "professor",
+                    "courses": [
+                        "MATH140"
+                    ],
+                    "average_rating": 4.125
+                }
             else:
                 raise ConnectionError("Professor Not Found")
 
