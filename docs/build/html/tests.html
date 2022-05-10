@@ -34,9 +34,6 @@
             
   <section id="tests-package">
 <h1>tests package<a class="headerlink" href="#tests-package" title="Permalink to this headline">¶</a></h1>
-<section id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
-</section>
 <section id="module-tests.conftest">
 <span id="tests-conftest-module"></span><h2>tests.conftest module<a class="headerlink" href="#module-tests.conftest" title="Permalink to this headline">¶</a></h2>
 <dl class="py function">
@@ -93,6 +90,28 @@
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">unittest.case.TestCase</span></code></p>
 <p>Test functions in the APIGet and APIParse classes, which consist of several static helper methods to call
 the Planetterp and umdio APIs, and parse the returned data into objects</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_courses.APIGetAndParseTest.setUp">
+<span class="sig-name descname"><span class="pre">setUp</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_courses.APIGetAndParseTest.setUp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hook method for setting up the test fixture before exercising it.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_courses.APIGetAndParseTest.tearDown">
+<span class="sig-name descname"><span class="pre">tearDown</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_courses.APIGetAndParseTest.tearDown" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hook method for deconstructing the test fixture after testing it.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_courses.APIGetAndParseTest.test_gen_ed_search_returned_courses_empty_bad_request">
+<span class="sig-name descname"><span class="pre">test_gen_ed_search_returned_courses_empty_bad_request</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_courses.APIGetAndParseTest.test_gen_ed_search_returned_courses_empty_bad_request" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_courses.APIGetAndParseTest.test_gen_ed_search_returned_courses_valid_good_request">
+<span class="sig-name descname"><span class="pre">test_gen_ed_search_returned_courses_valid_good_request</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_courses.APIGetAndParseTest.test_gen_ed_search_returned_courses_valid_good_request" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="tests.test_courses.APIGetAndParseTest.test_get_course_heads_make_sure_all_courses_we_expect_are_present">
 <span class="sig-name descname"><span class="pre">test_get_course_heads_make_sure_all_courses_we_expect_are_present</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_courses.APIGetAndParseTest.test_get_course_heads_make_sure_all_courses_we_expect_are_present" title="Permalink to this definition">¶</a></dt>
@@ -413,9 +432,6 @@ the API calls</p>
 </dd></dl>
 
 </section>
-<section id="module-tests">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-tests" title="Permalink to this headline">¶</a></h2>
-</section>
 </section>
 
 
@@ -439,13 +455,11 @@ the API calls</p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="flask_app.html">flask_app package</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">tests package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-tests.conftest">tests.conftest module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-tests.test_app">tests.test_app module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-tests.test_courses">tests.test_courses module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-tests.test_schedule">tests.test_schedule module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-tests.utils">tests.utils module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-tests">Module contents</a></li>
 </ul>
 </li>
 </ul>

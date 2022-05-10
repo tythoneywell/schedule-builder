@@ -326,7 +326,7 @@ class APIGet(object):
         in order to display them all on the "see all courses" page
         Each page has 30 courses
 
-        :
+        Args:
             page_num: int
                 The page number of all courses to load
         Returns:
@@ -351,6 +351,7 @@ class APIGet(object):
         """
         Returns a list of all courses within a department that satisfy a single gen ed
         requirement (max 30)
+
         Args:
             department_id: str
                 The department in which to search for courses
@@ -382,7 +383,7 @@ class APIGet(object):
     @staticmethod
     def get_sections_list_by_course(course: Course) -> Tuple:
         """
-        Params:
+        Args:
             course: Course
                 Base course to get sections of
         Returns:
@@ -398,7 +399,7 @@ class APIGet(object):
     @staticmethod
     def get_professor_gpa_breakdown_by_course(course_code: str) -> dict:
         """
-        Params:
+        Args:
             course_code: str
                 Course code of class to query grade information
         Returns:
@@ -413,7 +414,7 @@ class APIGet(object):
     @staticmethod
     def get_professor_by_name(professor_name: str, get_reviews="false") -> Professor:
         """
-        Params:
+        Args:
             professor_name: str
                 Professor Name whose object we want to get
         Returns:
@@ -440,7 +441,8 @@ class RequestProxy(object):
     def planetterp_search_by_query(cls, query: str) -> list:
         """
         Ask planetterp to match query to course names
-        Params:
+
+        Args:
             query: str
                 Partial string to search
         Returns:
@@ -459,7 +461,8 @@ class RequestProxy(object):
     def planetterp_get_course_by_course_code(cls, course_code: str) -> dict:
         """
         Ask planetterp to search for a course given a specific course code
-        Params:
+
+        Args:
             course_code: str
                 Course code string to get
         Returns:
@@ -504,7 +507,8 @@ class RequestProxy(object):
     def planetterp_get_courses_by_page(cls, page_num: int) -> list:
         """
         Ask planetterp to get a page from the list of all courses
-        Params:
+
+        Args:
             page_num: str
                 Page number to get
         Returns:
@@ -544,7 +548,8 @@ class RequestProxy(object):
     def umdio_get_sections_by_course_code(cls, course: Course) -> list:
         """
         Ask umd.io to get a list of sections from a course code
-        Params:
+
+        Args:
             course: str
                 Course whose course code will be used for search
         Returns:
@@ -594,7 +599,8 @@ class RequestProxy(object):
     def umdio_get_courses_by_gened(cls, department_id: str, gen_ed: str) -> list:
         """
         Ask umd.io to get a list of courses with a specific gen-ed requirement
-        Params:
+
+        Args:
             department_id: str
                 Department ID to match (i.e. CMSC)
             gen_ed: str
@@ -688,7 +694,8 @@ class RequestProxy(object):
     def planetterp_get_grades_by_course_code(cls, course_code: str) -> list:
         """
         Ask planetterp to get grades for a course
-        Params:
+
+        Args:
             course_code: str
                 Course code to get grades for
         Returns:
@@ -736,7 +743,8 @@ class RequestProxy(object):
     def planetterp_get_professor_by_name(cls, professor_name: str, get_reviews="false") -> dict:
         """
         Ask planetterp for information on a professor
-        Params:
+
+        Args:
             professor_name: str
                 Professor Name whose object we want to get
         Returns:
