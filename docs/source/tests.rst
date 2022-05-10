@@ -1,9 +1,6 @@
 tests package
 =============
 
-Submodules
-----------
-
 tests.conftest module
 ---------------------
 
@@ -44,10 +41,3 @@ tests.utils module
    :undoc-members:
    :show-inheritance:
 
-Module contents
----------------
-
-.. automodule:: tests
-   :members:
-   :undoc-members:
-   :show-inheritance:

@@ -5,5 +5,4 @@ team-project
    :maxdepth: 4
 
    flask_app
-   run
    tests

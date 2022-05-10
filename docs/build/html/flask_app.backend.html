@@ -118,29 +118,53 @@ without sections. (Course “heads”)</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="flask_app.backend.courses.APIGet.get_course_list_by_gen_ed">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_course_list_by_gen_ed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">department_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gen_ed</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="headerlink" href="#flask_app.backend.courses.APIGet.get_course_list_by_gen_ed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of all courses within a department that satisfy a single gen ed
+requirement (max 30)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>department_id</strong> – str
+The department in which to search for courses</p></li>
+<li><p><strong>gen_ed</strong> – str
+The gen ed requirement to search for</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>list</dt><dd><p>List of courses satisfying input arguments</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>courses</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="flask_app.backend.courses.APIGet.get_course_list_by_page_number">
 <em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_course_list_by_page_number</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">page_num</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#flask_app.backend.courses.APIGet.get_course_list_by_page_number" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given a page number, this function will call the API and give back a
 dictionary of course objects in alphabetical order
 in order to display them all on the “see all courses” page
 Each page has 30 courses</p>
-<dl class="simple">
-<dt>:</dt><dd><dl class="simple">
-<dt>page_num: int</dt><dd><p>The page number of all courses to load</p>
-</dd>
-</dl>
-</dd>
-</dl>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><dl class="simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>page_num</strong> – int
+The page number of all courses to load</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
 <dt>dict</dt><dd><p>Dictionary of courses in alphabetical order to display in the “all courses” page (max of 30)</p>
 </dd>
 </dl>
 </p>
 </dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>courses</p>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>courses</p>
 </dd>
 </dl>
 </dd></dl>
@@ -148,23 +172,20 @@ Each page has 30 courses</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="flask_app.backend.courses.APIGet.get_professor_by_name">
 <em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_professor_by_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">professor_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">get_reviews</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'false'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#flask_app.backend.courses.Professor" title="flask_app.backend.courses.Professor"><span class="pre">flask_app.backend.courses.Professor</span></a></span></span><a class="headerlink" href="#flask_app.backend.courses.APIGet.get_professor_by_name" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="simple">
-<dt>Params:</dt><dd><dl class="simple">
-<dt>professor_name: str</dt><dd><p>Professor Name whose object we want to get</p>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>professor_name</strong> – str
+Professor Name whose object we want to get</p>
 </dd>
-</dl>
-</dd>
-</dl>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><dl class="simple">
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
 <dt>Professor</dt><dd><p>The object of this professor</p>
 </dd>
 </dl>
 </p>
 </dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>professor</p>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>professor</p>
 </dd>
 </dl>
 </dd></dl>
@@ -172,24 +193,21 @@ Each page has 30 courses</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="flask_app.backend.courses.APIGet.get_professor_gpa_breakdown_by_course">
 <em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_professor_gpa_breakdown_by_course</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">course_code</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#flask_app.backend.courses.APIGet.get_professor_gpa_breakdown_by_course" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="simple">
-<dt>Params:</dt><dd><dl class="simple">
-<dt>course_code: str</dt><dd><p>Course code of class to query grade information</p>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>course_code</strong> – str
+Course code of class to query grade information</p>
 </dd>
-</dl>
-</dd>
-</dl>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><dl class="simple">
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
 <dt>dict</dt><dd><p>Dictionary of [str:float] of professor to calculated average gpa of specific course when taught by that
 professor</p>
 </dd>
 </dl>
 </p>
 </dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>gpa</p>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>gpa</p>
 </dd>
 </dl>
 </dd></dl>
@@ -197,16 +215,13 @@ professor</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="flask_app.backend.courses.APIGet.get_sections_list_by_course">
 <em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_sections_list_by_course</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">course</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#flask_app.backend.courses.Course" title="flask_app.backend.courses.Course"><span class="pre">flask_app.backend.courses.Course</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span></span></span><a class="headerlink" href="#flask_app.backend.courses.APIGet.get_sections_list_by_course" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="simple">
-<dt>Params:</dt><dd><dl class="simple">
-<dt>course: Course</dt><dd><p>Base course to get sections of</p>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>course</strong> – Course
+Base course to get sections of</p>
 </dd>
-</dl>
-</dd>
-</dl>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><dl class="simple">
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
 <dt>dict[str, Section]</dt><dd><p>Sections of this course, from umd.io</p>
 </dd>
 <dt>professors: dict[str, Section]</dt><dd><p>Professors teaching this course with a list of their sections, from umd.io</p>
@@ -214,8 +229,8 @@ professor</p>
 </dl>
 </p>
 </dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>sections</p>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>sections</p>
 </dd>
 </dl>
 </dd></dl>
@@ -353,7 +368,7 @@ Course these sections are sections of</p></li>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="flask_app.backend.courses.Course">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">flask_app.backend.courses.</span></span><span class="sig-name descname"><span class="pre">Course</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">course_code</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">course_credits</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sections</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">professor_to_sections</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">professor_to_avg_course_gpa</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">avg_gpa</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">any</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#flask_app.backend.courses.Course" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">flask_app.backend.courses.</span></span><span class="sig-name descname"><span class="pre">Course</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">course_code</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">course_credits</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sections</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">professor_to_sections</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">professor_to_avg_course_gpa</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">avg_gpa</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">any</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gen_eds</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#flask_app.backend.courses.Course" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Represents a course as seen on the Schedule of Classes.
 Contains a list of sections, the course code, and credits.</p>
@@ -532,24 +547,21 @@ Returns error sample response when bad_request is set to True.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="flask_app.backend.courses.RequestProxy.planetterp_get_course_by_course_code">
 <em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">planetterp_get_course_by_course_code</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">course_code</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#flask_app.backend.courses.RequestProxy.planetterp_get_course_by_course_code" title="Permalink to this definition">¶</a></dt>
-<dd><p>Ask planetterp to search for a course given a specific course code
-Params:</p>
-<blockquote>
-<div><dl class="simple">
-<dt>course_code: str</dt><dd><p>Course code string to get</p>
-</dd>
-</dl>
-</div></blockquote>
+<dd><p>Ask planetterp to search for a course given a specific course code</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><dl class="simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>course_code</strong> – str
+Course code string to get</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
 <dt>dict</dt><dd><p>Course that was found, in dict form (from json response)</p>
 </dd>
 </dl>
 </p>
 </dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>course</p>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>course</p>
 </dd>
 </dl>
 </dd></dl>
@@ -557,24 +569,21 @@ Params:</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="flask_app.backend.courses.RequestProxy.planetterp_get_courses_by_page">
 <em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">planetterp_get_courses_by_page</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">page_num</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="headerlink" href="#flask_app.backend.courses.RequestProxy.planetterp_get_courses_by_page" title="Permalink to this definition">¶</a></dt>
-<dd><p>Ask planetterp to get a page from the list of all courses
-Params:</p>
-<blockquote>
-<div><dl class="simple">
-<dt>page_num: str</dt><dd><p>Page number to get</p>
-</dd>
-</dl>
-</div></blockquote>
+<dd><p>Ask planetterp to get a page from the list of all courses</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><dl class="simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>page_num</strong> – str
+Page number to get</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
 <dt>list</dt><dd><p>List of course on this page (from json response)</p>
 </dd>
 </dl>
 </p>
 </dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>courses</p>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>courses</p>
 </dd>
 </dl>
 </dd></dl>
@@ -582,45 +591,39 @@ Params:</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="flask_app.backend.courses.RequestProxy.planetterp_get_grades_by_course_code">
 <em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">planetterp_get_grades_by_course_code</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">course_code</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="headerlink" href="#flask_app.backend.courses.RequestProxy.planetterp_get_grades_by_course_code" title="Permalink to this definition">¶</a></dt>
-<dd><p>Ask planetterp to get grades for a course
-Params:</p>
-<blockquote>
-<div><dl class="simple">
-<dt>course_code: str</dt><dd><p>Course code to get grades for</p>
-</dd>
-</dl>
-</div></blockquote>
+<dd><p>Ask planetterp to get grades for a course</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><dl class="simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>course_code</strong> – str
+Course code to get grades for</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
 <dt>list</dt><dd><p>List of letter grades for this course (from json response)</p>
 </dd>
 </dl>
 </p>
 </dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>grades</p>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>grades</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="flask_app.backend.courses.RequestProxy.planetterp_get_professor_by_name">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">planetterp_get_professor_by_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">professor_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">get_reviews</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'false'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#flask_app.backend.courses.RequestProxy.planetterp_get_professor_by_name" title="Permalink to this definition">¶</a></dt>
-<dd><p>Ask planetterp for information on a professor
-Params:</p>
-<blockquote>
-<div><dl class="simple">
-<dt>professor_name: str</dt><dd><p>Professor Name whose object we want to get</p>
-</dd>
-</dl>
-</div></blockquote>
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">planetterp_get_professor_by_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">professor_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">get_reviews</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'false'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#flask_app.backend.courses.RequestProxy.planetterp_get_professor_by_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Ask planetterp for information on a professor</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>a json dict with professor infomration</p>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>professor_name</strong> – str
+Professor Name whose object we want to get</p>
 </dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>prof_raw</p>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a json dict with professor infomration</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>prof_raw</p>
 </dd>
 </dl>
 </dd></dl>
@@ -628,24 +631,21 @@ Params:</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="flask_app.backend.courses.RequestProxy.planetterp_search_by_query">
 <em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">planetterp_search_by_query</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="headerlink" href="#flask_app.backend.courses.RequestProxy.planetterp_search_by_query" title="Permalink to this definition">¶</a></dt>
-<dd><p>Ask planetterp to match query to course names
-Params:</p>
-<blockquote>
-<div><dl class="simple">
-<dt>query: str</dt><dd><p>Partial string to search</p>
-</dd>
-</dl>
-</div></blockquote>
+<dd><p>Ask planetterp to match query to course names</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><dl class="simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>query</strong> – str
+Partial string to search</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
 <dt>list</dt><dd><p>List of courses that were matched (from json response)</p>
 </dd>
 </dl>
 </p>
 </dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>matched_courses</p>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>matched_courses</p>
 </dd>
 </dl>
 </dd></dl>
@@ -656,26 +656,49 @@ Params:</p>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="flask_app.backend.courses.RequestProxy.umdio_get_sections_by_course_code">
-<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">umdio_get_sections_by_course_code</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">course</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#flask_app.backend.courses.Course" title="flask_app.backend.courses.Course"><span class="pre">flask_app.backend.courses.Course</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="headerlink" href="#flask_app.backend.courses.RequestProxy.umdio_get_sections_by_course_code" title="Permalink to this definition">¶</a></dt>
-<dd><p>Ask umd.io to get a list of sections from a course code
-Params:</p>
-<blockquote>
-<div><dl class="simple">
-<dt>course: str</dt><dd><p>Course whose course code will be used for search</p>
+<dt class="sig sig-object py" id="flask_app.backend.courses.RequestProxy.umdio_get_courses_by_gened">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">umdio_get_courses_by_gened</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">department_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gen_ed</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="headerlink" href="#flask_app.backend.courses.RequestProxy.umdio_get_courses_by_gened" title="Permalink to this definition">¶</a></dt>
+<dd><p>Ask umd.io to get a list of courses with a specific gen-ed requirement</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>department_id</strong> – str
+Department ID to match (i.e. CMSC)</p></li>
+<li><p><strong>gen_ed</strong> – str
+Gened requirement to search for</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>list</dt><dd><p>List of courses satisfying the gened (from json response)</p>
 </dd>
 </dl>
-</div></blockquote>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>courses</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="flask_app.backend.courses.RequestProxy.umdio_get_sections_by_course_code">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">umdio_get_sections_by_course_code</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">course</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#flask_app.backend.courses.Course" title="flask_app.backend.courses.Course"><span class="pre">flask_app.backend.courses.Course</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="headerlink" href="#flask_app.backend.courses.RequestProxy.umdio_get_sections_by_course_code" title="Permalink to this definition">¶</a></dt>
+<dd><p>Ask umd.io to get a list of sections from a course code</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><dl class="simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>course</strong> – str
+Course whose course code will be used for search</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
 <dt>list</dt><dd><p>List of sections for the course (from json response)</p>
 </dd>
 </dl>
 </p>
 </dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>sections</p>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>sections</p>
 </dd>
 </dl>
 </dd></dl>
@@ -979,10 +1002,8 @@ Section to try to remove.</p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="flask_app.html">flask_app package</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="flask_app.html#subpackages">Subpackages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="flask_app.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="flask_app.html#flask-app-app-module">flask_app.app module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="flask_app.html#module-flask_app.app">flask_app.app module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="flask_app.html#module-flask_app.forms">flask_app.forms module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="flask_app.html#module-flask_app">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="tests.html">tests package</a></li>
