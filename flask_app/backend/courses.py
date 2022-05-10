@@ -17,10 +17,10 @@ class Course(object):
         self.sess = requests.Session()
         self.course_code = course_code
         self.name = name
-        self.credits = course_credits
+        self.credits = course_credits if course_credits else 0
         self.sections = sections
         self.avg_gpa = avg_gpa
-        self.gen_eds = [] if gen_eds is None else gen_eds
+        self.gen_eds = gen_eds if gen_eds else []
         # note this will be a dict[string: list] since it is just one professor. In the case of co-taught classes,
         # the same section will appear as part of 2 (or more) lists in this dict
         self.professor_to_sections = professor_to_sections
@@ -30,6 +30,7 @@ class Course(object):
     def get_professor_average_rating(professor_name: str) -> Union[float, None]:
         """
         Retrieves an average Planetterp rating for a specified professor by the name
+
         Args:
             professor_name: str
                 Name of professor in section whose rating we want to get.
@@ -46,14 +47,16 @@ class Course(object):
         """
         This function sorts the existing professors to sections object by the rating to display
         the results properly in sorted order.
-        Args:
-            None
+
         Returns:
             None
         """
-        self.professor_to_sections =  dict(OrderedDict(sorted(self.professor_to_sections.items(),
-            key = lambda prof : (Course.get_professor_average_rating(prof[0]) is not None,
-                 Course.get_professor_average_rating(prof[0])), reverse = True)))
+        self.professor_to_sections = dict(OrderedDict(sorted(self.professor_to_sections.items(),
+                                                             key=lambda prof: (
+                                                                 Course.get_professor_average_rating(
+                                                                     prof[0]) is not None,
+                                                                 Course.get_professor_average_rating(prof[0])),
+                                                             reverse=True)))
 
 
 class Professor(object):
@@ -72,6 +75,7 @@ class Professor(object):
     def get_all_professors(page_num: int) -> Tuple[list, list, list]:
         """
         Returns a list of professors
+
         Args:
             page_num: int
                 Page number for the professors to retrieve from planetterp API
@@ -180,9 +184,11 @@ class CourseList(object):
         this function will call the umd.io API and give back a Course object
         This function will raise an exception if the course code or sections information
         cannot be found on the API (status code from response is not 200)
+
         Args:
             course_code: str
                 String of the course code (e.g. cmsc131)
+
         Returns:
             course: Course
                 Returns a Course object corresponding with the course code string
@@ -196,6 +202,7 @@ class CourseList(object):
         dictionary of course objects in alphabetical order
         in order to display them all on the "see all courses" page
         Each page has 30 courses
+
         Args:
             page_num: int
                 The page number of all courses to load
@@ -254,6 +261,7 @@ class APIGet(object):
         """
         Gets a list of courses (without sections) that match a given query.
         To be used when searching for a course to be added to schedule.
+
         Args:
             query: str
                  Search string to search on planetterp
@@ -277,6 +285,7 @@ class APIGet(object):
         """
         Gets a complete course (with sections) given its course code.
         To be used when adding a course to the schedule.
+
         Args:
             course_code: str
                 Course code of the course to be gotten.
@@ -297,6 +306,7 @@ class APIGet(object):
         """
         Gets a course "head" (without sections) given its course code.
         Helper method of get_course_heads_by_query and get_complete_course_by_course_code.
+
         Args:
             course_code: str
                 Course code of the course to be gotten.
@@ -316,6 +326,7 @@ class APIGet(object):
         dictionary of course objects in alphabetical order
         in order to display them all on the "see all courses" page
         Each page has 30 courses
+
         Args:
             page_num: int
                 The page number of all courses to load
@@ -341,6 +352,7 @@ class APIGet(object):
         """
         Returns a list of all courses within a department that satisfy a single gen ed
         requirement (max 30)
+
         Args:
             department_id: str
                 The department in which to search for courses
@@ -372,7 +384,7 @@ class APIGet(object):
     @staticmethod
     def get_sections_list_by_course(course: Course) -> Tuple:
         """
-        Params:
+        Args:
             course: Course
                 Base course to get sections of
         Returns:
@@ -388,7 +400,7 @@ class APIGet(object):
     @staticmethod
     def get_professor_gpa_breakdown_by_course(course_code: str) -> dict:
         """
-        Params:
+        Args:
             course_code: str
                 Course code of class to query grade information
         Returns:
@@ -403,9 +415,11 @@ class APIGet(object):
     @staticmethod
     def get_professor_by_name(professor_name: str, get_reviews="false") -> Professor:
         """
-        Params:
+        Args:
             professor_name: str
                 Professor Name whose object we want to get
+            get_reviews: bool
+                Boolean representing if API call should return the Professor reviews too
         Returns:
             professor: Professor
                 The object of this professor
@@ -430,7 +444,8 @@ class RequestProxy(object):
     def planetterp_search_by_query(cls, query: str) -> list:
         """
         Ask planetterp to match query to course names
-        Params:
+
+        Args:
             query: str
                 Partial string to search
         Returns:
@@ -449,7 +464,8 @@ class RequestProxy(object):
     def planetterp_get_course_by_course_code(cls, course_code: str) -> dict:
         """
         Ask planetterp to search for a course given a specific course code
-        Params:
+
+        Args:
             course_code: str
                 Course code string to get
         Returns:
@@ -494,7 +510,8 @@ class RequestProxy(object):
     def planetterp_get_courses_by_page(cls, page_num: int) -> list:
         """
         Ask planetterp to get a page from the list of all courses
-        Params:
+
+        Args:
             page_num: str
                 Page number to get
         Returns:
@@ -534,7 +551,8 @@ class RequestProxy(object):
     def umdio_get_sections_by_course_code(cls, course: Course) -> list:
         """
         Ask umd.io to get a list of sections from a course code
-        Params:
+
+        Args:
             course: str
                 Course whose course code will be used for search
         Returns:
@@ -584,7 +602,8 @@ class RequestProxy(object):
     def umdio_get_courses_by_gened(cls, department_id: str, gen_ed: str) -> list:
         """
         Ask umd.io to get a list of courses with a specific gen-ed requirement
-        Params:
+
+        Args:
             department_id: str
                 Department ID to match (i.e. CMSC)
             gen_ed: str
@@ -625,52 +644,52 @@ class RequestProxy(object):
                                    "of area. The course is especially recommended for science, "
                                    "engineering and mathematics majors.",
                     "grading_method": [
-                      "Regular",
-                      "Pass-Fail",
-                      "Audit"
+                        "Regular",
+                        "Pass-Fail",
+                        "Audit"
                     ],
                     "gen_ed": [
-                      [
-                        "FSAR",
-                        "FSMA"
-                      ]
+                        [
+                            "FSAR",
+                            "FSMA"
+                        ]
                     ],
                     "core": [
-                      "MS"
+                        "MS"
                     ],
                     "relationships": {
-                      "coreqs": None,
-                      "prereqs": "Minimum grade of C- in MATH115.",
-                      "formerly": None,
-                      "restrictions": None,
-                      "additional_info": "Or must have math eligibility of MATH140 or higher; "
-                                         "and math eligibility is based on the Math Placement "
-                                         "Test.  All sections will require the use of a TI "
-                                         "graphics calculator. Instructor will use a TI-83, "
-                                         "TI-83+, or TI-86 calculator. If purchasing used "
-                                         "books additional software may be required.",
-                      "also_offered_as": None,
-                      "credit_granted_for": "MATH120, MATH130, MATH136, MATH140 or MATH220."
+                        "coreqs": None,
+                        "prereqs": "Minimum grade of C- in MATH115.",
+                        "formerly": None,
+                        "restrictions": None,
+                        "additional_info": "Or must have math eligibility of MATH140 or higher; "
+                                           "and math eligibility is based on the Math Placement "
+                                           "Test.  All sections will require the use of a TI "
+                                           "graphics calculator. Instructor will use a TI-83, "
+                                           "TI-83+, or TI-86 calculator. If purchasing used "
+                                           "books additional software may be required.",
+                        "also_offered_as": None,
+                        "credit_granted_for": "MATH120, MATH130, MATH136, MATH140 or MATH220."
                     },
                     "sections": [
-                      "MATH140-0111",
-                      "MATH140-0121",
-                      "MATH140-0131",
-                      "MATH140-0141",
-                      "MATH140-0211",
-                      "MATH140-0221",
-                      "MATH140-0231",
-                      "MATH140-0241",
-                      "MATH140-0311",
-                      "MATH140-0321",
-                      "MATH140-0112",
-                      "MATH140-0113",
-                      "MATH140-0122",
-                      "MATH140-0123",
-                      "MATH140-0132",
-                      "MATH140-0142"
+                        "MATH140-0111",
+                        "MATH140-0121",
+                        "MATH140-0131",
+                        "MATH140-0141",
+                        "MATH140-0211",
+                        "MATH140-0221",
+                        "MATH140-0231",
+                        "MATH140-0241",
+                        "MATH140-0311",
+                        "MATH140-0321",
+                        "MATH140-0112",
+                        "MATH140-0113",
+                        "MATH140-0122",
+                        "MATH140-0123",
+                        "MATH140-0132",
+                        "MATH140-0142"
                     ]
-                  }]
+                }]
             else:
                 return []
 
@@ -678,7 +697,8 @@ class RequestProxy(object):
     def planetterp_get_grades_by_course_code(cls, course_code: str) -> list:
         """
         Ask planetterp to get grades for a course
-        Params:
+
+        Args:
             course_code: str
                 Course code to get grades for
         Returns:
@@ -726,11 +746,14 @@ class RequestProxy(object):
     def planetterp_get_professor_by_name(cls, professor_name: str, get_reviews="false") -> dict:
         """
         Ask planetterp for information on a professor
-        Params:
+
+        Args:
             professor_name: str
                 Professor Name whose object we want to get
+            get_reviews: bool
+                Boolean representing if API call should also return Professor reviews
         Returns:
-            prof_raw: a json dict with professor infomration
+            prof_raw: a json dict with professor information
         """
         if not cls.test_mode:
             course_search_return = requests.get('https://api.planetterp.com/v1/professor', params={
@@ -746,14 +769,14 @@ class RequestProxy(object):
         else:
             if not cls.bad_request:
                 return {
-                          "name": "Jon Snow",
-                          "slug": "snow",
-                          "type": "professor",
-                          "courses": [
-                            "MATH140"
-                          ],
-                          "average_rating": 4.125
-                        }
+                    "name": "Jon Snow",
+                    "slug": "snow",
+                    "type": "professor",
+                    "courses": [
+                        "MATH140"
+                    ],
+                    "average_rating": 4.125
+                }
             else:
                 raise ConnectionError("Professor Not Found")
 
@@ -768,6 +791,7 @@ class APIParse(object):
     def planetterp_course_raw_to_course_head(course_raw: dict) -> Course:
         """
         Makes a response from planetterp's course get into a course (with no sections)
+
         Args:
             course_raw: dict[str, str]
                 The raw response of the planetterp API (converted from json to dict)
@@ -792,8 +816,8 @@ class APIParse(object):
     @staticmethod
     def umd_io_course_raw_to_course_head(course_raw: dict) -> Course:
         """
-        TODO: Add unit test
         Makes a response from umd.io's course get into a course (with no sections)
+
         Args:
             course_raw: dict[str, str]
                 The raw response of the umd.io API (converted from json to dict)
@@ -820,6 +844,7 @@ class APIParse(object):
             -> Tuple[dict, dict]:
         """
         Makes a response from umd.io's sections get into a list of sections
+
         Args:
             sections_raw: dict[str, str]
                 The raw response of the umd.io API (converted from json to dict)
@@ -858,6 +883,7 @@ class APIParse(object):
     def planetterp_raw_grade_distribution_to_gpa(grades_raw: list) -> dict:
         """
         Makes a response from planetterps's grades get into a gpa float
+
         Args:
             grades_raw: dict[str, str]
                 The raw response of the planetterp API (converted from json to dict)
@@ -922,6 +948,7 @@ class APIParse(object):
     def planetterp_prof_raw_to_prof_head(prof_raw: dict) -> Professor:
         """
         Makes a response from planetterp's professor get into a course (with no sections)
+
         Args:
             prof_raw: dict[str, str]
                 The raw response of the planetterp API (converted from json to dict)

@@ -60,6 +60,8 @@ class MySchedule(object):
             message: bool
                 String describing the result of trying to add the course.
         """
+        if course_to_add.credits == 0:
+            return "Oops! " + course_to_add.course_code + " is not offered this semester."
 
         for other_course in self.courses_list:
             if course_to_add.course_code == other_course.course_code:
@@ -170,7 +172,6 @@ class MySchedule(object):
 
     def add_registered_course_section_by_id(self, section_id: str) -> str:
         """
-        TODO: Add unit test
         Args:
             section_id: str
                 Section ID to try to add, from an already registered course.
@@ -188,7 +189,6 @@ class MySchedule(object):
 
     def remove_registered_course_section_by_id(self, section_to_remove: Section) -> str:
         """
-        TODO: Add unit test
         Args:
             section_to_remove: Section
                 Section to try to remove.
@@ -225,7 +225,6 @@ class MySchedule(object):
     def remove_all_classes(self) -> None:
         """
         Resets the schedule to be empty.
-        TODO: Fix for new course/section addition procedure
         """
         self.schedule = {"M": [],
                          "Tu": [],
@@ -234,7 +233,7 @@ class MySchedule(object):
                          "F": []}
         self.total_credits = 0
         self.sections_list = []
-
+        self.courses_list = []
         self.warnings_list = []
 
     def get_schedule_average_gpa(self) -> float:
@@ -254,7 +253,7 @@ class MySchedule(object):
         This function serializes the user's schedule to easily be copied by the user on the frontend. The user can
         then use this serialized string to load their schedule through the "load_serialized_schedule" function.
 
-        return:
+        Returns:
             str_schedule: str
                 A String representation of the user's schedule
         """
@@ -271,7 +270,7 @@ class MySchedule(object):
         This function takes a string representation of the serialized version of a user's schedule and loads this
         schedule by adding all of the sections/meeting times.
 
-        param:
+        Args:
             str_schedule: str
                 A String representation of the user's schedule generated from the get_serialized_schedule function
         """
@@ -299,6 +298,7 @@ class MySchedule(object):
     def get_course_color(self, course: Course):
         """
         Returns the color of a course in the schedule
+
         Args:
             course: Course
                 Course to get the color of

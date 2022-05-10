@@ -1,0 +1,513 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>tests package &#8212; UMD Schedule Builder 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="flask_app.backend package" href="flask_app.backend.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="tests-package">
+<h1>tests package<a class="headerlink" href="#tests-package" title="Permalink to this headline">¶</a></h1>
+<section id="module-tests.conftest">
+<span id="tests-conftest-module"></span><h2>tests.conftest module<a class="headerlink" href="#module-tests.conftest" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.conftest.app">
+<span class="sig-prename descclassname"><span class="pre">tests.conftest.</span></span><span class="sig-name descname"><span class="pre">app</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.conftest.app" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get app object and set it up for testing</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.conftest.client">
+<span class="sig-prename descclassname"><span class="pre">tests.conftest.</span></span><span class="sig-name descname"><span class="pre">client</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.conftest.client" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a test client</p>
+</dd></dl>
+
+</section>
+<section id="module-tests.test_app">
+<span id="tests-test-app-module"></span><h2>tests.test_app module<a class="headerlink" href="#module-tests.test_app" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_app.test_all_courses_returns_200">
+<span class="sig-prename descclassname"><span class="pre">tests.test_app.</span></span><span class="sig-name descname"><span class="pre">test_all_courses_returns_200</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_app.test_all_courses_returns_200" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_app.test_all_professors_returns_200">
+<span class="sig-prename descclassname"><span class="pre">tests.test_app.</span></span><span class="sig-name descname"><span class="pre">test_all_professors_returns_200</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_app.test_all_professors_returns_200" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_app.test_index_returns_200">
+<span class="sig-prename descclassname"><span class="pre">tests.test_app.</span></span><span class="sig-name descname"><span class="pre">test_index_returns_200</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_app.test_index_returns_200" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_app.test_professor_detail_returns_200">
+<span class="sig-prename descclassname"><span class="pre">tests.test_app.</span></span><span class="sig-name descname"><span class="pre">test_professor_detail_returns_200</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_app.test_professor_detail_returns_200" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_app.test_professor_detail_returns_404_if_no_professor">
+<span class="sig-prename descclassname"><span class="pre">tests.test_app.</span></span><span class="sig-name descname"><span class="pre">test_professor_detail_returns_404_if_no_professor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_app.test_professor_detail_returns_404_if_no_professor" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_app.test_tutorial_returns_200">
+<span class="sig-prename descclassname"><span class="pre">tests.test_app.</span></span><span class="sig-name descname"><span class="pre">test_tutorial_returns_200</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_app.test_tutorial_returns_200" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-tests.test_courses">
+<span id="tests-test-courses-module"></span><h2>tests.test_courses module<a class="headerlink" href="#module-tests.test_courses" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="tests.test_courses.APIGetAndParseTest">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">tests.test_courses.</span></span><span class="sig-name descname"><span class="pre">APIGetAndParseTest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">methodName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'runTest'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_courses.APIGetAndParseTest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">unittest.case.TestCase</span></code></p>
+<p>Test functions in the APIGet and APIParse classes, which consist of several static helper methods to call
+the Planetterp and umdio APIs, and parse the returned data into objects</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_courses.APIGetAndParseTest.setUp">
+<span class="sig-name descname"><span class="pre">setUp</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_courses.APIGetAndParseTest.setUp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hook method for setting up the test fixture before exercising it.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_courses.APIGetAndParseTest.tearDown">
+<span class="sig-name descname"><span class="pre">tearDown</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_courses.APIGetAndParseTest.tearDown" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hook method for deconstructing the test fixture after testing it.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_courses.APIGetAndParseTest.test_gen_ed_search_returned_courses_empty_bad_request">
+<span class="sig-name descname"><span class="pre">test_gen_ed_search_returned_courses_empty_bad_request</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_courses.APIGetAndParseTest.test_gen_ed_search_returned_courses_empty_bad_request" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_courses.APIGetAndParseTest.test_gen_ed_search_returned_courses_valid_good_request">
+<span class="sig-name descname"><span class="pre">test_gen_ed_search_returned_courses_valid_good_request</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_courses.APIGetAndParseTest.test_gen_ed_search_returned_courses_valid_good_request" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_courses.APIGetAndParseTest.test_get_course_heads_make_sure_all_courses_we_expect_are_present">
+<span class="sig-name descname"><span class="pre">test_get_course_heads_make_sure_all_courses_we_expect_are_present</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_courses.APIGetAndParseTest.test_get_course_heads_make_sure_all_courses_we_expect_are_present" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_courses.APIGetAndParseTest.test_professor_object_returned_valid_courselist">
+<span class="sig-name descname"><span class="pre">test_professor_object_returned_valid_courselist</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_courses.APIGetAndParseTest.test_professor_object_returned_valid_courselist" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_courses.APIGetAndParseTest.test_professor_object_returned_valid_instructor_type">
+<span class="sig-name descname"><span class="pre">test_professor_object_returned_valid_instructor_type</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_courses.APIGetAndParseTest.test_professor_object_returned_valid_instructor_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_courses.APIGetAndParseTest.test_professor_object_returned_valid_name">
+<span class="sig-name descname"><span class="pre">test_professor_object_returned_valid_name</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_courses.APIGetAndParseTest.test_professor_object_returned_valid_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_courses.APIGetAndParseTest.test_professor_object_returned_valid_rating">
+<span class="sig-name descname"><span class="pre">test_professor_object_returned_valid_rating</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_courses.APIGetAndParseTest.test_professor_object_returned_valid_rating" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="tests.test_courses.CourseListTest">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">tests.test_courses.</span></span><span class="sig-name descname"><span class="pre">CourseListTest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">methodName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'runTest'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_courses.CourseListTest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">unittest.case.TestCase</span></code></p>
+<p>Test functions in the CourseList class, which is primarily responsible for
+interacting with the API, so this also tests the API functions as supposed to</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_courses.CourseListTest.setUp">
+<span class="sig-name descname"><span class="pre">setUp</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_courses.CourseListTest.setUp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hook method for setting up the test fixture before exercising it.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_courses.CourseListTest.tearDown">
+<span class="sig-name descname"><span class="pre">tearDown</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_courses.CourseListTest.tearDown" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hook method for deconstructing the test fixture after testing it.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_courses.CourseListTest.test_get_courses_using_course_code_invalid_course_code_throws_exception">
+<span class="sig-name descname"><span class="pre">test_get_courses_using_course_code_invalid_course_code_throws_exception</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_courses.CourseListTest.test_get_courses_using_course_code_invalid_course_code_throws_exception" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_courses.CourseListTest.test_get_courses_using_course_code_valid_course_code">
+<span class="sig-name descname"><span class="pre">test_get_courses_using_course_code_valid_course_code</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_courses.CourseListTest.test_get_courses_using_course_code_valid_course_code" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_courses.CourseListTest.test_get_courses_using_invalid_page_number">
+<span class="sig-name descname"><span class="pre">test_get_courses_using_invalid_page_number</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_courses.CourseListTest.test_get_courses_using_invalid_page_number" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_courses.CourseListTest.test_get_courses_using_valid_page_number">
+<span class="sig-name descname"><span class="pre">test_get_courses_using_valid_page_number</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_courses.CourseListTest.test_get_courses_using_valid_page_number" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="tests.test_courses.CourseTest">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">tests.test_courses.</span></span><span class="sig-name descname"><span class="pre">CourseTest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">methodName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'runTest'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_courses.CourseTest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">unittest.case.TestCase</span></code></p>
+<p>Test functions in the classes related to Courses (e.g. Section, Course, MeetingTime, etc.). It does not test
+the API calls</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_courses.CourseTest.test_class_formatted_weekly_schedule_correct">
+<span class="sig-name descname"><span class="pre">test_class_formatted_weekly_schedule_correct</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_courses.CourseTest.test_class_formatted_weekly_schedule_correct" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_courses.CourseTest.test_course_correct_prof_rating_order">
+<span class="sig-name descname"><span class="pre">test_course_correct_prof_rating_order</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_courses.CourseTest.test_course_correct_prof_rating_order" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_courses.CourseTest.test_course_correct_professor_rating_static_method">
+<span class="sig-name descname"><span class="pre">test_course_correct_professor_rating_static_method</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_courses.CourseTest.test_course_correct_professor_rating_static_method" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_courses.CourseTest.test_course_empty_prof_rating_order">
+<span class="sig-name descname"><span class="pre">test_course_empty_prof_rating_order</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_courses.CourseTest.test_course_empty_prof_rating_order" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_courses.CourseTest.test_hashes_of_different_meetings_times_are_different_too">
+<span class="sig-name descname"><span class="pre">test_hashes_of_different_meetings_times_are_different_too</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_courses.CourseTest.test_hashes_of_different_meetings_times_are_different_too" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_courses.CourseTest.test_hashes_of_same_meetings_times_are_same">
+<span class="sig-name descname"><span class="pre">test_hashes_of_same_meetings_times_are_same</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_courses.CourseTest.test_hashes_of_same_meetings_times_are_same" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_courses.CourseTest.test_meeting_time_not_equal_to_non_meeting_time_object">
+<span class="sig-name descname"><span class="pre">test_meeting_time_not_equal_to_non_meeting_time_object</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_courses.CourseTest.test_meeting_time_not_equal_to_non_meeting_time_object" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_courses.CourseTest.test_meeting_times_are_equal_according_to_eq_function">
+<span class="sig-name descname"><span class="pre">test_meeting_times_are_equal_according_to_eq_function</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_courses.CourseTest.test_meeting_times_are_equal_according_to_eq_function" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_courses.CourseTest.test_meeting_times_are_not_equal_according_to_eq_function">
+<span class="sig-name descname"><span class="pre">test_meeting_times_are_not_equal_according_to_eq_function</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_courses.CourseTest.test_meeting_times_are_not_equal_according_to_eq_function" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-tests.test_schedule">
+<span id="tests-test-schedule-module"></span><h2>tests.test_schedule module<a class="headerlink" href="#module-tests.test_schedule" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="tests.test_schedule.ScheduleGPA">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">tests.test_schedule.</span></span><span class="sig-name descname"><span class="pre">ScheduleGPA</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">methodName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'runTest'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_schedule.ScheduleGPA" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">unittest.case.TestCase</span></code></p>
+<p>Tests to ensure Average GPA schedule method is correct</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_schedule.ScheduleGPA.test_correct_average_gpa">
+<span class="sig-name descname"><span class="pre">test_correct_average_gpa</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_schedule.ScheduleGPA.test_correct_average_gpa" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_schedule.ScheduleGPA.test_empty_schedule_zero_gpa">
+<span class="sig-name descname"><span class="pre">test_empty_schedule_zero_gpa</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_schedule.ScheduleGPA.test_empty_schedule_zero_gpa" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="tests.test_schedule.ScheduleTest">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">tests.test_schedule.</span></span><span class="sig-name descname"><span class="pre">ScheduleTest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">methodName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'runTest'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_schedule.ScheduleTest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">unittest.case.TestCase</span></code></p>
+<p>Tests for the add_class and remove_class functions of MySchedule.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_schedule.ScheduleTest.test_add_class_and_credits_and_schedule_correct">
+<span class="sig-name descname"><span class="pre">test_add_class_and_credits_and_schedule_correct</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_schedule.ScheduleTest.test_add_class_and_credits_and_schedule_correct" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_schedule.ScheduleTest.test_add_class_then_remove_class_correct_credits_and_schedule">
+<span class="sig-name descname"><span class="pre">test_add_class_then_remove_class_correct_credits_and_schedule</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_schedule.ScheduleTest.test_add_class_then_remove_class_correct_credits_and_schedule" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_schedule.ScheduleTest.test_add_duplicate_class_and_credits_and_schedule_correct">
+<span class="sig-name descname"><span class="pre">test_add_duplicate_class_and_credits_and_schedule_correct</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_schedule.ScheduleTest.test_add_duplicate_class_and_credits_and_schedule_correct" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_schedule.ScheduleTest.test_add_duplicate_course_doesnt_add_again">
+<span class="sig-name descname"><span class="pre">test_add_duplicate_course_doesnt_add_again</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_schedule.ScheduleTest.test_add_duplicate_course_doesnt_add_again" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_schedule.ScheduleTest.test_add_two_classes_correct_credits_and_schedule">
+<span class="sig-name descname"><span class="pre">test_add_two_classes_correct_credits_and_schedule</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_schedule.ScheduleTest.test_add_two_classes_correct_credits_and_schedule" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_schedule.ScheduleTest.test_add_two_classes_make_sure_ordered_by_time">
+<span class="sig-name descname"><span class="pre">test_add_two_classes_make_sure_ordered_by_time</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_schedule.ScheduleTest.test_add_two_classes_make_sure_ordered_by_time" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_schedule.ScheduleTest.test_class_formatted_weekly_schedule_correct">
+<span class="sig-name descname"><span class="pre">test_class_formatted_weekly_schedule_correct</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_schedule.ScheduleTest.test_class_formatted_weekly_schedule_correct" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_schedule.ScheduleTest.test_class_overlap_different_class_time_conflict">
+<span class="sig-name descname"><span class="pre">test_class_overlap_different_class_time_conflict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_schedule.ScheduleTest.test_class_overlap_different_class_time_conflict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_schedule.ScheduleTest.test_class_overlap_same_class">
+<span class="sig-name descname"><span class="pre">test_class_overlap_same_class</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_schedule.ScheduleTest.test_class_overlap_same_class" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_schedule.ScheduleTest.test_class_with_no_time_conflict">
+<span class="sig-name descname"><span class="pre">test_class_with_no_time_conflict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_schedule.ScheduleTest.test_class_with_no_time_conflict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_schedule.ScheduleTest.test_get_course_color_of_course_in_schedule">
+<span class="sig-name descname"><span class="pre">test_get_course_color_of_course_in_schedule</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_schedule.ScheduleTest.test_get_course_color_of_course_in_schedule" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_schedule.ScheduleTest.test_get_course_color_of_course_not_in_schedule">
+<span class="sig-name descname"><span class="pre">test_get_course_color_of_course_not_in_schedule</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_schedule.ScheduleTest.test_get_course_color_of_course_not_in_schedule" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_schedule.ScheduleTest.test_load_empty_serialized_schedule">
+<span class="sig-name descname"><span class="pre">test_load_empty_serialized_schedule</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_schedule.ScheduleTest.test_load_empty_serialized_schedule" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_schedule.ScheduleTest.test_load_serialize_schedule_works">
+<span class="sig-name descname"><span class="pre">test_load_serialize_schedule_works</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_schedule.ScheduleTest.test_load_serialize_schedule_works" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_schedule.ScheduleTest.test_load_serialized_schedule_invalid_course">
+<span class="sig-name descname"><span class="pre">test_load_serialized_schedule_invalid_course</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_schedule.ScheduleTest.test_load_serialized_schedule_invalid_course" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_schedule.ScheduleTest.test_load_serialized_schedule_invalid_course_format">
+<span class="sig-name descname"><span class="pre">test_load_serialized_schedule_invalid_course_format</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_schedule.ScheduleTest.test_load_serialized_schedule_invalid_course_format" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_schedule.ScheduleTest.test_load_serialized_schedule_invalid_section_for_valid_course">
+<span class="sig-name descname"><span class="pre">test_load_serialized_schedule_invalid_section_for_valid_course</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_schedule.ScheduleTest.test_load_serialized_schedule_invalid_section_for_valid_course" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_schedule.ScheduleTest.test_remove_all_classes_on_empty_schedule">
+<span class="sig-name descname"><span class="pre">test_remove_all_classes_on_empty_schedule</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_schedule.ScheduleTest.test_remove_all_classes_on_empty_schedule" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_schedule.ScheduleTest.test_remove_all_classes_on_schedule_with_classes_in_it">
+<span class="sig-name descname"><span class="pre">test_remove_all_classes_on_schedule_with_classes_in_it</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_schedule.ScheduleTest.test_remove_all_classes_on_schedule_with_classes_in_it" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_schedule.ScheduleTest.test_remove_course_actually_in_schedule">
+<span class="sig-name descname"><span class="pre">test_remove_course_actually_in_schedule</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_schedule.ScheduleTest.test_remove_course_actually_in_schedule" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_schedule.ScheduleTest.test_remove_course_not_in_schedule">
+<span class="sig-name descname"><span class="pre">test_remove_course_not_in_schedule</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_schedule.ScheduleTest.test_remove_course_not_in_schedule" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_schedule.ScheduleTest.test_removing_class_not_in_schedule_doesnt_change_credits">
+<span class="sig-name descname"><span class="pre">test_removing_class_not_in_schedule_doesnt_change_credits</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_schedule.ScheduleTest.test_removing_class_not_in_schedule_doesnt_change_credits" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_schedule.ScheduleTest.test_schedule_is_empty">
+<span class="sig-name descname"><span class="pre">test_schedule_is_empty</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_schedule.ScheduleTest.test_schedule_is_empty" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_schedule.ScheduleTest.test_serialize_empty_schedule">
+<span class="sig-name descname"><span class="pre">test_serialize_empty_schedule</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_schedule.ScheduleTest.test_serialize_empty_schedule" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_schedule.ScheduleTest.test_serialize_schedule_returns_comma_separated_section_ids">
+<span class="sig-name descname"><span class="pre">test_serialize_schedule_returns_comma_separated_section_ids</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_schedule.ScheduleTest.test_serialize_schedule_returns_comma_separated_section_ids" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_schedule.ScheduleTest.test_try_to_add_class_in_middle_of_day_start_time_overlaps_with_previous_end_time">
+<span class="sig-name descname"><span class="pre">test_try_to_add_class_in_middle_of_day_start_time_overlaps_with_previous_end_time</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_schedule.ScheduleTest.test_try_to_add_class_in_middle_of_day_start_time_overlaps_with_previous_end_time" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_schedule.ScheduleTest.test_try_to_add_overlapping_classes_only_first_gets_added">
+<span class="sig-name descname"><span class="pre">test_try_to_add_overlapping_classes_only_first_gets_added</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_schedule.ScheduleTest.test_try_to_add_overlapping_classes_only_first_gets_added" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="tests.test_schedule.ScheduleWarningTest">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">tests.test_schedule.</span></span><span class="sig-name descname"><span class="pre">ScheduleWarningTest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">methodName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'runTest'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_schedule.ScheduleWarningTest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">unittest.case.TestCase</span></code></p>
+<p>Tests for ScheduleWarnings generated by MySchedule.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_schedule.ScheduleWarningTest.test_add_class_no_open_seats_makes_warning">
+<span class="sig-name descname"><span class="pre">test_add_class_no_open_seats_makes_warning</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_schedule.ScheduleWarningTest.test_add_class_no_open_seats_makes_warning" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_schedule.ScheduleWarningTest.test_add_multiple_classes_no_open_seats_makes_warnings">
+<span class="sig-name descname"><span class="pre">test_add_multiple_classes_no_open_seats_makes_warnings</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_schedule.ScheduleWarningTest.test_add_multiple_classes_no_open_seats_makes_warnings" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_schedule.ScheduleWarningTest.test_remove_class_no_open_seats_removes_warnings">
+<span class="sig-name descname"><span class="pre">test_remove_class_no_open_seats_removes_warnings</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_schedule.ScheduleWarningTest.test_remove_class_no_open_seats_removes_warnings" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_schedule.ScheduleWarningTest.test_remove_multiple_classes_no_open_seats_removes_warnings">
+<span class="sig-name descname"><span class="pre">test_remove_multiple_classes_no_open_seats_removes_warnings</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_schedule.ScheduleWarningTest.test_remove_multiple_classes_no_open_seats_removes_warnings" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-tests.utils">
+<span id="tests-utils-module"></span><h2>tests.utils module<a class="headerlink" href="#module-tests.utils" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="tests.utils.TestUtils">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">tests.utils.</span></span><span class="sig-name descname"><span class="pre">TestUtils</span></span><a class="headerlink" href="#tests.utils.TestUtils" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Load in some hard coded course data that doesn’t depend on API to test schedule logic</p>
+</dd></dl>
+
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">UMD Schedule Builder</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="flask_app.html">flask_app package</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">tests package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-tests.conftest">tests.conftest module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-tests.test_app">tests.test_app module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-tests.test_courses">tests.test_courses module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-tests.test_schedule">tests.test_schedule module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-tests.utils">tests.utils module</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="flask_app.backend.html" title="previous chapter">flask_app.backend package</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2022, Michelle Fang, Tyler Honeywell, Amar Mujumdar, Daniel Niezelski, and Andrew Schuck.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.2.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/tests.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
